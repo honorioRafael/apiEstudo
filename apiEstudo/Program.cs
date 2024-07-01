@@ -80,7 +80,7 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        Console.WriteLine("sofjsfjsofj");
+        
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
