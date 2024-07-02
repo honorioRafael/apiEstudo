@@ -4,7 +4,7 @@ using apiEstudo.Infraestrutura.Repositories;
 
 namespace apiEstudo.Domain.Model
 {
-    public interface IEmployeeRepository //: IBaseRepository<Employee>
+    public interface IEmployeeRepository : IBaseRepository<Employee>
     {
         void Add(Employee employee);
         //List<EmployeeDTO>? Get();

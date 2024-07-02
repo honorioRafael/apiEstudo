@@ -16,7 +16,6 @@ namespace apiEstudo.Controllers
 
         public EmployeeController(IEmployeeRepository employeeRepository)
         {
-            _context.Employees
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException();
         }
 
@@ -31,15 +30,15 @@ namespace apiEstudo.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var employess = _employeeRepository.Get(_context.Employees);
-            if (employess.Count() == 0) return NotFound();
+            var employess = _employeeRepository.Get(_context.Employees); 
+            if (employess == null || employess.Count() == 0) return NotFound();
             else return Ok(employess);
         }
 
-        /*[HttpGet("{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetId(int id)
         {
-            var employee = _employeeRepository.Get(id);
+            var employee = _employeeRepository.GetSingle(_context.Employees, x => x.id == id);
             if (employee == null) return NotFound();
             else return Ok(employee);
         }
@@ -47,10 +46,10 @@ namespace apiEstudo.Controllers
         [HttpGet("name/{name}")]
         public IActionResult GetByName(string name)
         {
-            var employee = _employeeRepository.Get(name);
+            var employee = _employeeRepository.GetSingle(_context.Employees, x => x.name == name);
             if (employee == null) return NotFound();
             else return Ok(employee);
 
-        }*/
+        }
     }
 }
