@@ -2,10 +2,8 @@
 {
     public class EmployeeDTO
     {
-        public int id { get; set; }
-        public string? name { get; set; }
-        public TaskDTO? task { get; set; }
-        //public string taskName { get; set; }
-        //public int age { get; private set; }
+        public long Id { get; set; }
+        public string? Name { get; set; }
+        public EmployeeTaskDTO? EmployeeTask { get; set; }
     }
 }

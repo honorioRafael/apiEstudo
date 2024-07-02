@@ -6,14 +6,9 @@ namespace apiEstudo.Infraestrutura
 {
     public class ConnectionContext : DbContext
     {
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<apiEstudo.Domain.Models.Task> Tasks { get; set; }
+        public ConnectionContext(DbContextOptions<ConnectionContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                "Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"
-                );
-        }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<apiEstudo.Domain.Models.EmployeeTask> Tasks { get; set; }
     }
 }

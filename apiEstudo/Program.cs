@@ -1,8 +1,10 @@
 using apiEstudo;
 using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura;
 using apiEstudo.Infraestrutura.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -51,9 +53,10 @@ internal class Program
         });
         });
 
+        builder.Services.AddDbContext<ConnectionContext>(x => x.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=harmon_erp_homolog_2;User ID=harmonit;Password=H4rm0n1t#130524;MultipleActiveResultSets=True;App=EntityFramework"));
+
         builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-        builder.Services.AddTransient<ITaskRepository, TaskRepository>();
-        //builder.Services.AddTransient<IGenericRepository<T>, GenericRepository>();
+        builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
 
         var key = Encoding.ASCII.GetBytes(Key.Secret);
         builder.Services.AddAuthentication(x =>

@@ -1,30 +1,38 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Domain.Model
 {
     /*
         Table para indicar o nome da tabela. Caso na tabela esteja diferente da classe, inserir o da tabela entre ""
      */
-    [Table("Employee")]
-    public class Employee
+    public class Employee : BaseEntry<Employee>
     {
-        [Key]
-        public int id { get; private set; }
-        public string? name { get; private set; }
-        public int age { get; private set; }
-        public int taskId { get; private set; }
+        public string? Name { get; private set; }
+        public int Age { get; private set; }
+        public long EmployeeTaskId { get; private set; }
+        public EmployeeTask? EmployeeTask { get; private set; }
 
-        public Employee(string? name, int age, int taskId)
+        public Employee(string? name, int age, int employeeTaskId, EmployeeTask? employeeTask)
         {
-            this.name = name ?? throw new ArgumentNullException();
-            this.age = age;
-            this.taskId = taskId;
+            Name = name ?? throw new ArgumentNullException();
+            Age = age;
+            EmployeeTaskId = employeeTaskId;
+            EmployeeTask = employeeTask;
         }
 
         public Employee()
         {
         }
 
+        public static implicit operator EmployeeDTO(Employee employee)
+        {
+            return employee == null ? default : new EmployeeDTO { Id = employee.Id, Name = employee.Name, EmployeeTask = employee.EmployeeTask };
+        }
+    }
+
+    public class BaseEntry<T> where T : BaseEntry<T>
+    {
+        public long Id { get; private set; }
     }
 }

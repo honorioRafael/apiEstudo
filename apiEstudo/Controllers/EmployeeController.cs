@@ -14,67 +14,41 @@ namespace apiEstudo.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly ConnectionContext _context = new ConnectionContext();
-        private readonly ITaskRepository _taskRepository;
+        private readonly IEmployeeTaskRepository _taskRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, ITaskRepository taskRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeeTaskRepository taskRepository)
         {
             _employeeRepository = employeeRepository;
             _taskRepository = taskRepository;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult Add(EmployeeViewModel employeeView)
         {
             var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
             _employeeRepository.Add(employee);
             return Ok();
-        }
+        }*/
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
-            var employess = _employeeRepository.Get(_context.Employees);
-            var resp = (from employee in employess
-                        select new EmployeeDTO
-                        {
-                            id = employee.id,
-                            name = employee.name,
-                            task = _taskRepository.GetTask(employee.taskId)
-                        }).ToList();
+            var employess = _employeeRepository.GetAll();
+            var resp = (from employee in employess select (EmployeeDTO)employee).ToList();
+
             if (resp == null || resp.Count() == 0) return NotFound();
             else return Ok(resp);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetId(int id)
+        public IActionResult Get(long id)
         {
-            var employess = _employeeRepository.Get(_context.Employees, x => x.id == id);
-            var resp = (from employee in employess
-                        select new EmployeeDTO
-                        {
-                            id = employee.id,
-                            name = employee.name,
-                            task = _taskRepository.GetTask(employee.taskId)
-                        }).FirstOrDefault();
+            var employee = _employeeRepository.Get(id);
+            var resp = (EmployeeDTO)employee;
+
             if (resp == null) return NotFound();
             else return Ok(resp);
-        }
-
-        [HttpGet("name/{name}")]
-        public IActionResult GetByName(string name)
-        {
-            var employess = _employeeRepository.Get(_context.Employees, x => x.name == name);
-            var resp = (from employee in employess
-                        select new EmployeeDTO
-                        {
-                            id = employee.id,
-                            name = employee.name,
-                            task = _taskRepository.GetTask(employee.taskId)
-                        }).FirstOrDefault();
-            if (resp == null) return NotFound();
-            else return Ok(resp);
-
         }
     }
+
 }
