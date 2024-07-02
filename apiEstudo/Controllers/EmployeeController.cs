@@ -41,7 +41,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public IActionResult Get(int id)
         {
             var employee = _employeeRepository.Get(id);
             var resp = (EmployeeDTO)employee;

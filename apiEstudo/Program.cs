@@ -53,10 +53,14 @@ internal class Program
         });
         });
 
-        builder.Services.AddDbContext<ConnectionContext>(x => x.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=harmon_erp_homolog_2;User ID=harmonit;Password=H4rm0n1t#130524;MultipleActiveResultSets=True;App=EntityFramework"));
+        builder.Services.AddDbContext<ConnectionContext>(x => 
+        x.UseSqlServer("Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"));
+
 
         builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
+        builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
+        builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
 
         var key = Encoding.ASCII.GetBytes(Key.Secret);
         builder.Services.AddAuthentication(x =>

@@ -1,5 +1,4 @@
-﻿using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +13,11 @@ namespace apiEstudo.Infraestrutura.Repositories
         public override List<Employee>? GetAll()
         {
             return _dbset.Include(x => x.EmployeeTask).ToList(); ;
+        }
+
+        public override Employee? Get(int id)
+        {
+            return _dbset.Include(x => x.EmployeeTask).Where(x => x.Id == id).FirstOrDefault();
         }
     }  
 }

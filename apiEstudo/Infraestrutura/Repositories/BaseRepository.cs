@@ -20,12 +20,12 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.ToList();
         }
 
-        public virtual List<T>? GetListByListId(List<long> listId)
+        public virtual List<T>? GetListByListId(List<int> listId)
         {
             return _dbset.Where(x => listId.Contains(x.Id)).ToList();
         }
 
-        public virtual T? Get(long id)
+        public virtual T? Get(int id)
         {
             return _dbset.Find(id);
         }

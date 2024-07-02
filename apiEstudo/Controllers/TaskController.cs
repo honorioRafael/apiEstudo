@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
@@ -8,19 +9,20 @@ namespace apiEstudo.Controllers
     [Route("api/v1/Task")]
     public class TaskController : ControllerBase
     {
-        public readonly ITaskRepository _TaskRepository;
+        private readonly IEmployeeTaskRepository _taskRepository;
 
-        public TaskController(ITaskRepository taskRepository)
+        public TaskController(IEmployeeTaskRepository taskRepository)
         {
-            _TaskRepository = taskRepository;
+            _taskRepository = taskRepository;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
-            var tasks = _TaskRepository.GetTask();
-            if(tasks != null) return Ok(tasks);
-            else return NotFound();
+            var resp = _taskRepository.GetAll();
+
+            if (resp == null || resp.Count() == 0) return NotFound();
+            else return Ok(resp);
         }
     }*/
 }

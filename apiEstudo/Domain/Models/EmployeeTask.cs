@@ -7,12 +7,14 @@ namespace apiEstudo.Domain.Models
     [Table("Task")]
     public class EmployeeTask : BaseEntry<EmployeeTask>
     {
+        [Column("taskName")]
         public string Name { get; set; }
+        [Column("taskDescription")]
         public string Description { get; set; }
 
         public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)
         {
-            return employeeTask == null ? default : new EmployeeTaskDTO { Id = employeeTask.Id, Name = employeeTask.Name, Description = employeeTask.Description };
+            return employeeTask == null ? default : new EmployeeTaskDTO { Name = employeeTask.Name, Description = employeeTask.Description };
         }
     }
 }
