@@ -7,12 +7,12 @@ namespace apiEstudo.Infraestrutura.Repositories
     public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
         private readonly ConnectionContext _context = new ConnectionContext();
-        private readonly ITaskRepository _taskRepository;
+        /*private readonly ITaskRepository _taskRepository;
 
         public EmployeeRepository(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
-        }
+        }*/
 
         public void Add(Employee employee)
         {
