@@ -61,6 +61,7 @@ internal class Program
         builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
         builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
         builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
+        builder.Services.AddTransient<ICompraRepository, ComprasRepository>();
 
         var key = Encoding.ASCII.GetBytes(Key.Secret);
         builder.Services.AddAuthentication(x =>

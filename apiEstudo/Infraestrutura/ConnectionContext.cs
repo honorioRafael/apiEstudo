@@ -12,5 +12,6 @@ namespace apiEstudo.Infraestrutura
         public DbSet<EmployeeTask> Tasks { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Compras> Compras { get; set; }
     }
 }
