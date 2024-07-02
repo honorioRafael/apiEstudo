@@ -15,14 +15,16 @@ namespace apiEstudo.Domain.Model
         public int age { get; private set; }
         public int taskId { get; private set; }
 
-        public Employee(string _name, int _age)
+        public Employee(string? name, int age, int taskId)
         {
-            name = _name ?? throw new ArgumentException(nameof(_name));
-            age = _age;
+            this.name = name ?? throw new ArgumentNullException();
+            this.age = age;
+            this.taskId = taskId;
         }
 
         public Employee()
         {
         }
+
     }
 }

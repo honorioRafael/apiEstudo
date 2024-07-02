@@ -4,7 +4,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
         private readonly ConnectionContext _context = new ConnectionContext();
         private readonly ITaskRepository _taskRepository;
@@ -20,7 +20,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             _context.SaveChanges();
         }
 
-        public List<EmployeeDTO>? Get()
+        /*public List<EmployeeDTO>? Get()
         {
             return (from employee in _context.Employees
                     select new EmployeeDTO()
@@ -54,6 +54,6 @@ namespace apiEstudo.Infraestrutura.Repositories
                         task = _taskRepository.GetTask(employee.taskId)
                     })
                     .FirstOrDefault();
-        }
+        }*/
     }  
 }

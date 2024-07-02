@@ -53,6 +53,7 @@ internal class Program
 
         builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         builder.Services.AddTransient<ITaskRepository, TaskRepository>();
+        //builder.Services.AddTransient<IGenericRepository<T>, GenericRepository>();
 
         var key = Encoding.ASCII.GetBytes(Key.Secret);
         builder.Services.AddAuthentication(x =>

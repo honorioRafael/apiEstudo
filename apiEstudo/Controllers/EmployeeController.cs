@@ -1,5 +1,6 @@
 ﻿using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.Model;
+using apiEstudo.Infraestrutura;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,16 +12,18 @@ namespace apiEstudo.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly ConnectionContext _context = new ConnectionContext();
 
         public EmployeeController(IEmployeeRepository employeeRepository)
         {
+            _context.Employees
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException();
         }
 
         [HttpPost]
         public IActionResult Add(EmployeeViewModel employeeView)
         {
-            var employee = new Employee(employeeView.Name, employeeView.Age);
+            var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
             _employeeRepository.Add(employee);
             return Ok();
         }
@@ -28,12 +31,12 @@ namespace apiEstudo.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var employess = _employeeRepository.Get();
+            var employess = _employeeRepository.Get(_context.Employees);
             if (employess.Count() == 0) return NotFound();
             else return Ok(employess);
         }
 
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         public IActionResult GetId(int id)
         {
             var employee = _employeeRepository.Get(id);
@@ -48,6 +51,6 @@ namespace apiEstudo.Controllers
             if (employee == null) return NotFound();
             else return Ok(employee);
 
-        }
+        }*/
     }
 }
