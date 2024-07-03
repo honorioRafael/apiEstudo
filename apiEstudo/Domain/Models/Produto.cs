@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,10 +27,22 @@ namespace apiEstudo.Domain.Models
             MarcaId = marcaId;
             Marca = marca;
         }
-        
+
+        public void UpdateProduto(ProdutoViewModel produtoView)
+        {
+            Nome = produtoView.Nome;
+            Quantidade = produtoView.Quantidade;
+            MarcaId = produtoView.MarcaId;
+        }
+
+        public static implicit operator ProdutoDTOSimplified(Produto produto)
+        {
+            return produto == null ? default : new ProdutoDTOSimplified { Id = produto.Id, Nome = produto.Nome };
+        }
+
         public static implicit operator ProdutoDTO(Produto produto)
         {
-            return produto == null ? default : new ProdutoDTO { Nome = produto.Nome, Quantidade = produto.Quantidade, Marca = produto.Marca };
+            return produto == null ? default : new ProdutoDTO { Id = produto.Id, Nome = produto.Nome, Quantidade = produto.Quantidade, Marca = produto.Marca };
         }
     }
 }

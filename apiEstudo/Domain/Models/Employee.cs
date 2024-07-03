@@ -42,6 +42,11 @@ namespace apiEstudo.Domain.Model
             EmployeeTaskId = employeeView.taskId;
         }
 
+        public static implicit operator EmployeeDTOSimplified(Employee employee)
+        {
+            return employee == null ? default : new EmployeeDTOSimplified { Id = employee.Id, Name = employee.Name };
+        }
+
         public static implicit operator EmployeeDTO(Employee employee)
         {
             return employee == null ? default : new EmployeeDTO { Id = employee.Id, Name = employee.Name, EmployeeTask = employee.EmployeeTask };

@@ -28,19 +28,17 @@ namespace apiEstudo.Domain.Models
             Data_compra = data_compra;
             Employee = employee;
             Produto = produto;
-        }
 
+            var prod = new Produto();
+            
+        }
+        
         public static implicit operator ComprasDTO(Compras compra)
         {
             return compra == null ? default : new ComprasDTO {               
                 Id = compra.Id,
-                Employee = new () {
-                    Name = compra.Employee.Name
-                },
-                Produto = new () {
-                    Nome = compra.Produto.Nome,
-                    Quantidade = compra.Produto.Quantidade
-                },
+                Employee = (EmployeeDTOSimplified)compra.Employee,
+                Produto = (ProdutoDTOSimplified)compra.Produto,
                 Valor = compra.Valor,
                 Data_compra = compra.Data_compra
             };

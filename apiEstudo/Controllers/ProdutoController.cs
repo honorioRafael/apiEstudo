@@ -27,6 +27,27 @@ namespace apiEstudo.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id) 
+        {
+            var ProdutoToBeDeleted = _produtoRepository.Get(id);
+            if(ProdutoToBeDeleted == null) return NotFound();
+
+            _produtoRepository.Delete(ProdutoToBeDeleted);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, ProdutoViewModel produtoView)
+        {
+            var ProdutoToBeUpdated = _produtoRepository.Get(id);
+            if(ProdutoToBeUpdated == null) return NotFound();
+            
+            ProdutoToBeUpdated.UpdateProduto(produtoView);
+            _produtoRepository.Update(ProdutoToBeUpdated);
+            return Ok();
+        }
+
         [HttpGet]
         public IActionResult GetAll() 
         {
