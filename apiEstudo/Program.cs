@@ -1,7 +1,6 @@
 using apiEstudo;
-using apiEstudo.Domain.Model;
-using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.Repositories;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

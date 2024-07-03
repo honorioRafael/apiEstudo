@@ -1,4 +1,5 @@
 ﻿using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers

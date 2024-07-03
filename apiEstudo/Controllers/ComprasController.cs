@@ -2,12 +2,13 @@
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.Repositories;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
 {
     [ApiController]
-    [Route("/Compras")]
+    [Route("api/v1/Compras")]
     public class ComprasController : Controller
     {
         private readonly ICompraRepository _compraRepository;

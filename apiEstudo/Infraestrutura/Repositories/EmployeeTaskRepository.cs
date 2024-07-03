@@ -1,5 +1,6 @@
 ﻿using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories

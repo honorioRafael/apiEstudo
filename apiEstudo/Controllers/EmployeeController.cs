@@ -1,8 +1,8 @@
 ﻿using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
-using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

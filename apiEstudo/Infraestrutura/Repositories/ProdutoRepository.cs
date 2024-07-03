@@ -2,6 +2,7 @@
 using apiEstudo.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using apiEstudo.Mappings;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {

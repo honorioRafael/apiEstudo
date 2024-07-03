@@ -1,8 +1,8 @@
 ﻿using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Models;
+using apiEstudo.Domain.Model;
 using apiEstudo.Infraestrutura.Repositories;
 
-namespace apiEstudo.Domain.Model
+namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
     public interface IEmployeeRepository : IBaseRepository<Employee>
     {

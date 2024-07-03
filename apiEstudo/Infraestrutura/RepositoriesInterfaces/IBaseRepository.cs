@@ -1,7 +1,7 @@
 ﻿using apiEstudo.Infraestrutura;
 using Microsoft.EntityFrameworkCore;
 
-namespace apiEstudo.Domain.Models
+namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
     public interface IBaseRepository<T>
     {
