@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
-    [Table("marcas")]
     public class Marca : BaseEntry<Marca>
     {
         public string Nome { get; set; }

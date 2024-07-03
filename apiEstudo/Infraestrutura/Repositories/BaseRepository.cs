@@ -1,6 +1,7 @@
 ﻿using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
+using apiEstudo.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories

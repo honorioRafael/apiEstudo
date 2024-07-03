@@ -1,4 +1,5 @@
 ﻿using apiEstudo.Domain.Models;
+using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {

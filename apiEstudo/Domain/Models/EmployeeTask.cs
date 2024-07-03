@@ -4,12 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
-    [Table("Task")]
     public class EmployeeTask : BaseEntry<EmployeeTask>
-    {
-        [Column("taskName")]
-        public string Name { get; set; }
-        [Column("taskDescription")]
+    {        
+        public string Name { get; set; }        
         public string Description { get; set; }
 
         public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
-    [Table("produtos")]
     public class Produto : BaseEntry<Produto>
     {
 
