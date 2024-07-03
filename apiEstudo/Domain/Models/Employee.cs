@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,7 +34,13 @@ namespace apiEstudo.Domain.Model
         }
 
         public Employee()
+        { }
+
+        public void UpdateEmployee(EmployeeViewModel employeeView)
         {
+            Name = employeeView.Name;
+            Age = employeeView.Age;
+            EmployeeTaskId = employeeView.taskId;
         }
 
         public static implicit operator EmployeeDTO(Employee employee)

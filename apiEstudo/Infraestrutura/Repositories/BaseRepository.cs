@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,18 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Find(id);
         }
 
+        public void Update(T classe)
+        {
+
+            _context.Update(classe);
+            _context.SaveChanges();
+        }
+
+        public void Delete(T classe)
+        {
+            _context.Remove(classe);
+            _context.SaveChanges();
+        }
 
         /*public virtual List<T>? Get(IEnumerable<T> table, Func<T, bool> filter) 
         {

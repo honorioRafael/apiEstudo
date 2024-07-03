@@ -7,8 +7,7 @@ namespace apiEstudo.Infraestrutura.Repositories
     public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
         public EmployeeRepository(ConnectionContext contexto) : base(contexto) 
-        {
-        }
+        { }
 
         public override List<Employee>? GetAll()
         {

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace apiEstudo.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/v1/employee")]
     public class EmployeeController : ControllerBase
     {
@@ -20,14 +20,6 @@ namespace apiEstudo.Controllers
         {
             _employeeRepository = employeeRepository;
             _taskRepository = taskRepository;
-        }
-
-        [HttpPost]
-        public IActionResult Add(EmployeeViewModel employeeView)
-        {
-            var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
-            _employeeRepository.Add(employee);
-            return Ok();
         }
 
         [HttpGet]
@@ -48,6 +40,35 @@ namespace apiEstudo.Controllers
 
             if (resp == null) return NotFound();
             else return Ok(resp);
+        }
+
+        [HttpPost]
+        public IActionResult Add(EmployeeViewModel employeeView)
+        {
+            var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
+            _employeeRepository.Add(employee);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, EmployeeViewModel employeeView) 
+        {
+            var employeeToUpdate = _employeeRepository.Get(id);
+            if (employeeToUpdate == null) return NotFound();
+            
+            employeeToUpdate.UpdateEmployee(employeeView);
+            _employeeRepository.Update(employeeToUpdate);
+            return Ok();            
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id) 
+        { 
+            var employeeToDelete = _employeeRepository.Get(id);
+            if(employeeToDelete == null) return NotFound();
+
+            _employeeRepository.Delete(employeeToDelete);
+            return Ok();
         }
     }
 
