@@ -2,7 +2,7 @@
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IProdutoRepository : IBaseRepository<Produto>
+    public interface IProductRepository : IBaseRepository<Product>
     {
     }
 }

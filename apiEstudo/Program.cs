@@ -58,7 +58,7 @@ internal class Program
 
         builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
-        builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
+        builder.Services.AddTransient<IProductRepository, ProductRepository>();
         builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
         builder.Services.AddTransient<ICompraRepository, ComprasRepository>();
 

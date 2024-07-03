@@ -5,16 +5,16 @@ namespace apiEstudo.Domain.Models
 {
     public class Marca : BaseEntry<Marca>
     {
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
-        public Marca(string nome)
+        public Marca(string name)
         {
-            Nome = nome;
+            Name = name;
         }
 
         public static implicit operator MarcaDTO(Marca marca)
         {
-            return marca == null ? default : new MarcaDTO { Nome = marca.Nome };
+            return marca == null ? default : new MarcaDTO { Name = marca.Name };
         }
     }   
 }

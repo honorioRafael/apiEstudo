@@ -2,8 +2,8 @@
 {
     public class ComprasViewModel
     {
-        public int Employeeid { get; set; }
-        public int Produtoid { get; set; }
-        public double Valor { get; set; }
+        public int EmployeeId { get; set; }
+        public int ProductId { get; set; }
+        public double Value { get; set; }
     }
 }

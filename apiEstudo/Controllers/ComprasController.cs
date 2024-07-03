@@ -21,7 +21,7 @@ namespace apiEstudo.Controllers
         [HttpPost]
         public IActionResult Add(ComprasViewModel comprasView)
         {
-            var compra = new Compras(comprasView.Employeeid, comprasView.Produtoid, comprasView.Valor);
+            var compra = new Compras(comprasView.EmployeeId, comprasView.ProductId, comprasView.Value);
             _compraRepository.Add(compra);
             return Ok();
         }

@@ -9,6 +9,8 @@ namespace apiEstudo.Mappings
         public void Configure(EntityTypeBuilder<Marca> builder)
         {
             builder.ToTable("marcas");
+            builder.Property(x => x.Id).HasColumnName("Id");
+            builder.Property(x => x.Name).HasColumnName("name");
         }
     }
 }

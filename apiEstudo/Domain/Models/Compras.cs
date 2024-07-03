@@ -5,32 +5,30 @@ namespace apiEstudo.Domain.Models
 {
     public class Compras : BaseEntry<Compras>
     {
-        public int Employeeid { get; private set; }
-        public int Produtoid { get; private set; }
-        public double Valor { get; private set; }
-        public DateTime Data_compra { get; private set; }
+        public int EmployeeId { get; private set; }
+        public int ProductId { get; private set; }
+        public double Value { get; private set; }
+        public DateTime TransationDate { get; private set; }
         public virtual Employee Employee { get; private set; }
-        public virtual Produto Produto { get; private set; }
+        public virtual Product Product { get; private set; }
 
         public Compras() { }
 
-        public Compras(int employeeid, int produtoid, double valor)
+        public Compras(int employeeid, int productid, double value)
         {
-            Employeeid = employeeid;
-            Produtoid = produtoid;
-            Valor = valor;
-            Data_compra = DateTime.Now; 
+            EmployeeId = employeeid;
+            ProductId = productid;
+            Value = value;
+            TransationDate = DateTime.Now; 
         }
-        public Compras(int employeeid, int produtoid, DateTime data_compra, Employee employee, Produto produto)
+        public Compras(int employeeid, int productid, double value, DateTime transationDate, Employee employee, Product product)
         {
-            Employeeid = employeeid;
-            Produtoid = produtoid;
-            Data_compra = data_compra;
+            EmployeeId = employeeid;
+            ProductId = productid;
+            TransationDate = transationDate;
+            Value = value;
             Employee = employee;
-            Produto = produto;
-
-            var prod = new Produto();
-            
+            Product = product;       
         }
         
         public static implicit operator ComprasDTO(Compras compra)
@@ -38,9 +36,9 @@ namespace apiEstudo.Domain.Models
             return compra == null ? default : new ComprasDTO {               
                 Id = compra.Id,
                 Employee = (EmployeeDTOSimplified)compra.Employee,
-                Produto = (ProdutoDTOSimplified)compra.Produto,
-                Valor = compra.Valor,
-                Data_compra = compra.Data_compra
+                Product = (ProductDTOSimplified)compra.Product,
+                Value = compra.Value,
+                TransationDate = compra.TransationDate
             };
         }
     }
