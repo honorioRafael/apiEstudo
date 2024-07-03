@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
 {
-    /*[ApiController]
+    [ApiController]
     [Route("api/v1/marca")]
     public class MarcaController : ControllerBase
     { 
@@ -14,6 +14,14 @@ namespace apiEstudo.Controllers
             _marcaRepository = marcaRepository;
         }
 
+        [HttpPost]
+        public IActionResult Add(string nome)
+        {
+            var marca = new Marca(nome);
+            _marcaRepository.Add(marca);
+            return Ok();
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -22,5 +30,5 @@ namespace apiEstudo.Controllers
             if (resp == null || resp.Count() == 0) return NotFound();
             else return Ok(resp);
         }
-    }*/
+    }
 }

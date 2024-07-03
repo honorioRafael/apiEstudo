@@ -13,5 +13,10 @@ namespace apiEstudo.Infraestrutura.Repositories
         {
             return _dbset.Include(x => x.Produto).Include(x => x.Employee).ToList();
         }
+
+        public override Compras? Get(int id)
+        {
+            return _dbset.Where(x => x.Id == id).Include(x => x.Produto).Include(x => x.Employee).FirstOrDefault();
+        }
     }
 }

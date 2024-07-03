@@ -1,4 +1,6 @@
-﻿using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,14 @@ namespace apiEstudo.Controllers
         public ProdutoController(IProdutoRepository produtoRepository)
         {
             _produtoRepository = produtoRepository;
+        }
+
+        [HttpPost]
+        public IActionResult Add(ProdutoViewModel produtoView)
+        {
+            var produto = new Produto(produtoView.Nome, produtoView.Quantidade, produtoView.MarcaId);
+            _produtoRepository.Add(produto);
+            return Ok();
         }
 
         [HttpGet]

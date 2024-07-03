@@ -15,6 +15,12 @@ namespace apiEstudo.Infraestrutura.Repositories
             _dbset = _context.Set<T>();
         }
 
+        public virtual void Add(T classe)
+        {
+            _context.Add(classe);
+            _context.SaveChanges();
+        }
+
         public virtual List<T>? GetAll()
         {
             return _dbset.ToList();

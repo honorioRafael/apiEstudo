@@ -14,6 +14,12 @@ namespace apiEstudo.Domain.Models
         public virtual Marca Marca { get; private set; }
 
         public Produto() { }
+        public Produto(string nome, int quantidade, int marcaId)
+        {
+            Nome = nome;
+            Quantidade = quantidade;
+            MarcaId = marcaId;
+        }
         public Produto(string nome, int quantidade, int marcaId, Marca marca)
         {
             Nome = nome;

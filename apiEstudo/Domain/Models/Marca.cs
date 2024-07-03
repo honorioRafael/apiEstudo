@@ -8,6 +8,11 @@ namespace apiEstudo.Domain.Models
     {
         public string Nome { get; set; }
 
+        public Marca(string nome)
+        {
+            Nome = nome;
+        }
+
         public static implicit operator MarcaDTO(Marca marca)
         {
             return marca == null ? default : new MarcaDTO { Nome = marca.Nome };

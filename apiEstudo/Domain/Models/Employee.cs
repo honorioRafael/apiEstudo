@@ -15,7 +15,14 @@ namespace apiEstudo.Domain.Model
         [Column("taskId")]
         public int EmployeeTaskId { get; private set; }
         public EmployeeTask EmployeeTask { get; private set; }
-      
+
+
+        public Employee(string? name, int age, int employeeTaskId)
+        {
+            Name = name ?? throw new ArgumentNullException();
+            Age = age;
+            EmployeeTaskId = employeeTaskId;         
+        }
 
         public Employee(string? name, int age, int employeeTaskId, EmployeeTask employeeTask)
         {

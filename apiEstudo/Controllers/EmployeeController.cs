@@ -22,13 +22,13 @@ namespace apiEstudo.Controllers
             _taskRepository = taskRepository;
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public IActionResult Add(EmployeeViewModel employeeView)
         {
             var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
             _employeeRepository.Add(employee);
             return Ok();
-        }*/
+        }
 
         [HttpGet]
         public IActionResult GetAll()
