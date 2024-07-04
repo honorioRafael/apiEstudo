@@ -1,8 +1,9 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IMarcaRepository : IBaseRepository<Marca>
+    public interface IMarcaRepository : IBaseRepository<Marca, MarcaDTO>
     {
     }
 }

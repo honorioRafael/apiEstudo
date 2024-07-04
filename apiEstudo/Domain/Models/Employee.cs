@@ -1,6 +1,7 @@
 ﻿using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Model
@@ -23,6 +24,7 @@ namespace apiEstudo.Domain.Model
             EmployeeTaskId = employeeTaskId;
         }
 
+
         public Employee(string? name, int age, int employeeTaskId, EmployeeTask employeeTask)
         {
             Name = name ?? throw new ArgumentNullException();
@@ -33,6 +35,16 @@ namespace apiEstudo.Domain.Model
 
         public Employee()
         { }
+
+        public static Employee FromDTO(EmployeeDTO dto)
+        {
+
+            return new Employee {
+                Id = dto.Id,
+                Name = dto.Name,
+                Age = dto.Age
+            };
+        }
 
         public static implicit operator EmployeeDTOSimplified(Employee employee)
         {

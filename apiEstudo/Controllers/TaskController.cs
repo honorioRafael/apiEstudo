@@ -41,7 +41,7 @@ namespace apiEstudo.Controllers
             var TaskToDelete = _taskRepository.Get(id);
             if (TaskToDelete == null) return NotFound();
 
-            _taskRepository.Delete(TaskToDelete);
+            //_taskRepository.Delete(TaskToDelete);
             return Ok();
         }
 
@@ -51,7 +51,7 @@ namespace apiEstudo.Controllers
             var TaskToUpdate = _taskRepository.Get(id);
             if (TaskToUpdate == null) return NotFound();
 
-            TaskToUpdate.UpdateTask(taskView);
+            //TaskToUpdate.UpdateTask(taskView);
             //_taskRepository.Update(TaskToUpdate);
             return Ok();
         }

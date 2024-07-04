@@ -10,7 +10,7 @@ namespace apiEstudo.Application.Services
     public class EmployeeService : BaseService<Employee, EmployeeDTO>, IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
-
+        
         public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository) 
         {
             _employeeRepository = employeeRepository;

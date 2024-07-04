@@ -7,11 +7,13 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class BaseService<T, TDTO> : IBaseService<T, TDTO> where TDTO : IBaseDTO<TDTO>
+    public class BaseService<T, TDTO> : IBaseService<T, TDTO> 
+        where T : BaseEntry<T>, IBaseModel<T>
+        where TDTO : IBaseDTO<TDTO>
     {
-        private IBaseRepository<T> _repository { get; set; }
+        private IBaseRepository<T, TDTO> _repository { get; set; }
 
-        public BaseService(IBaseRepository<T> contextInterface)
+        public BaseService(IBaseRepository<T, TDTO> contextInterface)
         {
             _repository = contextInterface;
         }
@@ -19,16 +21,14 @@ namespace apiEstudo.Application.Services
         {
             var query = _repository.Get(id);
 
-            return query;
+            return OutputToDTO(query);
         }
 
         public virtual List<TDTO>? GetAll()
         {
             var query = _repository.GetAll();
-            var resp = (from item in query
-                        select item).ToList();
 
-            return resp;
+            return OutputToDTO(query);
         }
 
         public virtual bool Update(int id, IBaseViewModel view)
@@ -53,6 +53,26 @@ namespace apiEstudo.Application.Services
         List<TDTO>? IBaseService<T, TDTO>.GetListByListId(List<int> listId)
         {
             throw new NotImplementedException();
+        }
+
+        internal TDTO OutputToDTO(T entrada)
+        {
+            return (TDTO)(dynamic)entrada;
+        }
+
+        internal List<TDTO> OutputToDTO(List<T> entrada)
+        {
+            return (from item in entrada select (TDTO)(dynamic)item).ToList();
+        }
+
+        internal T DTOToOutput(TDTO dto)
+        {
+            return (T)(dynamic)dto;
+        }
+
+        internal List<T> DTOToOutput(List<T> entrada)
+        {
+            return (from item in entrada select (T)(dynamic)item).ToList();
         }
     }
 }

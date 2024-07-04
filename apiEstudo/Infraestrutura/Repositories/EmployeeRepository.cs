@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
@@ -6,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
+    public class EmployeeRepository : BaseRepository<Employee, EmployeeDTO>, IEmployeeRepository
     {
         public EmployeeRepository(ConnectionContext contexto) : base(contexto) 
         { }
-
+        
         public override List<Employee>? GetAll()
         {
-            return _dbset.Include(x => x.EmployeeTask).ToList(); ;
+            return _dbset.Include(x => x.EmployeeTask).ToList();
         }
 
         public override Employee? Get(int id)

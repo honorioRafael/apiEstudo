@@ -1,11 +1,12 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ComprasRepository : BaseRepository<Compras>, ICompraRepository
+    public class ComprasRepository : BaseRepository<Compras, ComprasDTO>, ICompraRepository
     {
         public ComprasRepository(ConnectionContext context) : base(context)
         {

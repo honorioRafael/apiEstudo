@@ -2,7 +2,7 @@
 
 namespace apiEstudo.Domain.DTOs
 {
-    public class EmployeeTaskDTO
+    public class EmployeeTaskDTO : IBaseDTO<EmployeeTaskDTO>
     {
         public string Name { get; set; }
         public string Description { get; set; }

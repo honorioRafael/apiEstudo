@@ -44,7 +44,7 @@ namespace apiEstudo.Controllers
         public IActionResult Add(EmployeeViewModel employeeView)
         {
             var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
-            _employeeRepository.Create(employee);
+            //_employeeRepository.Create(employee);
             return Ok();
         }
 

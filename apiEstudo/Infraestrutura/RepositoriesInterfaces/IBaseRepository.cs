@@ -1,10 +1,11 @@
 ﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.DTOs;
 using apiEstudo.Infraestrutura;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IBaseRepository<T>
+    public interface IBaseRepository<T, TDTO> where TDTO : IBaseDTO<TDTO>
     {
         public void Create(T classe);
         public void Update(T classe);

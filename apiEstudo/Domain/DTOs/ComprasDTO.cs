@@ -3,7 +3,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Domain.DTOs
 {
-    public class ComprasDTO
+    public class ComprasDTO : IBaseDTO<ComprasDTO>
     {
         public int Id { get; set; }
         public ProductDTOSimplified Product { get; set; }

@@ -3,10 +3,11 @@ using apiEstudo.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using apiEstudo.Mappings;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+using apiEstudo.Domain.DTOs;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    public class ProductRepository : BaseRepository<Product, ProductDTO>, IProductRepository
     {
         public ProductRepository(ConnectionContext context) : base(context)
         {

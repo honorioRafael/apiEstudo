@@ -43,7 +43,7 @@ namespace apiEstudo.Controllers
             var ProductToBeUpdated = _productRepository.Get(id);
             if(ProductToBeUpdated == null) return NotFound();
             
-            ProductToBeUpdated.UpdateProduct(productView);
+            //ProductToBeUpdated.UpdateProduct(productView);
             //_productRepository.Update(ProductToBeUpdated);
             return Ok();
         }

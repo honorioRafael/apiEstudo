@@ -1,6 +1,6 @@
 ﻿namespace apiEstudo.Domain.DTOs
 {
-    public class ProductDTO
+    public class ProductDTO : IBaseDTO<ProductDTO>
     {
         public int Id { get; set; }
         public string Name { get; set; }
