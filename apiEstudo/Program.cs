@@ -27,6 +27,7 @@ internal class Program
         {
         //c.OperationFilter<SwaggerDefaultValues>();
 
+        
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Name = "Authorization",

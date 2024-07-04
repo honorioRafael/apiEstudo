@@ -42,10 +42,5 @@ namespace apiEstudo.Domain.Models
                 TransationDate = compra.TransationDate
             };
         }
-
-        public void UpdateSelf(IBaseViewModel view)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

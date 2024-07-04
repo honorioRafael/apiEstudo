@@ -39,14 +39,13 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Find(id);
         }
 
-        public void Update(T classe, IBaseViewModel view)
+        public virtual void Update(T classe)
         {
-            classe.UpdateSelf(view);
             _context.Update(classe);
             _context.SaveChanges();
         }
 
-        public void Delete(T classe)
+        public virtual void Delete(T classe)
         {
             _context.Remove(classe);
             _context.SaveChanges();

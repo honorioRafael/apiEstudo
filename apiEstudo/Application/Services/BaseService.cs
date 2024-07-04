@@ -7,7 +7,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class BaseService<T> : IBaseService<T>
+    public class BaseService<T, TDTO> : IBaseService<T, TDTO> where TDTO : IBaseDTO<TDTO>
     {
         private IBaseRepository<T> _repository { get; set; }
 
@@ -15,14 +15,14 @@ namespace apiEstudo.Application.Services
         {
             _repository = contextInterface;
         }
-        public T? Get(int id)
+        public virtual TDTO? Get(int id)
         {
             var query = _repository.Get(id);
 
             return query;
         }
 
-        public List<T>? GetAll()
+        public virtual List<TDTO>? GetAll()
         {
             var query = _repository.GetAll();
             var resp = (from item in query
@@ -31,32 +31,28 @@ namespace apiEstudo.Application.Services
             return resp;
         }
 
-        public List<T>? GetListByListId(List<int> listId)
+        public virtual bool Update(int id, IBaseViewModel view)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(int id, IBaseViewModel view)
-        {
-            var query = _repository.Get(id);
-            if (query == null) return false;
-            
-            _repository.Update(query, view);
-            return true;
-        }
-
-        public bool Create(T classe)
+        public virtual bool Create(T classe)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public virtual bool Delete(int id)
         {
             var query = _repository.Get(id);
             if (query == null) return false;
 
             _repository.Delete(query);
             return true;
+        }
+
+        List<TDTO>? IBaseService<T, TDTO>.GetListByListId(List<int> listId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

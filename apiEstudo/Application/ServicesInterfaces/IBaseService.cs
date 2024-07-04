@@ -3,13 +3,13 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
-    public interface IBaseService<T> 
+    public interface IBaseService<T, TDTO> 
     {
         public bool Create(T classe);
-        public bool Update(int id, IBaseViewModel view);
+        public abstract bool Update(int id, IBaseViewModel view);
         public bool Delete(int id);
-        public List<T>? GetAll();
-        public T? Get(int id);
-        List<T>? GetListByListId(List<int> listId);
+        public List<TDTO>? GetAll();
+        public TDTO? Get(int id);
+        List<TDTO>? GetListByListId(List<int> listId);
     }
 }

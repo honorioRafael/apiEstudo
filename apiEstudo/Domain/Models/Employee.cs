@@ -11,10 +11,10 @@ namespace apiEstudo.Domain.Model
     //[Table("Employee")
     public class Employee : BaseEntry<Employee>, IBaseModel<Employee>
     {
-        public string? Name { get; private set; }
-        public int Age { get; private set; }
-        public int EmployeeTaskId { get; private set; }
-        public EmployeeTask EmployeeTask { get; private set; }
+        public string? Name { get; set; }
+        public int Age { get; set; }
+        public int EmployeeTaskId { get; set; }
+        public EmployeeTask EmployeeTask { get; set; }
 
         public Employee(string? name, int age, int employeeTaskId)
         {
@@ -34,18 +34,6 @@ namespace apiEstudo.Domain.Model
         public Employee()
         { }
 
-        public void UpdateSelf(EmployeeViewModel employeeView)
-        {
-            Name = employeeView.Name;
-            Age = employeeView.Age;
-            EmployeeTaskId = employeeView.taskId;
-        }
-
-        public void UpdateSelf(IBaseViewModel view)
-        {
-            throw new NotImplementedException();
-        }
-
         public static implicit operator EmployeeDTOSimplified(Employee employee)
         {
             return employee == null ? default : new EmployeeDTOSimplified { Id = employee.Id, Name = employee.Name };
@@ -53,7 +41,7 @@ namespace apiEstudo.Domain.Model
 
         public static implicit operator EmployeeDTO(Employee employee)
         {
-            return employee == null ? default : new EmployeeDTO { Id = employee.Id, Name = employee.Name, EmployeeTask = employee.EmployeeTask };
+            return employee == null ? default : new EmployeeDTO { Id = employee.Id, Age = employee.Age, Name = employee.Name, EmployeeTask = employee.EmployeeTask };
         }
     }
 }

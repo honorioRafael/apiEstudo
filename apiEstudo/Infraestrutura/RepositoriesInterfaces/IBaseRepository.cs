@@ -7,7 +7,7 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
     public interface IBaseRepository<T>
     {
         public void Create(T classe);
-        public void Update(T classe, IBaseViewModel view);
+        public void Update(T classe);
         public void Delete(T classe);
         public List<T>? GetAll();
         public T? Get(int id);

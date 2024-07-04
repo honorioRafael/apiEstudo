@@ -28,7 +28,7 @@ namespace apiEstudo.Controllers
         {           
             var query = _employeeService.GetAll();
             if (query == null || query.Count() == 0) return NotFound();
-            else return Ok(from item in query select (EmployeeDTO)item);            
+            else return Ok(query);            
         }
 
         [HttpGet("{id}")]
@@ -37,7 +37,7 @@ namespace apiEstudo.Controllers
             var query = _employeeService.Get(id);
 
             if (query == null) return NotFound();
-            else return Ok((EmployeeDTO)query);
+            else return Ok(query);
         }
 
         [HttpPost]
