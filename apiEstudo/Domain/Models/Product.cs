@@ -35,11 +35,6 @@ namespace apiEstudo.Domain.Models
             BrandId = productView.BrandId;
         }
 
-        public void UpdateSelf(IBaseViewModel view)
-        {
-            throw new NotImplementedException();
-        }
-
         public static implicit operator ProductDTOSimplified(Product product)
         {
             return product == null ? default : new ProductDTOSimplified { Id = product.Id, Name = product.Name };

@@ -12,15 +12,14 @@ namespace apiEstudo.Domain.Models
         {
             Name = name;
         }
+        public Marca(MarcaViewModel view)
+        {
+            Name = view.Name;
+        }
 
         public static implicit operator MarcaDTO(Marca marca)
         {
-            return marca == null ? default : new MarcaDTO { Name = marca.Name };
-        }
-
-        public void UpdateSelf(IBaseViewModel view)
-        {
-            throw new NotImplementedException();
+            return marca == null ? default : new MarcaDTO { Id = marca.Id, Name = marca.Name };
         }
     }   
 }

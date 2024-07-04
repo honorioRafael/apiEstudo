@@ -27,7 +27,7 @@ internal class Program
         {
         //c.OperationFilter<SwaggerDefaultValues>();
 
-        
+        // Swagger config
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Name = "Authorization",
@@ -56,6 +56,7 @@ internal class Program
         });
         });
 
+        // DataBase Context
         builder.Services.AddDbContext<ConnectionContext>(x => 
         x.UseSqlServer("Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"));
 
@@ -68,7 +69,10 @@ internal class Program
         
         // Services
         builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+        builder.Services.AddTransient<IEmployeeTaskService, EmployeeTaskService>();
+        builder.Services.AddTransient<IMarcaService, MarcaService>();
 
+        // JWT Token
         var key = Encoding.ASCII.GetBytes(Key.Secret);
         builder.Services.AddAuthentication(x =>
         {

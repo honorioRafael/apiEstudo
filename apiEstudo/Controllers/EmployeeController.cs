@@ -14,12 +14,10 @@ namespace apiEstudo.Controllers
     [Route("api/v1/employee")]
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeRepository _employeeRepository; //
         private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeeTaskRepository taskRepository, IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService)
         {
-            _employeeRepository = employeeRepository;
             _employeeService = employeeService;
         }
 
@@ -43,16 +41,16 @@ namespace apiEstudo.Controllers
         [HttpPost]
         public IActionResult Add(EmployeeViewModel employeeView)
         {
-            var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
-            //_employeeRepository.Create(employee);
+            var QueryResponse = _employeeService.Create(employeeView);
+            if (!QueryResponse) return NotFound();
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, EmployeeViewModel employeeView) 
         {
-            var queryResponse = _employeeService.Update(id, employeeView);
-            if (queryResponse == false) return NotFound();
+            var QueryResponse = _employeeService.Update(id, employeeView);
+            if (QueryResponse == false) return NotFound();
             return Ok();            
         }
 

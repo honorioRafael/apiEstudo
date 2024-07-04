@@ -3,9 +3,8 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.ViewModel
 {
-    public class EmployeeTaskViewModel : BaseViewModel<EmployeeTask>, IEmployeeTaskViewModel
+    public class MarcaViewModel : BaseViewModel<Marca>, IMarcaViewModel
     {
         public string Name { get; set; }
-        public string Description { get; set; }
     }
 }

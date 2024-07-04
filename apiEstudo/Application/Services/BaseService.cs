@@ -1,5 +1,6 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModelInterfaces;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.Repositories;
@@ -10,6 +11,7 @@ namespace apiEstudo.Application.Services
     public class BaseService<T, TDTO> : IBaseService<T, TDTO> 
         where T : BaseEntry<T>, IBaseModel<T>
         where TDTO : IBaseDTO<TDTO>
+    
     {
         private IBaseRepository<T, TDTO> _repository { get; set; }
 
@@ -17,6 +19,7 @@ namespace apiEstudo.Application.Services
         {
             _repository = contextInterface;
         }
+
         public virtual TDTO? Get(int id)
         {
             var query = _repository.Get(id);
@@ -31,12 +34,12 @@ namespace apiEstudo.Application.Services
             return OutputToDTO(query);
         }
 
-        public virtual bool Update(int id, IBaseViewModel view)
+        public virtual bool Update(int id, BaseViewModel<T> view)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool Create(T classe)
+        public virtual bool Create(BaseViewModel<T> view)
         {
             throw new NotImplementedException();
         }

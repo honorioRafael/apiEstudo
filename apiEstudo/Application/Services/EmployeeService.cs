@@ -1,5 +1,6 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModelInterfaces;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
@@ -18,6 +19,7 @@ namespace apiEstudo.Application.Services
 
         public bool Update(int id, EmployeeViewModel view)
         {
+            if (view == null) return false;
             var employee = _employeeRepository.Get(id);
             if (employee == null) return false;
 
@@ -28,6 +30,15 @@ namespace apiEstudo.Application.Services
             _employeeRepository.Update(employee);
             return true;
 
+        }
+
+        public bool Create(EmployeeViewModel View)
+        {
+            if (View == null) return false;
+
+            var entity = new Employee(View.Name, View.Age, View.taskId);
+            _employeeRepository.Create(entity);
+            return true;
         }
     }
 }

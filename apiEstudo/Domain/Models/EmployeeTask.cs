@@ -23,11 +23,6 @@ namespace apiEstudo.Domain.Models
             Description = taskView.Description;
         }
 
-        public void UpdateSelf(IBaseViewModel view)
-        {
-            throw new NotImplementedException();
-        }
-
         public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)
         {
             return employeeTask == null ? default : new EmployeeTaskDTO { Name = employeeTask.Name, Description = employeeTask.Description };

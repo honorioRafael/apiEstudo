@@ -1,4 +1,6 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,29 +9,29 @@ namespace apiEstudo.Controllers
     [ApiController]
     [Route("api/v1/marca")]
     public class MarcaController : ControllerBase
-    { 
-        private readonly IMarcaRepository _marcaRepository;
+    {         
+        private readonly IMarcaService _marcaService;
 
-        public MarcaController(IMarcaRepository marcaRepository)
+        public MarcaController(IMarcaService marcaService)
         {
-            _marcaRepository = marcaRepository;
+            _marcaService = marcaService;
         }
 
         [HttpPost]
-        public IActionResult Add(string nome)
+        public IActionResult Create(MarcaViewModel view)
         {
-            var marca = new Marca(nome);
-            _marcaRepository.Create(marca);
+            var QueryResponse = _marcaService.Create(view);
+            if (!QueryResponse) return NotFound();
             return Ok();
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var resp = _marcaRepository.GetAll();
-
-            if (resp == null || resp.Count() == 0) return NotFound();
-            else return Ok(resp);
+            var Query= _marcaService.GetAll();
+            
+            if (Query == null || Query.Count() == 0) return NotFound();
+            else return Ok(Query);
         }
     }
 }
