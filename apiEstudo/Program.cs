@@ -65,12 +65,14 @@ internal class Program
         builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
         builder.Services.AddTransient<IProductRepository, ProductRepository>();
         builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
-        builder.Services.AddTransient<ICompraRepository, ComprasRepository>();
+        builder.Services.AddTransient<IComprasRepository, ComprasRepository>();
         
         // Services
         builder.Services.AddTransient<IEmployeeService, EmployeeService>();
         builder.Services.AddTransient<IEmployeeTaskService, EmployeeTaskService>();
         builder.Services.AddTransient<IMarcaService, MarcaService>();
+        builder.Services.AddTransient<IProductService, ProductService>();
+        builder.Services.AddTransient<IComprasService, ComprasService>();
 
         // JWT Token
         var key = Encoding.ASCII.GetBytes(Key.Secret);

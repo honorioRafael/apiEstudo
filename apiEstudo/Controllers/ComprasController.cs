@@ -1,4 +1,5 @@
-﻿using apiEstudo.Application.ViewModel;
+﻿using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.Repositories;
@@ -11,36 +12,34 @@ namespace apiEstudo.Controllers
     [Route("api/v1/Compras")]
     public class ComprasController : Controller
     {
-        private readonly ICompraRepository _compraRepository;
+        private readonly IComprasService _compraService;
 
-        public ComprasController(ICompraRepository compraRepository)
+        public ComprasController(IComprasService compraService)
         {
-            _compraRepository = compraRepository;
+            _compraService = compraService;
         }
 
         [HttpPost]
-        public IActionResult Add(ComprasViewModel comprasView)
+        public IActionResult Create(ComprasViewModel comprasView)
         {
-            var compra = new Compras(comprasView.EmployeeId, comprasView.ProductId, comprasView.Value);
-            _compraRepository.Create(compra);
+            _compraService.Create(comprasView);
             return Ok();
         }
 
         [HttpGet]
         public IActionResult GetAll() 
         {
-            var query = _compraRepository.GetAll();
-            var resp = (from compra in query
-                        select (ComprasDTO)compra).ToList();
-            return (resp == null) ? NotFound() : Ok(resp);
+            var Query = _compraService.GetAll();
+            if(Query == null) return NotFound();
+            return Ok(Query);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = _compraRepository.Get(id);
-            var resp = (ComprasDTO)query;
-            return (resp == null) ? NotFound() : Ok(resp);
+            var Query = _compraService.Get(id);
+            if (Query == null) return NotFound();
+            return Ok(Query);
         }
     }
 }

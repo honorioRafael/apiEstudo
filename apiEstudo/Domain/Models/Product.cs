@@ -8,17 +8,17 @@ namespace apiEstudo.Domain.Models
     public class Product : BaseEntry<Product>, IBaseModel<Product>
     {
 
-        public string Name { get; private set; }
-        public int Quantity { get; private set; }
-        public int BrandId { get; private set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public int BrandId { get; set; }
         public virtual Marca Brand { get; private set; }
 
         public Product() { }
-        public Product(string nome, int quantidade, int marcaId)
+        public Product(ProductViewModel view)
         {
-            Name = nome;
-            Quantity = quantidade;
-            BrandId = marcaId;
+            Name = view.Name;
+            Quantity = view.Quantity;
+            BrandId = view.BrandId;
         }
         public Product(string name, int quantity, int brandId, Marca brand)
         {
@@ -26,13 +26,6 @@ namespace apiEstudo.Domain.Models
             Quantity = quantity;
             BrandId = brandId;
             Brand = brand;
-        }
-
-        public void UpdateProduct(ProductViewModel productView)
-        {
-            Name = productView.Name;
-            Quantity = productView.Quantity;
-            BrandId = productView.BrandId;
         }
 
         public static implicit operator ProductDTOSimplified(Product product)

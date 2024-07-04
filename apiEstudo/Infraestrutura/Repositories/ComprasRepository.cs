@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ComprasRepository : BaseRepository<Compras, ComprasDTO>, ICompraRepository
+    public class ComprasRepository : BaseRepository<Compras, ComprasDTO>, IComprasRepository
     {
         public ComprasRepository(ConnectionContext context) : base(context)
         {

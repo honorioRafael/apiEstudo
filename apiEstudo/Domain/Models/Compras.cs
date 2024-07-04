@@ -15,11 +15,11 @@ namespace apiEstudo.Domain.Models
 
         public Compras() { }
 
-        public Compras(int employeeid, int productid, double value)
+        public Compras(ComprasViewModel view)
         {
-            EmployeeId = employeeid;
-            ProductId = productid;
-            Value = value;
+            EmployeeId = view.EmployeeId;
+            ProductId = view.ProductId;
+            Value = view.Value;
             TransationDate = DateTime.Now; 
         }
         public Compras(int employeeid, int productid, double value, DateTime transationDate, Employee employee, Product product)

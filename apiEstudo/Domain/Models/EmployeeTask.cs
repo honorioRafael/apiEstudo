@@ -17,12 +17,6 @@ namespace apiEstudo.Domain.Models
             Description = description;
         }
 
-        public void UpdateTask(EmployeeTaskViewModel taskView)
-        {
-            Name = taskView.Name;
-            Description = taskView.Description;
-        }
-
         public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)
         {
             return employeeTask == null ? default : new EmployeeTaskDTO { Name = employeeTask.Name, Description = employeeTask.Description };

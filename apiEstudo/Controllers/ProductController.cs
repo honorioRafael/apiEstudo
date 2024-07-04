@@ -1,4 +1,5 @@
-﻿using apiEstudo.Application.ViewModel;
+﻿using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
@@ -12,59 +13,51 @@ namespace apiEstudo.Controllers
     [Route("api/v1/product")]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductService _productService;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductService productService)
         {
-            _productRepository = productRepository;
+            _productService = productService;
         }
 
         [HttpPost]
-        public IActionResult Add(ProductViewModel productView)
+        public IActionResult Create(ProductViewModel productView)
         {
-            var product = new Product(productView.Name, productView.Quantity, productView.BrandId);
-            _productRepository.Create(product);
+            var QueryResponse = _productService.Create(productView);
+            if(!QueryResponse) return NotFound();
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) 
         {
-            var ProductToBeDeleted = _productRepository.Get(id);
-            if(ProductToBeDeleted == null) return NotFound();
-
-            _productRepository.Delete(ProductToBeDeleted);
+            var QueryResponse = _productService.Delete(id);
+            if(!QueryResponse) return NotFound();
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, ProductViewModel productView)
         {
-            var ProductToBeUpdated = _productRepository.Get(id);
-            if(ProductToBeUpdated == null) return NotFound();
-            
-            //ProductToBeUpdated.UpdateProduct(productView);
-            //_productRepository.Update(ProductToBeUpdated);
+            var QueryResponse = _productService.Update(id, productView);
+            if(!QueryResponse) return NotFound();
             return Ok();
         }
 
         [HttpGet]
         public IActionResult GetAll() 
         {
-            var query = _productRepository.GetAll();
-            var resp = (from product in query
-                        select (ProductDTO)product).ToList();
-
-            if (resp == null) return NotFound();
-            else return Ok(resp);
+            var Query = _productService.GetAll();
+            if(Query == null) return NotFound();
+            return Ok(Query);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) 
         { 
-            var query = _productRepository.Get(id);
-            if (query == null) return NotFound();
-            else return Ok((ProductDTO)query);
+            var Query = _productService.Get(id);
+            if (Query == null) return NotFound();
+            else return Ok(Query);
         }
     }
 }
