@@ -8,26 +8,22 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class EmployeeService : BaseService<Employee, EmployeeDTO>, IEmployeeService
+    public class EmployeeService : BaseService<Employee, IEmployeeRepository, EmployeeDTO>, IEmployeeService
     {
-        private readonly IEmployeeRepository _employeeRepository;
+         public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository) 
+        { }
         
-        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository) 
-        {
-            _employeeRepository = employeeRepository;
-        }
-
         public bool Update(int id, EmployeeViewModel view)
         {
             if (view == null) return false;
-            var employee = _employeeRepository.Get(id);
+            var employee = _repository.Get(id);
             if (employee == null) return false;
 
             employee.Name = view.Name;
             employee.Age = view.Age;
             employee.EmployeeTaskId = view.taskId;
 
-            _employeeRepository.Update(employee);
+            _repository.Update(employee);
             return true;
 
         }
@@ -36,8 +32,8 @@ namespace apiEstudo.Application.Services
         {
             if (View == null) return false;
 
-            var entity = new Employee(View.Name, View.Age, View.taskId);
-            _employeeRepository.Create(entity);
+            var entity = new Employee(View.Name, View.Age, View.taskId, null);
+            _repository.Create(entity);
             return true;
         }
     }

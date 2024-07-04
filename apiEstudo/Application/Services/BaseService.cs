@@ -8,14 +8,14 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class BaseService<T, TDTO> : IBaseService<T, TDTO> 
-        where T : BaseEntry<T>, IBaseModel<T>
+    public class BaseService<T, TRepository, TDTO> : IBaseService<T, TDTO> 
+        where T : IBaseModel<T>
         where TDTO : IBaseDTO<TDTO>
-    
+        where TRepository : IBaseRepository<T, TDTO>
     {
-        private IBaseRepository<T, TDTO> _repository { get; set; }
+        protected readonly TRepository _repository;
 
-        public BaseService(IBaseRepository<T, TDTO> contextInterface)
+        public BaseService(TRepository contextInterface)
         {
             _repository = contextInterface;
         }

@@ -12,10 +12,6 @@ namespace apiEstudo.Domain.Models
         {
             Name = name;
         }
-        public Marca(MarcaViewModel view)
-        {
-            Name = view.Name;
-        }
 
         public static implicit operator MarcaDTO(Marca marca)
         {

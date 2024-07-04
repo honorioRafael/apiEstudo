@@ -14,12 +14,7 @@ namespace apiEstudo.Domain.Models
         public virtual Marca Brand { get; private set; }
 
         public Product() { }
-        public Product(ProductViewModel view)
-        {
-            Name = view.Name;
-            Quantity = view.Quantity;
-            BrandId = view.BrandId;
-        }
+        
         public Product(string name, int quantity, int brandId, Marca brand)
         {
             Name = name;

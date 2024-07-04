@@ -8,34 +8,31 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace apiEstudo.Application.Services
 {
-    public class ProductService : BaseService<Product, ProductDTO>, IProductService
+    public class ProductService : BaseService<Product, IProductRepository, ProductDTO>, IProductService
     {
-        private readonly IProductRepository _productRepository;
         public ProductService(IProductRepository contextInterface) : base(contextInterface)
-        {
-            _productRepository = contextInterface;
-        }
+        { }
 
-        public bool Create(ProductViewModel viewModel)
+        public bool Create(ProductViewModel view)
         {
-            if (viewModel == null) return false;
+            if (view == null) return false;
 
-            var Entity = new Product(viewModel);
-            _productRepository.Create(Entity);
+            var Entity = new Product(view.Name, view.Quantity, view.BrandId, null);
+            _repository.Create(Entity);
             return true;
         }
 
         public bool Update(int id, ProductViewModel view)
         {
             if (view == null) return false;
-            Product item = _productRepository.Get(id);
+            Product item = _repository.Get(id);
             if (item == null) return false;
 
             item.Name = view.Name;
             item.Quantity = view.Quantity;
             item.BrandId = view.BrandId;
 
-            _productRepository.Update(item);
+            _repository.Update(item);
             return true;
         }
     }

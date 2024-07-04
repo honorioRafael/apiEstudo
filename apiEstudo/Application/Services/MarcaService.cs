@@ -6,20 +6,17 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class MarcaService : BaseService<Marca, MarcaDTO>, IMarcaService
+    public class MarcaService : BaseService<Marca, IMarcaRepository, MarcaDTO>, IMarcaService
     {
-        private readonly IMarcaRepository _marcaRepository;
         public MarcaService(IMarcaRepository contextInterface) : base(contextInterface)
-        {
-            _marcaRepository = contextInterface;
-        }
+        { }
 
         public bool Create(MarcaViewModel view)
         {
             if (view == null) return false;
 
-            var entity = new Marca(view);
-            _marcaRepository.Create(entity);
+            var entity = new Marca(view.Name);
+            _repository.Create(entity);
             return true;
         }
     }

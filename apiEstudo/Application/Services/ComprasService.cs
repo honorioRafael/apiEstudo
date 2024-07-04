@@ -6,19 +6,16 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class ComprasService : BaseService<Compras, ComprasDTO>, IComprasService
+    public class ComprasService : BaseService<Compras, IComprasRepository, ComprasDTO>, IComprasService
     {
-        private readonly IComprasRepository _comprasRepository;
         public ComprasService(IComprasRepository contextInterface) : base(contextInterface)
-        {
-            _comprasRepository = contextInterface;
-        }
+        { }
 
         public bool Create(ComprasViewModel view)
         {
             if (view == null) return false;
-            var Entity = new Compras(view);
-            _comprasRepository.Create(Entity);
+            var Entity = new Compras(view.EmployeeId, view.ProductId, view.Value, DateTime.Now, null, null);
+            _repository.Create(Entity);
 
             return true;
         }

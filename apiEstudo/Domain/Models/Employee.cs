@@ -17,17 +17,9 @@ namespace apiEstudo.Domain.Model
         public int EmployeeTaskId { get; set; }
         public EmployeeTask EmployeeTask { get; set; }
 
-        public Employee(string? name, int age, int employeeTaskId)
-        {
-            Name = name ?? throw new ArgumentNullException();
-            Age = age;
-            EmployeeTaskId = employeeTaskId;
-        }
-
-
         public Employee(string? name, int age, int employeeTaskId, EmployeeTask employeeTask)
         {
-            Name = name ?? throw new ArgumentNullException();
+            Name = name;
             Age = age;
             EmployeeTaskId = employeeTaskId;
             EmployeeTask = employeeTask;
@@ -38,7 +30,6 @@ namespace apiEstudo.Domain.Model
 
         public static Employee FromDTO(EmployeeDTO dto)
         {
-
             return new Employee {
                 Id = dto.Id,
                 Name = dto.Name,

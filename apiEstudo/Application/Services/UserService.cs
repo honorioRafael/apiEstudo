@@ -6,7 +6,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class UserService : BaseService<User, UserDTO>, IUserService
+    public class UserService : BaseService<User, IUserRepository, UserDTO>, IUserService
     {
 
         public UserService(IUserRepository contextInterface) : base(contextInterface)
