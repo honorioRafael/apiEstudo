@@ -1,6 +1,8 @@
-﻿namespace apiEstudo.Application.ViewModel
+﻿using apiEstudo.Domain.Model;
+
+namespace apiEstudo.Application.ViewModel
 {
-    public class EmployeeViewModel
+    public class EmployeeViewModel : IBaseViewModel 
     {
         public string Name { get; set; }
         public int Age { get; set; }

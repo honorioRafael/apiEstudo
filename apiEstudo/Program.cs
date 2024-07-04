@@ -1,4 +1,7 @@
 using apiEstudo;
+using apiEstudo.Application.Services;
+using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Application.ViewModel;
 using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
@@ -55,12 +58,15 @@ internal class Program
         builder.Services.AddDbContext<ConnectionContext>(x => 
         x.UseSqlServer("Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"));
 
-
+        // Repositories
         builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
         builder.Services.AddTransient<IProductRepository, ProductRepository>();
         builder.Services.AddTransient<IMarcaRepository, MarcaRepository>();
         builder.Services.AddTransient<ICompraRepository, ComprasRepository>();
+
+        // Services
+        builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
         var key = Encoding.ASCII.GetBytes(Key.Secret);
         builder.Services.AddAuthentication(x =>

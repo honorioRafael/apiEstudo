@@ -1,9 +1,10 @@
-﻿using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.DTOs;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
-    public class Marca : BaseEntry<Marca>
+    public class Marca : BaseEntry<Marca>, IBaseModel<Marca>
     {
         public string Name { get; set; }
 
@@ -15,6 +16,11 @@ namespace apiEstudo.Domain.Models
         public static implicit operator MarcaDTO(Marca marca)
         {
             return marca == null ? default : new MarcaDTO { Name = marca.Name };
+        }
+
+        public void UpdateSelf(IBaseViewModel view)
+        {
+            throw new NotImplementedException();
         }
     }   
 }

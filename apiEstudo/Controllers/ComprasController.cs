@@ -22,7 +22,7 @@ namespace apiEstudo.Controllers
         public IActionResult Add(ComprasViewModel comprasView)
         {
             var compra = new Compras(comprasView.EmployeeId, comprasView.ProductId, comprasView.Value);
-            _compraRepository.Add(compra);
+            _compraRepository.Create(compra);
             return Ok();
         }
 

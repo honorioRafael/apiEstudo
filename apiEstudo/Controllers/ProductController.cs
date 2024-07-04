@@ -23,7 +23,7 @@ namespace apiEstudo.Controllers
         public IActionResult Add(ProductViewModel productView)
         {
             var product = new Product(productView.Name, productView.Quantity, productView.BrandId);
-            _productRepository.Add(product);
+            _productRepository.Create(product);
             return Ok();
         }
 
@@ -44,7 +44,7 @@ namespace apiEstudo.Controllers
             if(ProductToBeUpdated == null) return NotFound();
             
             ProductToBeUpdated.UpdateProduct(productView);
-            _productRepository.Update(ProductToBeUpdated);
+            //_productRepository.Update(ProductToBeUpdated);
             return Ok();
         }
 

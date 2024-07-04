@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
-    public class EmployeeTask : BaseEntry<EmployeeTask>
+    public class EmployeeTask : BaseEntry<EmployeeTask>, IBaseModel<EmployeeTask>
     {
         public string Name { get; set; }        
         public string Description { get; set; }
@@ -21,6 +21,11 @@ namespace apiEstudo.Domain.Models
         {
             Name = taskView.Name;
             Description = taskView.Description;
+        }
+
+        public void UpdateSelf(IBaseViewModel view)
+        {
+            throw new NotImplementedException();
         }
 
         public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)

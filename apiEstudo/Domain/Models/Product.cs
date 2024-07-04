@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
-    public class Product : BaseEntry<Product>
+    public class Product : BaseEntry<Product>, IBaseModel<Product>
     {
 
         public string Name { get; private set; }
@@ -33,6 +33,11 @@ namespace apiEstudo.Domain.Models
             Name = productView.Name;
             Quantity = productView.Quantity;
             BrandId = productView.BrandId;
+        }
+
+        public void UpdateSelf(IBaseViewModel view)
+        {
+            throw new NotImplementedException();
         }
 
         public static implicit operator ProductDTOSimplified(Product product)

@@ -22,7 +22,7 @@ namespace apiEstudo.Controllers
         public IActionResult Add(EmployeeTaskViewModel viewModel)
         {
             var task = new EmployeeTask(viewModel.Name, viewModel.Description);
-            _taskRepository.Add(task);
+            _taskRepository.Create(task);
             return Ok();
         }
 
@@ -52,7 +52,7 @@ namespace apiEstudo.Controllers
             if (TaskToUpdate == null) return NotFound();
 
             TaskToUpdate.UpdateTask(taskView);
-            _taskRepository.Update(TaskToUpdate);
+            //_taskRepository.Update(TaskToUpdate);
             return Ok();
         }
     }

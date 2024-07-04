@@ -1,9 +1,10 @@
-﻿using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
 {
-    public class Compras : BaseEntry<Compras>
+    public class Compras : BaseEntry<Compras>, IBaseModel<Compras>
     {
         public int EmployeeId { get; private set; }
         public int ProductId { get; private set; }
@@ -40,6 +41,11 @@ namespace apiEstudo.Domain.Models
                 Value = compra.Value,
                 TransationDate = compra.TransationDate
             };
+        }
+
+        public void UpdateSelf(IBaseViewModel view)
+        {
+            throw new NotImplementedException();
         }
     }
 }

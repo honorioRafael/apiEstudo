@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntry<T>
+    public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntry<T>, IBaseModel<T>
     {
         protected readonly ConnectionContext _context;
         protected readonly DbSet<T> _dbset;
@@ -18,7 +18,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             _dbset = _context.Set<T>();
         }
 
-        public virtual void Add(T classe)
+        public virtual void Create(T classe)
         {
             _context.Add(classe);
             _context.SaveChanges();
@@ -39,9 +39,9 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Find(id);
         }
 
-        public void Update(T classe)
+        public void Update(T classe, IBaseViewModel view)
         {
-
+            classe.UpdateSelf(view);
             _context.Update(classe);
             _context.SaveChanges();
         }

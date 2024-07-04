@@ -6,6 +6,5 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
     public interface IEmployeeRepository : IBaseRepository<Employee>
     {
-        //void Add(Employee employee);
     }
 }

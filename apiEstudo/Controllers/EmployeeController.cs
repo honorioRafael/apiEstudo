@@ -1,4 +1,5 @@
-﻿using apiEstudo.Application.ViewModel;
+﻿using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 using apiEstudo.Infraestrutura;
@@ -13,61 +14,54 @@ namespace apiEstudo.Controllers
     [Route("api/v1/employee")]
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        private readonly IEmployeeTaskRepository _taskRepository;
+        private readonly IEmployeeRepository _employeeRepository; //
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeeTaskRepository taskRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, IEmployeeTaskRepository taskRepository, IEmployeeService employeeService)
         {
             _employeeRepository = employeeRepository;
-            _taskRepository = taskRepository;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
         public IActionResult GetAll()
-        {
-            var employess = _employeeRepository.GetAll();
-            var resp = (from employee in employess select (EmployeeDTO)employee).ToList();
-
-            if (resp == null || resp.Count() == 0) return NotFound();
-            else return Ok(resp);
+        {           
+            var query = _employeeService.GetAll();
+            if (query == null || query.Count() == 0) return NotFound();
+            else return Ok(from item in query select (EmployeeDTO)item);            
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var employee = _employeeRepository.Get(id);
-            var resp = (EmployeeDTO)employee;
+            var query = _employeeService.Get(id);
 
-            if (resp == null) return NotFound();
-            else return Ok(resp);
+            if (query == null) return NotFound();
+            else return Ok((EmployeeDTO)query);
         }
 
         [HttpPost]
         public IActionResult Add(EmployeeViewModel employeeView)
         {
             var employee = new Employee(employeeView.Name, employeeView.Age, employeeView.taskId);
-            _employeeRepository.Add(employee);
+            _employeeRepository.Create(employee);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Edit(int id, EmployeeViewModel employeeView) 
+        public IActionResult Update(int id, EmployeeViewModel employeeView) 
         {
-            var employeeToUpdate = _employeeRepository.Get(id);
-            if (employeeToUpdate == null) return NotFound();
-            
-            employeeToUpdate.UpdateEmployee(employeeView);
-            _employeeRepository.Update(employeeToUpdate);
+            var queryResponse = _employeeService.Update(id, employeeView);
+            if (queryResponse == false) return NotFound();
             return Ok();            
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) 
-        { 
-            var employeeToDelete = _employeeRepository.Get(id);
-            if(employeeToDelete == null) return NotFound();
+        {
+            var QueryResponse = _employeeService.Delete(id);
 
-            _employeeRepository.Delete(employeeToDelete);
+            if(QueryResponse == false) return NotFound();
             return Ok();
         }
     }

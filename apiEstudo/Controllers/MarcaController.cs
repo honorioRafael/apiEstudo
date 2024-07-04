@@ -19,7 +19,7 @@ namespace apiEstudo.Controllers
         public IActionResult Add(string nome)
         {
             var marca = new Marca(nome);
-            _marcaRepository.Add(marca);
+            _marcaRepository.Create(marca);
             return Ok();
         }
 

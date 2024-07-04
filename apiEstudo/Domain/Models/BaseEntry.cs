@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using apiEstudo.Application.ViewModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace apiEstudo.Domain.Models
 {

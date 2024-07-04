@@ -9,7 +9,7 @@ namespace apiEstudo.Domain.Model
         Table para indicar o nome da tabela. Caso na tabela esteja diferente da classe, inserir o da tabela entre ""
      */
     //[Table("Employee")
-    public class Employee : BaseEntry<Employee>
+    public class Employee : BaseEntry<Employee>, IBaseModel<Employee>
     {
         public string? Name { get; private set; }
         public int Age { get; private set; }
@@ -34,11 +34,16 @@ namespace apiEstudo.Domain.Model
         public Employee()
         { }
 
-        public void UpdateEmployee(EmployeeViewModel employeeView)
+        public void UpdateSelf(EmployeeViewModel employeeView)
         {
             Name = employeeView.Name;
             Age = employeeView.Age;
             EmployeeTaskId = employeeView.taskId;
+        }
+
+        public void UpdateSelf(IBaseViewModel view)
+        {
+            throw new NotImplementedException();
         }
 
         public static implicit operator EmployeeDTOSimplified(Employee employee)
