@@ -42,6 +42,11 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Find(id);
         }
 
+        public virtual T? GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual void Update(T classe)
         {
             _context.Update(classe);
@@ -81,5 +86,6 @@ namespace apiEstudo.Infraestrutura.Repositories
         {
             return (from item in entrada select (T)(dynamic)item).ToList();
         }
+
     }
 }

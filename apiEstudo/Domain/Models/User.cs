@@ -7,10 +7,11 @@ namespace apiEstudo.Domain.Models
     {
         public string Name { get; set; }
         public string Password { get; set; }
-        public User(UserViewModel view)
+
+        public User(string name, string password)
         {
-            Name = view.Name;
-            Password = view.Password;
+            Name = name;
+            Password = password;
         }
 
         public User()

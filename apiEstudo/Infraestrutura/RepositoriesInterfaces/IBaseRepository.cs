@@ -12,6 +12,7 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         public void Delete(T classe);
         public List<T>? GetAll();
         public T? Get(int id);
+        public T? GetByName(string name);
         List<T>? GetListByListId(List<int> listId);
     }
 }

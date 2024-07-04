@@ -15,6 +15,7 @@ namespace apiEstudo.Mappings
             modelBuilder.ApplyConfiguration(new MarcaMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new ComprasMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
         }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeTask> Tasks { get; set; }

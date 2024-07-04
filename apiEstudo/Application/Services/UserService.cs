@@ -13,9 +13,21 @@ namespace apiEstudo.Application.Services
         {
         }
 
+        public bool Auth(UserViewModel view)
+        {
+            var UserEntity = _repository.GetByName(view.Name);
+            if (UserEntity == null) return false;
+            if (UserEntity.Password != view.Password) return false;
+
+            return true;
+        }
+
         public bool Create(UserViewModel view)
         {
-            throw new NotImplementedException();
+            if (view == null) return false;
+            var Entity = new User(view.Name, view.Password);
+            _repository.Create(Entity);
+            return true;
         }
     }
 }

@@ -9,5 +9,11 @@ namespace apiEstudo.Infraestrutura.Repositories
     {
         public UserRepository(ConnectionContext context) : base(context)
         { }
+
+        public override User? GetByName(string name)
+        {
+            Console.WriteLine(name.GetType());
+            return _dbset.Where(x => x.Name == name).FirstOrDefault();
+        }
     }
 }
