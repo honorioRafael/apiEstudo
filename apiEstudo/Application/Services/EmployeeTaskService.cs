@@ -1,32 +1,42 @@
-﻿//using apiEstudo.Application.ServicesInterfaces;
-//using apiEstudo.Domain.Models;
-//using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Brand;
+using apiEstudo.Application.Services;
+using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-//namespace apiEstudo.Application.Services
-//{
-//    public class EmployeeTaskService : BaseService<EmployeeTask, IEmployeeTaskRepository, EmployeeTaskDTO>, IEmployeeTaskService
-//    {
-//        public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
-//        { }
-//        public bool Create(EmployeeTaskCreateViewModel view)
-//        {
-//            if (view == null) return false;
-//            var entity = new EmployeeTask(view.Name, view.Description);
-//            _repository.Create(entity);
-//            return true;
-//        }
+namespace apiEstudo.Application
+{
+    public class EmployeeTaskService : BaseService<EmployeeTask, IEmployeeTaskRepository, InputCreateEmployeeTask, InputUpdateEmployeeTask, InputIdentityUpdateEmployeeTask, InputIdentityDeleteEmployeeTask, OutputEmployeeTask>, IEmployeeTaskService
+    {
+        public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
+        { }
 
-//        public bool Update(EmployeeTaskUpdateViewModel view)
-//        {
-//            if (view == null) return false;
-//            var Task = _repository.Get(view.Id);
-//            if (Task == null) return false;
+        public override long Create(InputCreateEmployeeTask inputCreateEmployeeTask)
+        {
+            if (inputCreateEmployeeTask == null) throw new ArgumentNullException();
+            return _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
+        }
 
-//            Task.Name = view.Name;
-//            Task.Description = view.Description;
+        public override long Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
+        {
+            if (inputIdentityUpdateEmployeeTask == null) throw new ArgumentNullException();
+            var originalEmployeeTask = _repository.Get(inputIdentityUpdateEmployeeTask.Id);
+            return _repository.Update(new EmployeeTask(inputIdentityUpdateEmployeeTask.InputUpdate.Name, inputIdentityUpdateEmployeeTask.InputUpdate.Description).LoadInternalData(originalEmployeeTask.Id, originalEmployeeTask.CreationDate, originalEmployeeTask.ChangeDate).SetChangeDate());
+        }
 
-//            _repository.Update(Task);
-//            return true;
-//        }
-//    }
-//}
+        //public bool Update(EmployeeTaskUpdateViewModel view)
+        //{
+        //    if (view == null) return false;
+        //    var Task = _repository.Get(view.Id);
+        //    if (Task == null) return false;
+
+        //    Task.Name = view.Name;
+        //    Task.Description = view.Description;
+
+        //    _repository.Update(Task);
+        //    return true;
+        //}
+    }
+}

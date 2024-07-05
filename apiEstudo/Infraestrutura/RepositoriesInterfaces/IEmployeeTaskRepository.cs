@@ -1,8 +1,9 @@
-﻿//using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.Models;
+using System.Formats.Tar;
 
-//namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
-//{
-//    public interface IEmployeeTaskRepository : IBaseRepository<EmployeeTask, EmployeeTaskDTO>
-//    {
-//    }
-//}
+namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
+{
+    public interface IEmployeeTaskRepository : IBaseRepository<EmployeeTask>
+    {
+    }
+}

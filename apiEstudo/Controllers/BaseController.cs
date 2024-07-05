@@ -45,6 +45,10 @@ namespace apiEstudo.Controllers
                 return Ok(_service.Create(inputCreate));
             }
             //Exceptions customizadas / tratativas
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -60,6 +64,10 @@ namespace apiEstudo.Controllers
                 return Ok(_service.Update(inputIdentityUpdate));
             }
             //Exceptions customizadas / tratativas
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -71,7 +79,12 @@ namespace apiEstudo.Controllers
         {
             try
             {
-                return Ok(_service.Delete(inputIdentityDelete));
+                _service.Delete(inputIdentityDelete);
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
             }
             //Exceptions customizadas / tratativas
             catch (Exception ex)

@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
 {
@@ -15,9 +16,9 @@ namespace apiEstudo.Domain.Models
             CreationDate = DateTime.Now;
         }
 
-        //public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)
-        //{
-        //    return employeeTask == null ? default : new EmployeeTaskDTO { Name = employeeTask.Name, Description = employeeTask.Description };
-        //}
+        public static implicit operator OutputEmployeeTask(EmployeeTask employeeTask)
+        {
+            return employeeTask == null ? default : new OutputEmployeeTask(employeeTask.Name, employeeTask.Description).LoadInternalData(employeeTask.Id, employeeTask.CreationDate, employeeTask.ChangeDate);
+        }
     }
 }

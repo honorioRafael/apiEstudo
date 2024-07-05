@@ -3,8 +3,17 @@
     public abstract class BaseEntry<TEntry> where TEntry : BaseEntry<TEntry>
     {
         public int Id { get; protected set; }
-        public DateTime CreationDate { get; protected set; }
+        public DateTime? CreationDate { get; protected set; }
         public DateTime? ChangeDate { get; set; }
+
+        public TEntry LoadInternalData(int id, DateTime? creationDate, DateTime? changeDate)
+        {
+            Id = id;
+            CreationDate = creationDate;
+            ChangeDate = changeDate;
+
+            return (TEntry)this;
+        }
 
         public TEntry SetCreationDate()
         {

@@ -16,8 +16,7 @@ namespace apiEstudo.Application.Services
             if (inputCreateBrand == null)
                 throw new ArgumentNullException();
 
-            var entry = new Brand(inputCreateBrand.Name, default);
-            return _repository.Create(entry);
+            return _repository.Create(new Brand(inputCreateBrand.Name));
         }
 
         public override long Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
@@ -25,8 +24,10 @@ namespace apiEstudo.Application.Services
             if (inputIdentityUpdateBrand == null)
                 throw new ArgumentNullException();
 
-            var entry = new Brand(inputIdentityUpdateBrand.InputUpdate.Name, default);
-            return _repository.Update(entry);
+            var originalBrand = _repository.Get(inputIdentityUpdateBrand.Id);
+            if(originalBrand == null) throw new ArgumentNullException();
+            //var entry = ;
+            return _repository.Update(new Brand(inputIdentityUpdateBrand.InputUpdate.Name).LoadInternalData(originalBrand.Id, originalBrand.CreationDate, originalBrand.ChangeDate).SetChangeDate());
         }
     }
 }

@@ -37,7 +37,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public virtual TEntry? Get(int id)
         {
-            return _dbset.Find(id);
+            return _dbset.Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
         }
 
         public virtual TEntry? GetByName(string name)
@@ -47,7 +47,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public virtual long Update(TEntry entry)
         {
-            _context.Update(entry.SetChangeDate());
+            _context.Update(entry);
             _context.SaveChanges();
 
             return entry.Id;

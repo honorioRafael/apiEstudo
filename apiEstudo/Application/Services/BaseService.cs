@@ -48,9 +48,11 @@ namespace apiEstudo.Application.Services
             throw new NotImplementedException();
         }
 
-        public virtual bool Delete(TInputIdentityDelete inputIdentityDelete)
+        public virtual void Delete(TInputIdentityDelete inputIdentityDelete)
         {
-            throw new NotImplementedException();
+            var ToBeDeleted = _repository.Get(inputIdentityDelete.Id);
+            if (ToBeDeleted == null) throw new ArgumentNullException();
+            _repository.Delete(ToBeDeleted);
         }
 
         internal TOutput EntryToOutput(TEntry entrada)

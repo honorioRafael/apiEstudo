@@ -13,7 +13,7 @@ namespace apiEstudo.Application.ServicesInterfaces
     {
         public long Create(TInputCreate inputCreate);
         public long Update(TInputIdentityUpdate inputIdentityUpdate);
-        public bool Delete(TInputIdentityDelete inputIdentityDelete);
+        public void Delete(TInputIdentityDelete inputIdentityDelete);
         public List<TOutput>? GetAll();
         public TOutput? Get(int id);
         List<TOutput>? GetListByListId(List<int> listId);
