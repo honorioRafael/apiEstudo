@@ -19,10 +19,10 @@ namespace apiEstudo.Application.Services
             return true;
         }
 
-        public bool Update(int id, EmployeeTaskCreateViewModel view)
+        public bool Update(EmployeeTaskUpdateViewModel view)
         {
             if (view == null) return false;
-            var Task = _repository.Get(id);
+            var Task = _repository.Get(view.Id);
             if (Task == null) return false;
 
             Task.Name = view.Name;

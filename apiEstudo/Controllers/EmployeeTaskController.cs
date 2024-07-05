@@ -21,7 +21,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(EmployeeTaskCreateViewModel view)
+        public IActionResult Create(EmployeeTaskCreateViewModel view)
         {
             var QueryResponse = _taskService.Create(view);
             if(!QueryResponse) return NotFound();
@@ -45,10 +45,10 @@ namespace apiEstudo.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, EmployeeTaskCreateViewModel taskView)
+        [HttpPut]
+        public IActionResult Update(EmployeeTaskUpdateViewModel taskView)
         { 
-            var QueryResponse = _taskService.Update(id, taskView);
+            var QueryResponse = _taskService.Update(taskView);
             if (!QueryResponse) return NotFound();
             return Ok();
         }

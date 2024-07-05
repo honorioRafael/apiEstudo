@@ -3,7 +3,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.ViewModelInterfaces.IProductViewModel
 {
-    public interface IProductCreateViewModel : IBaseCreateViewModel<Product>
+    public interface IProductUpdateViewModel : IBaseUpdateViewModel<Product>
     {
     }
 }

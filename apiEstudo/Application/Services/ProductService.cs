@@ -22,10 +22,10 @@ namespace apiEstudo.Application.Services
             return true;
         }
 
-        public bool Update(int id, ProductCreateViewModel view)
+        public bool Update(ProductUpdateViewModel view)
         {
             if (view == null) return false;
-            Product item = _repository.Get(id);
+            Product item = _repository.Get(view.Id);
             if (item == null) return false;
 
             item.Name = view.Name;

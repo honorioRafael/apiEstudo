@@ -3,7 +3,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.ViewModelInterfaces.IBrandViewModel
 {
-    public interface IBrandCreateViewModel : IBaseCreateViewModel<Brand>
+    public interface IBrandUpdateViewModel : IBaseUpdateViewModel<Brand>
     {
     }
 }

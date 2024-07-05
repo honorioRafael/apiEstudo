@@ -46,10 +46,10 @@ namespace apiEstudo.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, EmployeeCreateViewModel employeeView) 
+        [HttpPut]
+        public IActionResult Update(EmployeeUpdateViewModel employeeView) 
         {
-            var QueryResponse = _employeeService.Update(id, employeeView);
+            var QueryResponse = _employeeService.Update(employeeView);
             if (QueryResponse == false) return NotFound();
             return Ok();            
         }

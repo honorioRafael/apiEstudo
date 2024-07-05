@@ -37,10 +37,10 @@ namespace apiEstudo.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, ProductCreateViewModel productView)
+        [HttpPut]
+        public IActionResult Update(ProductUpdateViewModel productView)
         {
-            var QueryResponse = _productService.Update(id, productView);
+            var QueryResponse = _productService.Update(productView);
             if(!QueryResponse) return NotFound();
             return Ok();
         }

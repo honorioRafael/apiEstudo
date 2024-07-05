@@ -7,6 +7,6 @@ namespace apiEstudo.Application.ServicesInterfaces
     public interface IProductService : IBaseService<Product, ProductDTO>
     {
         public bool Create(ProductCreateViewModel viewModel);
-        public bool Update(int id, ProductCreateViewModel viewModel);
+        public bool Update(ProductUpdateViewModel viewModel);
     }
 }

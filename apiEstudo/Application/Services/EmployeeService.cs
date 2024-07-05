@@ -13,10 +13,10 @@ namespace apiEstudo.Application.Services
          public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository) 
         { }
         
-        public bool Update(int id, EmployeeCreateViewModel view)
+        public bool Update(EmployeeUpdateViewModel view)
         {
             if (view == null) return false;
-            var employee = _repository.Get(id);
+            var employee = _repository.Get(view.Id);
             if (employee == null) return false;
 
             employee.Name = view.Name;

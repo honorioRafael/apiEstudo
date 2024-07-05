@@ -34,7 +34,7 @@ namespace apiEstudo.Application.Services
             return OutputToDTO(query);
         }
 
-        public virtual bool Update(int id, BaseCreateViewModel<T> view)
+        public virtual bool Update(int id, BaseUpdateViewModel<T> view)
         {
             throw new NotImplementedException();
         }

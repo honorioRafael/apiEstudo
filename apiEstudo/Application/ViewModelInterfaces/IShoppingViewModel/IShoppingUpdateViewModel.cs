@@ -3,7 +3,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.ViewModelInterfaces.IShoppingViewModel
 {
-    public interface IShoppingCreateViewModel : IBaseCreateViewModel<User>
+    public interface IShoppingUpdateViewModel : IBaseUpdateViewModel<Shopping>
     {
     }
 }

@@ -3,6 +3,7 @@ using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Application.ViewModelInterfaces.IEmployeeViewModel
 {
-    public interface IEmployeeCreateViewModel : IBaseCreateViewModel<Employee>
-    { }
+    public interface IEmployeeUpdateViewModel : IBaseUpdateViewModel<Employee>
+    {
+    }
 }

@@ -7,7 +7,7 @@ namespace apiEstudo.Application.ServicesInterfaces
 {
     public interface IEmployeeTaskService : IBaseService<EmployeeTask, EmployeeTaskDTO>
     {
-        public bool Update(int id, EmployeeTaskCreateViewModel view);
+        public bool Update(EmployeeTaskUpdateViewModel view);
         public bool Create(EmployeeTaskCreateViewModel view);
     }
 }

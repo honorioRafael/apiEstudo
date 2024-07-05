@@ -2,7 +2,8 @@
 
 namespace apiEstudo.Application.ViewModelInterfaces.IBaseUpdateViewModel
 {
-    public interface IBaseCreateViewModel<T> where T : IBaseModel<T>
+    public interface IBaseUpdateViewModel<T> where T : IBaseModel<T>
     {
+        //public int Id { get; set; }
     }
 }
