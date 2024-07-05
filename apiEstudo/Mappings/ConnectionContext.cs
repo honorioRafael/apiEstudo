@@ -12,15 +12,15 @@ namespace apiEstudo.Mappings
         {
             modelBuilder.ApplyConfiguration(new EmployeeMap());
             modelBuilder.ApplyConfiguration(new EmployeeTaskMap());
-            modelBuilder.ApplyConfiguration(new MarcaMap());
+            modelBuilder.ApplyConfiguration(new BrandMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
-            modelBuilder.ApplyConfiguration(new ComprasMap());
+            modelBuilder.ApplyConfiguration(new ShoppingMap());
             modelBuilder.ApplyConfiguration(new UserMap());
         }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeTask> Tasks { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Marca> Marcas { get; set; }
-        public DbSet<Compras> Compras { get; set; }
+        public DbSet<Brand> Marcas { get; set; }
+        public DbSet<Shopping> Compras { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.EmployeeViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 using apiEstudo.Infraestrutura;
@@ -11,7 +11,7 @@ namespace apiEstudo.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/v1/employee")]
+    [Route("api/v1/Employee")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
@@ -39,7 +39,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(EmployeeViewModel employeeView)
+        public IActionResult Add(EmployeeCreateViewModel employeeView)
         {
             var QueryResponse = _employeeService.Create(employeeView);
             if (!QueryResponse) return NotFound();
@@ -47,7 +47,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, EmployeeViewModel employeeView) 
+        public IActionResult Update(int id, EmployeeCreateViewModel employeeView) 
         {
             var QueryResponse = _employeeService.Update(id, employeeView);
             if (QueryResponse == false) return NotFound();

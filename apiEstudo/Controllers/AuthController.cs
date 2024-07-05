@@ -2,8 +2,8 @@
 using apiEstudo.Domain.Model;
 using apiEstudo.Application.Services;
 using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.Models;
+using apiEstudo.Application.ViewModel.UserViewModel;
 
 namespace apiEstudo.Controllers
 {
@@ -18,8 +18,8 @@ namespace apiEstudo.Controllers
             _userService = userService;
         }
 
-        [HttpPost("/NewUser")]
-        public IActionResult Create(UserViewModel view)
+        [HttpPost]
+        public IActionResult Create(UserCreateViewModel view)
         {
             try
             {
@@ -34,10 +34,14 @@ namespace apiEstudo.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPost("/Login")]
-        public IActionResult Auth(UserViewModel view)
+        [HttpPost("Login")]
+        public IActionResult Auth(UserCreateViewModel view)
         {
             try
             {
@@ -54,7 +58,11 @@ namespace apiEstudo.Controllers
             catch (WrongPasswordException ex)
             {
                 return BadRequest(ex.Message);
-            }           
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.ProductViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.Repositories;
@@ -13,7 +13,7 @@ namespace apiEstudo.Application.Services
         public ProductService(IProductRepository contextInterface) : base(contextInterface)
         { }
 
-        public bool Create(ProductViewModel view)
+        public bool Create(ProductCreateViewModel view)
         {
             if (view == null) return false;
 
@@ -22,7 +22,7 @@ namespace apiEstudo.Application.Services
             return true;
         }
 
-        public bool Update(int id, ProductViewModel view)
+        public bool Update(int id, ProductCreateViewModel view)
         {
             if (view == null) return false;
             Product item = _repository.Get(id);

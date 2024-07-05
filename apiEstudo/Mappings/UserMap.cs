@@ -9,9 +9,11 @@ namespace apiEstudo.Mappings
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("users");
-            builder.Property(x => x.Id).HasColumnName("id");
+            builder.HasKey(x => x.Id).HasName("id");
             builder.Property(x => x.Name).HasColumnName("name");
+            builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Password).HasColumnName("password");
+            builder.Property(x => x.Password).IsRequired();
         }
     }
 }

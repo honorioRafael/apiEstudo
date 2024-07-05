@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.EmployeeTaskViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
@@ -21,7 +21,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(EmployeeTaskViewModel view)
+        public IActionResult Add(EmployeeTaskCreateViewModel view)
         {
             var QueryResponse = _taskService.Create(view);
             if(!QueryResponse) return NotFound();
@@ -46,7 +46,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, EmployeeTaskViewModel taskView)
+        public IActionResult Update(int id, EmployeeTaskCreateViewModel taskView)
         { 
             var QueryResponse = _taskService.Update(id, taskView);
             if (!QueryResponse) return NotFound();

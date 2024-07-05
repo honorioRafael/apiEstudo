@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.UserViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
@@ -13,7 +13,7 @@ namespace apiEstudo.Application.Services
         {
         }
 
-        public User? Auth(UserViewModel view)
+        public User? Auth(UserCreateViewModel view)
         {
             var UserEntity = _repository.GetByName(view.Name);
             if (UserEntity == null) throw new ArgumentNullException();
@@ -22,7 +22,7 @@ namespace apiEstudo.Application.Services
             return UserEntity;
         }
 
-        public void Create(UserViewModel view)
+        public void Create(UserCreateViewModel view)
         {
             if (view == null) throw new ArgumentNullException();
             User? UserBeingUsed = _repository.GetByName(view.Name);

@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.EmployeeViewModel;
 using apiEstudo.Application.ViewModelInterfaces;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
@@ -13,7 +13,7 @@ namespace apiEstudo.Application.Services
          public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository) 
         { }
         
-        public bool Update(int id, EmployeeViewModel view)
+        public bool Update(int id, EmployeeCreateViewModel view)
         {
             if (view == null) return false;
             var employee = _repository.Get(id);
@@ -28,7 +28,7 @@ namespace apiEstudo.Application.Services
 
         }
 
-        public bool Create(EmployeeViewModel View)
+        public bool Create(EmployeeCreateViewModel View)
         {
             if (View == null) return false;
 

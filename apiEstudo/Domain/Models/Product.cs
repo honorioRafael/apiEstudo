@@ -11,11 +11,11 @@ namespace apiEstudo.Domain.Models
         public string Name { get; set; }
         public int Quantity { get; set; }
         public int BrandId { get; set; }
-        public virtual Marca Brand { get; private set; }
+        public virtual Brand Brand { get; private set; }
 
         public Product() { }
         
-        public Product(string name, int quantity, int brandId, Marca brand)
+        public Product(string name, int quantity, int brandId, Brand brand)
         {
             Name = name;
             Quantity = quantity;

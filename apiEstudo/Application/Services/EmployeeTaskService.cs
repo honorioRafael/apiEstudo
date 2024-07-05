@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.EmployeeTaskViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.Repositories;
@@ -11,7 +11,7 @@ namespace apiEstudo.Application.Services
     {
         public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
         { }
-        public bool Create(EmployeeTaskViewModel view)
+        public bool Create(EmployeeTaskCreateViewModel view)
         {
             if (view == null) return false;
             var entity = new EmployeeTask(view.Name, view.Description);
@@ -19,7 +19,7 @@ namespace apiEstudo.Application.Services
             return true;
         }
 
-        public bool Update(int id, EmployeeTaskViewModel view)
+        public bool Update(int id, EmployeeTaskCreateViewModel view)
         {
             if (view == null) return false;
             var Task = _repository.Get(id);

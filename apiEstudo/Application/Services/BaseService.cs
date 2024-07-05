@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.BaseViewModel;
 using apiEstudo.Application.ViewModelInterfaces;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
@@ -34,12 +34,12 @@ namespace apiEstudo.Application.Services
             return OutputToDTO(query);
         }
 
-        public virtual bool Update(int id, BaseViewModel<T> view)
+        public virtual bool Update(int id, BaseCreateViewModel<T> view)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool Create(BaseViewModel<T> view)
+        public virtual bool Create(BaseCreateViewModel<T> view)
         {
             throw new NotImplementedException();
         }

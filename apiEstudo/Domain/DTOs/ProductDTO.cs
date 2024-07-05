@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
-        public MarcaDTO Brand { get; set; }
+        public BrandDTO Brand { get; set; }
     }
 
     public class ProductDTOSimplified

@@ -9,10 +9,12 @@ namespace apiEstudo.Mappings
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("produtos");
-            builder.Property(x => x.Id).HasColumnName("id");
+            builder.HasKey(x => x.Id).HasName("id");
             builder.Property(x => x.Name).HasColumnName("name");
+            builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Quantity).HasColumnName("quantity");
             builder.Property(x => x.BrandId).HasColumnName("brandid");
+            builder.Property(x => x.BrandId).IsRequired();
         }
     }
 }

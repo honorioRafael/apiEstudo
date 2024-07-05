@@ -1,5 +1,5 @@
 ﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
+using apiEstudo.Application.ViewModel.ProductViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
@@ -11,7 +11,7 @@ namespace apiEstudo.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/v1/product")]
+    [Route("api/v1/Product")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -22,7 +22,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ProductViewModel productView)
+        public IActionResult Create(ProductCreateViewModel productView)
         {
             var QueryResponse = _productService.Create(productView);
             if(!QueryResponse) return NotFound();
@@ -38,7 +38,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ProductViewModel productView)
+        public IActionResult Update(int id, ProductCreateViewModel productView)
         {
             var QueryResponse = _productService.Update(id, productView);
             if(!QueryResponse) return NotFound();
