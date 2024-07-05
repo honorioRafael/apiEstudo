@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace apiEstudo.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/v1/employee")]
     public class EmployeeController : ControllerBase
     {

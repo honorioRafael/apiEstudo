@@ -3,6 +3,7 @@ using apiEstudo.Domain.Model;
 using apiEstudo.Application.Services;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Application.ViewModel;
+using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Controllers
 {
@@ -20,23 +21,40 @@ namespace apiEstudo.Controllers
         [HttpPost("/NewUser")]
         public IActionResult Create(UserViewModel view)
         {
-            var QueryResponse = _userService.Create(view);
-            if (!QueryResponse) return NotFound();
-            return Ok();
+            try
+            {
+                _userService.Create(view);
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
+            }
+            catch (NameInUseException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("/Login")]
         public IActionResult Auth(UserViewModel view)
         {
-            var QueryResponse = _userService.Auth(view);
-            
-            if(QueryResponse)
+            try
             {
-                var token = TokenService.GenerateToken(new Employee());
-                return Ok(token);
-            }
+                User? UserAccount = _userService.Auth(view);
 
-            return BadRequest("Usuário ou senha invalido.");
+                var token = TokenService.GenerateToken(UserAccount);
+                return Ok(token);
+                
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
+            }
+            catch (WrongPasswordException ex)
+            {
+                return BadRequest(ex.Message);
+            }           
         }
     }
 }

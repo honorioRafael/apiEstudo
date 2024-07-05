@@ -2,11 +2,13 @@
 using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/marca")]
     public class MarcaController : ControllerBase
     {         

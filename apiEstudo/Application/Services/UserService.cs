@@ -13,21 +13,35 @@ namespace apiEstudo.Application.Services
         {
         }
 
-        public bool Auth(UserViewModel view)
+        public User? Auth(UserViewModel view)
         {
             var UserEntity = _repository.GetByName(view.Name);
-            if (UserEntity == null) return false;
-            if (UserEntity.Password != view.Password) return false;
+            if (UserEntity == null) throw new ArgumentNullException();
+            if (UserEntity.Password != view.Password) throw new WrongPasswordException("A senha informada é inválida");
 
-            return true;
+            return UserEntity;
         }
 
-        public bool Create(UserViewModel view)
+        public void Create(UserViewModel view)
         {
-            if (view == null) return false;
+            if (view == null) throw new ArgumentNullException();
+            User? UserBeingUsed = _repository.GetByName(view.Name);
+            if(UserBeingUsed != null) throw new NameInUseException("O nome de usuário ja está em uso!");
+
             var Entity = new User(view.Name, view.Password);
             _repository.Create(Entity);
-            return true;
         }
+    }
+
+    public class NameInUseException : Exception
+    {
+        public NameInUseException(string message) : base(message)
+        { }
+    }
+
+    public class WrongPasswordException : Exception
+    {
+        public WrongPasswordException(string message) : base(message)
+        { }
     }
 }

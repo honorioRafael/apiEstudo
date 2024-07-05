@@ -1,4 +1,4 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,14 +8,14 @@ namespace apiEstudo.Application.Services
 {
     public class TokenService
     {
-        public static object GenerateToken(Employee employee)
+        public static object GenerateToken(User user)
         {
             var key = Encoding.ASCII.GetBytes(Key.Secret);
             var tokenConfig = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("employeeId", employee.Id.ToString()),
+                    new Claim("userId", user.Id.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

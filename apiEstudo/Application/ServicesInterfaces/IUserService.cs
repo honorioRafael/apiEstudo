@@ -6,7 +6,7 @@ namespace apiEstudo.Application.ServicesInterfaces
 {
     public interface IUserService : IBaseService<User, UserDTO>
     {
-        public bool Create(UserViewModel view);
-        public bool Auth(UserViewModel view);
+        public void Create(UserViewModel view);
+        public User? Auth(UserViewModel view);
     }
 }

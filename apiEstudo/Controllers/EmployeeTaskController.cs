@@ -3,12 +3,13 @@ using apiEstudo.Application.ViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/v1/Task")]
     public class EmployeeTaskController : ControllerBase
     {
