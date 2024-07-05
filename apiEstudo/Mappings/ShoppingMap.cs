@@ -25,7 +25,7 @@ namespace apiEstudo.Mappings
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.Product)
-                .WithMany(p => p.Shoppings)
+                .WithMany(p => p.ListShopping)
                 .HasForeignKey(p => p.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

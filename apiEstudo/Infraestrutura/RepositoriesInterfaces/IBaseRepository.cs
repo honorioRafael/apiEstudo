@@ -1,18 +1,16 @@
-﻿using apiEstudo.Application.ViewModel;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Infraestrutura;
-using Microsoft.EntityFrameworkCore;
+﻿using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IBaseRepository<T, TDTO> where TDTO : IBaseDTO<TDTO>
+    public interface IBaseRepository<TEntry>
+        where TEntry : BaseEntry<TEntry>
     {
-        public void Create(T classe);
-        public void Update(T classe);
-        public void Delete(T classe);
-        public List<T>? GetAll();
-        public T? Get(int id);
-        public T? GetByName(string name);
-        List<T>? GetListByListId(List<int> listId);
+        public long Create(TEntry classe);
+        public long Update(TEntry classe);
+        public bool Delete(TEntry classe);
+        public List<TEntry>? GetAll();
+        public TEntry? Get(int id);
+        public TEntry? GetByName(string name);
+        List<TEntry>? GetListByListId(List<int> listId);
     }
 }

@@ -1,25 +1,23 @@
-﻿using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Model;
-using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.RepositoriesInterfaces;
-using apiEstudo.Mappings;
-using Microsoft.EntityFrameworkCore;
+﻿//using apiEstudo.Domain.Model;
+//using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+//using apiEstudo.Mappings;
+//using Microsoft.EntityFrameworkCore;
 
-namespace apiEstudo.Infraestrutura.Repositories
-{
-    public class EmployeeRepository : BaseRepository<Employee, EmployeeDTO>, IEmployeeRepository
-    {
-        public EmployeeRepository(ConnectionContext contexto) : base(contexto) 
-        { }
-        
-        public override List<Employee>? GetAll()
-        {
-            return _dbset.Include(x => x.EmployeeTask).ToList();
-        }
+//namespace apiEstudo.Infraestrutura.Repositories
+//{
+//    public class EmployeeRepository : BaseRepository<Employee, EmployeeDTO>, IEmployeeRepository
+//    {
+//        public EmployeeRepository(ConnectionContext contexto) : base(contexto)
+//        { }
 
-        public override Employee? Get(int id)
-        {
-            return _dbset.Include(x => x.EmployeeTask).Where(x => x.Id == id).FirstOrDefault();
-        }
-    }  
-}
+//        public override List<Employee>? GetAll()
+//        {
+//            return _dbset.Include(x => x.EmployeeTask).ToList();
+//        }
+
+//        public override Employee? Get(int id)
+//        {
+//            return _dbset.Include(x => x.EmployeeTask).Where(x => x.Id == id).FirstOrDefault();
+//        }
+//    }
+//}

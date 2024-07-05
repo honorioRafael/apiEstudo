@@ -1,10 +1,8 @@
-﻿using apiEstudo.Application.ViewModel;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
 {
-    public class Shopping : BaseEntry<Shopping>, IBaseModel<Shopping>
+    public class Shopping : BaseEntry<Shopping>
     {
         public int EmployeeId { get; private set; }
         public int ProductId { get; private set; }
@@ -22,19 +20,19 @@ namespace apiEstudo.Domain.Models
             TransationDate = transationDate;
             Value = value;
             Employee = employee;
-            Product = product;       
-            CreationDate = DateTime.Now;
+            Product = product;
         }
-        
-        public static implicit operator ShoppingDTO(Shopping compra)
-        {
-            return compra == null ? default : new ShoppingDTO {               
-                Id = compra.Id,
-                Employee = (EmployeeDTOSimplified)compra.Employee,
-                Product = (ProductDTOSimplified)compra.Product,
-                Value = compra.Value,
-                TransationDate = compra.TransationDate
-            };
-        }
+
+        //public static implicit operator ShoppingDTO(Shopping compra)
+        //{
+        //    return compra == null ? default : new ShoppingDTO
+        //    {
+        //        Id = compra.Id,
+        //        Employee = (EmployeeDTOSimplified)compra.Employee,
+        //        Product = (ProductDTOSimplified)compra.Product,
+        //        Value = compra.Value,
+        //        TransationDate = compra.TransationDate
+        //    };
+        //}
     }
 }

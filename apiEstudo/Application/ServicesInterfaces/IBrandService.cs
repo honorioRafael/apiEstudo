@@ -1,12 +1,7 @@
-﻿using apiEstudo.Application.ViewModel.BrandViewModel;
-using apiEstudo.Application.ViewModelInterfaces;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Brand;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
-    public interface IBrandService : IBaseService<Brand, BrandDTO>
-    {
-        public bool Create(BrandCreateViewModel view);
-    }
+    public interface IBrandService : IBaseService<InputCreateBrand, InputUpdateBrand, InputIdentityUpdateBrand, InputIdentityDeleteBrand, OutputBrand> { }
 }

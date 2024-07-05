@@ -1,7 +1,6 @@
 using apiEstudo;
 using apiEstudo.Application.Services;
 using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel;
 using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
@@ -25,10 +24,10 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-        //c.OperationFilter<SwaggerDefaultValues>();
+            //c.OperationFilter<SwaggerDefaultValues>();
 
-        // Swagger config
-        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            // Swagger config
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Name = "Authorization",
                 In = ParameterLocation.Header,
@@ -57,24 +56,24 @@ internal class Program
         });
 
         // DataBase Context
-        builder.Services.AddDbContext<ConnectionContext>(x => 
+        builder.Services.AddDbContext<ConnectionContext>(x =>
         x.UseSqlServer("Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"));
 
         // Repositories
-        builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-        builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
-        builder.Services.AddTransient<IProductRepository, ProductRepository>();
+        //builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+        //builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
+        //builder.Services.AddTransient<IProductRepository, ProductRepository>();
         builder.Services.AddTransient<IBrandRepository, BrandRepository>();
-        builder.Services.AddTransient<IShoppingRepository, ShoppingRepository>();
-        builder.Services.AddTransient<IUserRepository, UserRepository>();
+        //builder.Services.AddTransient<IShoppingRepository, ShoppingRepository>();
+        //builder.Services.AddTransient<IUserRepository, UserRepository>();
 
         // Services
-        builder.Services.AddTransient<IEmployeeService, EmployeeService>();
-        builder.Services.AddTransient<IEmployeeTaskService, EmployeeTaskService>();
+        //builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+        //builder.Services.AddTransient<IEmployeeTaskService, EmployeeTaskService>();
         builder.Services.AddTransient<IBrandService, BrandService>();
-        builder.Services.AddTransient<IProductService, ProductService>();
-        builder.Services.AddTransient<IShoppingService, ShoppingService>();
-        builder.Services.AddTransient<IUserService, UserService>();
+        //builder.Services.AddTransient<IProductService, ProductService>();
+        //builder.Services.AddTransient<IShoppingService, ShoppingService>();
+        //builder.Services.AddTransient<IUserService, UserService>();
 
         // JWT Token
         var key = Encoding.ASCII.GetBytes(Key.Secret);
@@ -103,7 +102,7 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();

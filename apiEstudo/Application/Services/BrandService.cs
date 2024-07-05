@@ -1,23 +1,32 @@
-﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel.BrandViewModel;
-using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Brand;
+using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class BrandService : BaseService<Brand, IBrandRepository, BrandDTO>, IBrandService
+    public class BrandService : BaseService<Brand, IBrandRepository, InputCreateBrand, InputUpdateBrand, InputIdentityUpdateBrand, InputIdentityDeleteBrand, OutputBrand>, IBrandService
     {
         public BrandService(IBrandRepository contextInterface) : base(contextInterface)
         { }
 
-        public bool Create(BrandCreateViewModel view)
+        public override long Create(InputCreateBrand inputCreateBrand)
         {
-            if (view == null) return false;
+            if (inputCreateBrand == null)
+                throw new ArgumentNullException();
 
-            var entity = new Brand(view.Name);
-            _repository.Create(entity);
-            return true;
+            var entry = new Brand(inputCreateBrand.Name, default);
+            return _repository.Create(entry);
+        }
+
+        public override long Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
+        {
+            if (inputIdentityUpdateBrand == null)
+                throw new ArgumentNullException();
+
+            var entry = new Brand(inputIdentityUpdateBrand.InputUpdate.Name, default);
+            return _repository.Update(entry);
         }
     }
 }

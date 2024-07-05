@@ -9,6 +9,7 @@ namespace apiEstudo.Mappings
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("produtos");
+
             builder.HasKey(x => x.Id).HasName("id");
             builder.Property(x => x.Name).HasColumnName("name");
             builder.Property(x => x.Name).IsRequired();
@@ -19,7 +20,7 @@ namespace apiEstudo.Mappings
 
             builder.Property(x => x.BrandId).IsRequired();
             builder.HasOne(x => x.Brand)
-                   .WithMany(p => p.Products)
+                   .WithMany(p => p.ListProduct)
                    .HasForeignKey(p => p.BrandId)
                    .OnDelete(DeleteBehavior.Restrict);
         }

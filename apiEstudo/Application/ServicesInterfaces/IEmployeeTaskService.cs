@@ -1,13 +1,10 @@
-﻿using apiEstudo.Application.ViewModel.EmployeeTaskViewModel;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+﻿//using apiEstudo.Domain.Models;
 
-namespace apiEstudo.Application.ServicesInterfaces
-{
-    public interface IEmployeeTaskService : IBaseService<EmployeeTask, EmployeeTaskDTO>
-    {
-        public bool Update(EmployeeTaskUpdateViewModel view);
-        public bool Create(EmployeeTaskCreateViewModel view);
-    }
-}
+//namespace apiEstudo.Application.ServicesInterfaces
+//{
+//    public interface IEmployeeTaskService : IBaseService<EmployeeTask, EmployeeTaskDTO>
+//    {
+//        public bool Update(EmployeeTaskUpdateViewModel view);
+//        public bool Create(EmployeeTaskCreateViewModel view);
+//    }
+//}

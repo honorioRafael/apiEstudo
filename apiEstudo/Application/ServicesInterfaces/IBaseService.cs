@@ -1,16 +1,21 @@
-﻿using apiEstudo.Application.ViewModel.BaseViewModel;
-using apiEstudo.Application.ViewModelInterfaces;
-using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Base;
+using apiEstudo.Application.Arguments.BaseViewModel;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
-    public interface IBaseService<T, TDTO> where T : IBaseModel<T>
+    public interface IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
+        where TInputCreate : BaseInputCreate<TInputCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
+        where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
+        where TOutput : BaseOutput<TOutput>
     {
-        public abstract bool Create(BaseCreateViewModel<T> view);
-        public abstract bool Update(int id, BaseUpdateViewModel<T> view);
-        public bool Delete(int id);
-        public List<TDTO>? GetAll();
-        public TDTO? Get(int id);
-        List<TDTO>? GetListByListId(List<int> listId);
+        public long Create(TInputCreate inputCreate);
+        public long Update(TInputIdentityUpdate inputIdentityUpdate);
+        public bool Delete(TInputIdentityDelete inputIdentityDelete);
+        public List<TOutput>? GetAll();
+        public TOutput? Get(int id);
+        List<TOutput>? GetListByListId(List<int> listId);
     }
 }

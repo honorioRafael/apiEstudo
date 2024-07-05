@@ -1,24 +1,21 @@
-﻿using apiEstudo.Application.ViewModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace apiEstudo.Domain.Models
+﻿namespace apiEstudo.Domain.Models
 {
-    public abstract class BaseEntry<T> where T : BaseEntry<T>
+    public abstract class BaseEntry<TEntry> where TEntry : BaseEntry<TEntry>
     {
         public int Id { get; protected set; }
-        public DateTime? CreationDate { get; protected set; }
+        public DateTime CreationDate { get; protected set; }
         public DateTime? ChangeDate { get; set; }
 
-        public T SetCreationDate() 
+        public TEntry SetCreationDate()
         {
             CreationDate = DateTime.Now;
-            return (T)this;
+            return (TEntry)this;
         }
 
-        public T SetChangeDate() 
+        public TEntry SetChangeDate()
         {
             ChangeDate = DateTime.Now;
-            return (T)this; 
+            return (TEntry)this;
         }
     }
 }

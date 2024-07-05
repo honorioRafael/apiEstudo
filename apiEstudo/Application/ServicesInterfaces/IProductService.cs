@@ -1,12 +1,10 @@
-﻿using apiEstudo.Application.ViewModel.ProductViewModel;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Models;
+﻿//using apiEstudo.Domain.Models;
 
-namespace apiEstudo.Application.ServicesInterfaces
-{
-    public interface IProductService : IBaseService<Product, ProductDTO>
-    {
-        public bool Create(ProductCreateViewModel viewModel);
-        public bool Update(ProductUpdateViewModel viewModel);
-    }
-}
+//namespace apiEstudo.Application.ServicesInterfaces
+//{
+//    public interface IProductService : IBaseService<Product, ProductDTO>
+//    {
+//        public bool Create(ProductCreateViewModel viewModel);
+//        public bool Update(ProductUpdateViewModel viewModel);
+//    }
+//}

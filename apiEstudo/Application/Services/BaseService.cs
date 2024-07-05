@@ -1,17 +1,20 @@
-﻿using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Application.ViewModel.BaseViewModel;
-using apiEstudo.Application.ViewModelInterfaces;
-using apiEstudo.Domain.DTOs;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Base;
+using apiEstudo.Application.Arguments.BaseViewModel;
+using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class BaseService<T, TRepository, TDTO> : IBaseService<T, TDTO> 
-        where T : IBaseModel<T>
-        where TDTO : IBaseDTO<TDTO>
-        where TRepository : IBaseRepository<T, TDTO>
+    public abstract class BaseService<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
+        where TInputCreate : BaseInputCreate<TInputCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
+        where TOutput : BaseOutput<TOutput>
+        where TEntry : BaseEntry<TEntry>
+        where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
+        where TRepository : IBaseRepository<TEntry>
     {
         protected readonly TRepository _repository;
 
@@ -20,62 +23,49 @@ namespace apiEstudo.Application.Services
             _repository = contextInterface;
         }
 
-        public virtual TDTO? Get(int id)
+        public virtual TOutput? Get(int id)
         {
-            var query = _repository.Get(id);
-
-            return OutputToDTO(query);
+            return EntryToOutput(_repository.Get(id));
         }
 
-        public virtual List<TDTO>? GetAll()
+        public virtual List<TOutput>? GetAll()
         {
-            var query = _repository.GetAll();
-
-            return OutputToDTO(query);
+            return EntryToOutput(_repository.GetAll());
         }
 
-        public virtual bool Update(int id, BaseUpdateViewModel<T> view)
+        public virtual long Update(TInputIdentityUpdate inputIdentityUpdate)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool Create(BaseCreateViewModel<T> view)
+        public virtual long Create(TInputCreate inputCreate)
+        {
+            return CreateMultiple([inputCreate]).FirstOrDefault();
+        }
+
+        public virtual List<long> CreateMultiple(List<TInputCreate> listInputCreate)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool Delete(int id)
-        {
-            var query = _repository.Get(id);
-            if (query == null) return false;
-
-            _repository.Delete(query);
-            return true;
-        }
-
-        List<TDTO>? IBaseService<T, TDTO>.GetListByListId(List<int> listId)
+        public virtual bool Delete(TInputIdentityDelete inputIdentityDelete)
         {
             throw new NotImplementedException();
         }
 
-        internal TDTO OutputToDTO(T entrada)
+        internal TOutput EntryToOutput(TEntry entrada)
         {
-            return (TDTO)(dynamic)entrada;
+            return (TOutput)(dynamic)entrada;
         }
 
-        internal List<TDTO> OutputToDTO(List<T> entrada)
+        internal List<TOutput> EntryToOutput(List<TEntry> entrada)
         {
-            return (from item in entrada select (TDTO)(dynamic)item).ToList();
+            return (from item in entrada select (TOutput)(dynamic)item).ToList();
         }
 
-        internal T DTOToOutput(TDTO dto)
+        public List<TOutput>? GetListByListId(List<int> listId)
         {
-            return (T)(dynamic)dto;
-        }
-
-        internal List<T> DTOToOutput(List<T> entrada)
-        {
-            return (from item in entrada select (T)(dynamic)item).ToList();
+            return EntryToOutput(_repository.GetListByListId(listId));
         }
     }
 }

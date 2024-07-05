@@ -1,23 +1,21 @@
-﻿using apiEstudo.Application.ViewModel;
-using apiEstudo.Domain.DTOs;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using apiEstudo.Application.Arguments;
 
 namespace apiEstudo.Domain.Models
 {
-    public class Brand : BaseEntry<Brand>, IBaseModel<Brand>
+    public class Brand : BaseEntry<Brand>
     {
         public string Name { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual List<Product> ListProduct { get; set; }
 
-        public Brand(string name)
+        public Brand(string name, List<Product> listProduct)
         {
-            Name = name;    
-            CreationDate = DateTime.Now;    
+            Name = name;
+            ListProduct = listProduct;
         }
 
-        public static implicit operator BrandDTO(Brand marca)
+        public static implicit operator OutputBrand(Brand brand)
         {
-            return marca == null ? default : new BrandDTO { Id = marca.Id, Name = marca.Name };
+            return brand == null ? default : new OutputBrand(brand.Name).LoadInternalData(brand.Id, brand.CreationDate, brand.ChangeDate);
         }
-    }   
+    }
 }

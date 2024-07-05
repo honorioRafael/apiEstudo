@@ -1,91 +1,64 @@
-﻿using apiEstudo.Application.ViewModel;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Model;
-using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public abstract class BaseRepository<T, TDTO> : IBaseRepository<T, TDTO> 
-        where T : BaseEntry<T>, IBaseModel<T> 
-        where TDTO : IBaseDTO<TDTO>
+    public abstract class BaseRepository<TEntry> : IBaseRepository<TEntry>
+        where TEntry : BaseEntry<TEntry>
     {
         protected readonly ConnectionContext _context;
-        protected readonly DbSet<T> _dbset;
+        protected readonly DbSet<TEntry> _dbset;
 
         public BaseRepository(ConnectionContext context)
         {
             _context = context;
-            _dbset = _context.Set<T>();
+            _dbset = _context.Set<TEntry>();
         }
 
-        public virtual void Create(T classe)
+        public virtual long Create(TEntry entry)
         {
-            _context.Add(classe);
+            _context.Add(entry.SetCreationDate());
             _context.SaveChanges();
+
+            return entry.Id;
         }
 
-        public virtual List<T>? GetAll()
+        public virtual List<TEntry>? GetAll()
         {
             return _dbset.ToList();
         }
 
-        public virtual List<T>? GetListByListId(List<int> listId)
+        public virtual List<TEntry>? GetListByListId(List<int> listId)
         {
             return _dbset.Where(x => listId.Contains(x.Id)).ToList();
         }
 
-        public virtual T? Get(int id)
+        public virtual TEntry? Get(int id)
         {
             return _dbset.Find(id);
         }
 
-        public virtual T? GetByName(string name)
+        public virtual TEntry? GetByName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Update(T classe)
+        public virtual long Update(TEntry entry)
         {
-            _context.Update(classe);
+            _context.Update(entry.SetChangeDate());
             _context.SaveChanges();
+
+            return entry.Id;
         }
 
-        public virtual void Delete(T classe)
+        public virtual bool Delete(TEntry classe)
         {
             _context.Remove(classe);
             _context.SaveChanges();
-        }
 
-        /*public virtual List<T>? Get(IEnumerable<T> table, Func<T, bool> filter) 
-        {
-            return (from employee in table
-                    where filter(employee)
-                    select employee).ToList();
+            return true;
         }
-        */
-
-        internal TDTO OutputToDTO(T entrada)
-        {
-            return (TDTO)(dynamic)entrada;
-        }
-
-        internal List<TDTO> OutputToDTO(List<T> entrada)
-        {
-            return (from item in entrada select (TDTO)(dynamic)item).ToList();
-        }
-
-        internal T DTOToOutput(TDTO dto)
-        {
-            return (T)(dynamic)dto;
-        }
-
-        internal List<T> DTOToOutput(List<T> entrada)
-        {
-            return (from item in entrada select (T)(dynamic)item).ToList();
-        }
-
     }
 }
