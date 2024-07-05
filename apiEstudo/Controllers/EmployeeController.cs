@@ -1,4 +1,5 @@
-﻿using apiEstudo.Application.ServicesInterfaces;
+﻿using apiEstudo.Application.Services;
+using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Application.ViewModel.EmployeeViewModel;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
@@ -12,16 +13,20 @@ namespace apiEstudo.Controllers
     [ApiController]
     [Authorize]
     [Route("api/v1/Employee")]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseController<Employee, IEmployeeService, EmployeeDTO>
     {
         private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(IEmployeeService service) : base(service)
         {
-            _employeeService = employeeService;
         }
 
-        [HttpGet]
+        /*public EmployeeController(IEmployeeService employeeService)
+        {
+            _employeeService = employeeService;
+        }*/
+
+        /*[HttpGet]
         public IActionResult GetAll()
         {           
             var query = _employeeService.GetAll();
@@ -36,12 +41,12 @@ namespace apiEstudo.Controllers
 
             if (query == null) return NotFound();
             else return Ok(query);
-        }
+        }*/
 
         [HttpPost]
         public IActionResult Add(EmployeeCreateViewModel employeeView)
         {
-            var QueryResponse = _employeeService.Create(employeeView);
+            var QueryResponse = _service.Create(employeeView);
             if (!QueryResponse) return NotFound();
             return Ok();
         }
@@ -49,7 +54,7 @@ namespace apiEstudo.Controllers
         [HttpPut]
         public IActionResult Update(EmployeeUpdateViewModel employeeView) 
         {
-            var QueryResponse = _employeeService.Update(employeeView);
+            var QueryResponse = _service.Update(employeeView);
             if (QueryResponse == false) return NotFound();
             return Ok();            
         }
@@ -57,7 +62,7 @@ namespace apiEstudo.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) 
         {
-            var QueryResponse = _employeeService.Delete(id);
+            var QueryResponse = _service.Delete(id);
 
             if(QueryResponse == false) return NotFound();
             return Ok();

@@ -9,12 +9,13 @@ namespace apiEstudo.Domain.Models
     {
         public string Name { get; set; }        
         public string Description { get; set; }
-        
+        public virtual ICollection<Employee> Employees { get; set; }
 
         public EmployeeTask(string name, string description)
         {
             Name = name;
             Description = description;
+            CreationDate = DateTime.Now;
         }
 
         public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)

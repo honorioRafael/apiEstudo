@@ -16,6 +16,7 @@ namespace apiEstudo.Domain.Model
         public int Age { get; set; }
         public int EmployeeTaskId { get; set; }
         public EmployeeTask EmployeeTask { get; set; }
+        public virtual ICollection<Shopping> Shoppings { get; set; }
 
         public Employee(string? name, int age, int employeeTaskId, EmployeeTask employeeTask)
         {
@@ -23,6 +24,7 @@ namespace apiEstudo.Domain.Model
             Age = age;
             EmployeeTaskId = employeeTaskId;
             EmployeeTask = employeeTask;
+            CreationDate = DateTime.Now;
         }
 
         public Employee()

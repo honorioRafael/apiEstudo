@@ -31,6 +31,7 @@ namespace apiEstudo.Application.Services
             item.Name = view.Name;
             item.Quantity = view.Quantity;
             item.BrandId = view.BrandId;
+            item.ChangeDate = DateTime.Now;
 
             _repository.Update(item);
             return true;

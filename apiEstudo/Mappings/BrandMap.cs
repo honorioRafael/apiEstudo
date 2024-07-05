@@ -12,6 +12,8 @@ namespace apiEstudo.Mappings
             builder.HasKey(x => x.Id).HasName("Id");
             builder.Property(x => x.Name).HasColumnName("name");
             builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.CreationDate).HasColumnName("creationdate");
+            builder.Property(x => x.ChangeDate).HasColumnName("changedate");
         }
     }
 }

@@ -7,10 +7,12 @@ namespace apiEstudo.Domain.Models
     public class Brand : BaseEntry<Brand>, IBaseModel<Brand>
     {
         public string Name { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public Brand(string name)
         {
-            Name = name;
+            Name = name;    
+            CreationDate = DateTime.Now;    
         }
 
         public static implicit operator BrandDTO(Brand marca)

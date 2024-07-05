@@ -12,6 +12,7 @@ namespace apiEstudo.Domain.Models
         {
             Name = name;
             Password = password;
+            CreationDate = DateTime.Now;
         }
 
         public User()

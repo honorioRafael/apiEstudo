@@ -16,6 +16,18 @@ namespace apiEstudo.Mappings
             builder.Property(x => x.ProductId).IsRequired();
             builder.Property(x => x.Value).HasColumnName("valor");
             builder.Property(x => x.TransationDate).HasColumnName("data_compra");
+            builder.Property(x => x.CreationDate).HasColumnName("creationdate");
+            builder.Property(x => x.ChangeDate).HasColumnName("changedate");
+
+            builder.HasOne(x => x.Employee)
+                .WithMany(e => e.Shoppings)
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Product)
+                .WithMany(p => p.Shoppings)
+                .HasForeignKey(p => p.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

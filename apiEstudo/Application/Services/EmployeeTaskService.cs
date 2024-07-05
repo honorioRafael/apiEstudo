@@ -27,6 +27,7 @@ namespace apiEstudo.Application.Services
 
             Task.Name = view.Name;
             Task.Description = view.Description;
+            Task.ChangeDate = DateTime.Now;
 
             _repository.Update(Task);
             return true;

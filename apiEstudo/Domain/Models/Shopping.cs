@@ -23,6 +23,7 @@ namespace apiEstudo.Domain.Models
             Value = value;
             Employee = employee;
             Product = product;       
+            CreationDate = DateTime.Now;
         }
         
         public static implicit operator ShoppingDTO(Shopping compra)

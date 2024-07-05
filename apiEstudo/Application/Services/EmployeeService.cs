@@ -23,7 +23,7 @@ namespace apiEstudo.Application.Services
             employee.Age = view.Age;
             employee.EmployeeTaskId = view.taskId;
 
-            _repository.Update(employee);
+            _repository.Update(employee.SetChangeDate());
             return true;
 
         }
@@ -32,7 +32,7 @@ namespace apiEstudo.Application.Services
         {
             if (View == null) return false;
 
-            var entity = new Employee(View.Name, View.Age, View.taskId, null);
+            var entity = new Employee(View.Name, View.Age, View.taskId, null).SetCreationDate();
             _repository.Create(entity);
             return true;
         }

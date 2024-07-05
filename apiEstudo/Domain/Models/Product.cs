@@ -11,7 +11,8 @@ namespace apiEstudo.Domain.Models
         public string Name { get; set; }
         public int Quantity { get; set; }
         public int BrandId { get; set; }
-        public virtual Brand Brand { get; private set; }
+        public virtual Brand Brand { get; set; }
+        public virtual ICollection<Shopping> Shoppings { get; set; }
 
         public Product() { }
         
@@ -21,6 +22,7 @@ namespace apiEstudo.Domain.Models
             Quantity = quantity;
             BrandId = brandId;
             Brand = brand;
+            CreationDate = DateTime.Now;
         }
 
         public static implicit operator ProductDTOSimplified(Product product)

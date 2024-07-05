@@ -14,6 +14,8 @@ namespace apiEstudo.Mappings
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Password).HasColumnName("password");
             builder.Property(x => x.Password).IsRequired();
+            builder.Property(x => x.CreationDate).HasColumnName("creationdate");
+            builder.Property(x => x.ChangeDate).HasColumnName("changedate");
         }
     }
 }
