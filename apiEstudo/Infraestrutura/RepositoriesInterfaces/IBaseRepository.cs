@@ -6,6 +6,7 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         where TEntry : BaseEntry<TEntry>
     {
         public long Create(TEntry classe);
+        public List<int> CreateMultiple(List<TEntry> entry);
         public long Update(TEntry classe);
         public bool Delete(TEntry classe);
         public List<TEntry>? GetAll();

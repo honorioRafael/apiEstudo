@@ -9,7 +9,7 @@ namespace apiEstudo.Domain.Models
         public int Quantity { get; set; }
         public int BrandId { get; set; }
         public virtual Brand Brand { get; private set; }
-        public virtual List<Shopping> ListShopping { get; set; }
+        public virtual List<ShoppingList> ListShoppingList { get; set; }
 
         public Product() { }
 

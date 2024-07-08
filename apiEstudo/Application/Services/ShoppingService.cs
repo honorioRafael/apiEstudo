@@ -2,27 +2,25 @@
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+using apiEstudo.Application.Services;
 
 namespace apiEstudo.Application.Services
 {
-    public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService
+    public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService<IShoppingListService>
     {
-        public ShoppingService(IShoppingRepository contextInterface) : base(contextInterface)
-        { }
-
+        public ShoppingService(IShoppingRepository contextInterface, IShoppingListService listContext) : base(contextInterface)
+        {
+            _listContext = listContext;
+        }
+        private readonly IShoppingListService _listContext;
+     
         public override long Create(InputCreateShopping inputCreate)
         {
             if (inputCreate == null) throw new ArgumentNullException();
-            return _repository.Create(new Shopping(inputCreate.EmployeeId, inputCreate.ProductId, inputCreate.Value, DateTime.Now, null, null).SetCreationDate());
-        }
+            var ShopId = _repository.Create(new Shopping(inputCreate.EmployeeId, null, inputCreate.Value, null).SetCreationDate());
 
-        public override long Update(InputIdentityUpdateShopping inputIdentityUpdate)
-        {
-            var OriginalItem = _repository.Get(inputIdentityUpdate.Id);
-            if (OriginalItem == null) throw new NotFoundException();
-            return _repository.Update(new Shopping(inputIdentityUpdate.InputUpdate.EmployeeId,
-                inputIdentityUpdate.InputUpdate.ProductId,
-                inputIdentityUpdate.InputUpdate.Value, OriginalItem.TransationDate, null, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            _listContext.CreateMultiple(Convert.ToInt32(ShopId), inputCreate.Products);
+            return ShopId;
         }
     }
 }

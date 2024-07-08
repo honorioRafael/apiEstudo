@@ -19,11 +19,20 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public virtual long Create(TEntry entry)
         {
-            _context.Add(entry.SetCreationDate());
+            _context.Add(entry);
             _context.SaveChanges();
 
             return entry.Id;
         }
+
+        public virtual List<int> CreateMultiple(List<TEntry> entry)
+        {
+            _context.AddRange(entry);
+            _context.SaveChanges();
+
+            return (from i in entry select i.Id).ToList();
+        }
+
 
         public virtual List<TEntry>? GetAll()
         {
@@ -44,7 +53,7 @@ namespace apiEstudo.Infraestrutura.Repositories
         {
             throw new NotImplementedException();
         }
-
+        
         public virtual long Update(TEntry entry)
         {
             _context.Update(entry);

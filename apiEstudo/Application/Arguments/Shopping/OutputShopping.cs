@@ -5,21 +5,19 @@ namespace apiEstudo.Application.Arguments
     public class OutputShopping : BaseOutput<OutputShopping>
     {
         public double Value { get; private set; }
-        public DateTime TransationDate { get; private set; }
         public virtual OutputEmployee Employee { get; private set; }
-        public virtual OutputProduct Product { get; private set; }
+        public virtual List<OutputShoppingList> Products { get; private set; }
 
         public OutputShopping()
         {
             
         }
 
-        public OutputShopping(double value, DateTime transationDate, OutputEmployee employee, OutputProduct product)
+        public OutputShopping(double value, OutputEmployee employee, List<OutputShoppingList> products)
         {
             Value = value;
-            TransationDate = transationDate;
             Employee = employee;
-            Product = product;
+            Products = products;
         }
     }
 }

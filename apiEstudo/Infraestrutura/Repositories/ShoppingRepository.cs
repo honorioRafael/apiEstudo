@@ -13,12 +13,20 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public override List<Shopping>? GetAll()
         {
-            return _dbset.Include(x => x.Product).Include(x => x.Employee).ToList();
+            return _dbset.Include(x => x.Products)
+                .ThenInclude(p => p.Product)
+                .ThenInclude(p => p.Brand)
+                .Include(x => x.Employee)
+                .ThenInclude(x => x.EmployeeTask).ToList();
         }
 
         public override Shopping? Get(int id)
         {
-            return _dbset.Where(x => x.Id == id).Include(x => x.Product).Include(x => x.Employee).AsNoTracking().FirstOrDefault();
+            return _dbset.Where(x => x.Id == id).Include(x => x.Products)
+                .ThenInclude(p => p.Product)
+                .ThenInclude(p => p.Brand)
+                .Include(x => x.Employee)
+                .ThenInclude(x => x.EmployeeTask).AsNoTracking().FirstOrDefault();
         }
     }
 }
