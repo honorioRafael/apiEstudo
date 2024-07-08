@@ -1,9 +1,9 @@
-﻿//using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Models;
 
-//namespace apiEstudo.Application.ServicesInterfaces
-//{
-//    public interface IShoppingService : IBaseService<Shopping, ShoppingDTO>
-//    {
-//        public bool Create(ShoppingCreateViewModel view);
-//    }
-//}
+namespace apiEstudo.Application.ServicesInterfaces
+{
+    public interface IShoppingService : IBaseService<InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>
+    {
+    }
+}

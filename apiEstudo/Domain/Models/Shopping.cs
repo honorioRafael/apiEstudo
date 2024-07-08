@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
 {
@@ -23,16 +24,9 @@ namespace apiEstudo.Domain.Models
             Product = product;
         }
 
-        //public static implicit operator ShoppingDTO(Shopping compra)
-        //{
-        //    return compra == null ? default : new ShoppingDTO
-        //    {
-        //        Id = compra.Id,
-        //        Employee = (EmployeeDTOSimplified)compra.Employee,
-        //        Product = (ProductDTOSimplified)compra.Product,
-        //        Value = compra.Value,
-        //        TransationDate = compra.TransationDate
-        //    };
-        //}
+        public static implicit operator OutputShopping(Shopping shop)
+        {
+            return shop == null ? default : new OutputShopping(shop.Value, shop.TransationDate, shop.Employee, shop.Product).LoadInternalData(shop.Id, shop.CreationDate, shop.ChangeDate);
+        }
     }
 }
