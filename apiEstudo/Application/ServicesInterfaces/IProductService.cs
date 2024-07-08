@@ -1,10 +1,10 @@
-﻿//using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments.Product;
+using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Models;
 
-//namespace apiEstudo.Application.ServicesInterfaces
-//{
-//    public interface IProductService : IBaseService<Product, ProductDTO>
-//    {
-//        public bool Create(ProductCreateViewModel viewModel);
-//        public bool Update(ProductUpdateViewModel viewModel);
-//    }
-//}
+namespace apiEstudo.Application.ServicesInterfaces
+{
+    public interface IProductService : IBaseService<InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct>
+    {
+    }
+}
