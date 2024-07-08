@@ -6,7 +6,7 @@ using apiEstudo.Application.Services;
 
 namespace apiEstudo.Application.Services
 {
-    public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService<IShoppingListService>
+    public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService
     {
         public ShoppingService(IShoppingRepository contextInterface, IShoppingListService listContext) : base(contextInterface)
         {

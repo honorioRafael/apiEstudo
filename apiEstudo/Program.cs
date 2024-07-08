@@ -80,7 +80,7 @@ internal class Program
         builder.Services.AddTransient<IEmployeeTaskService, EmployeeTaskService>();
         builder.Services.AddTransient<IBrandService, BrandService>();
         builder.Services.AddTransient<IProductService, ProductService>();
-        builder.Services.AddTransient<IShoppingService<IShoppingListService>, ShoppingService>();
+        builder.Services.AddTransient<IShoppingService, ShoppingService>();
         builder.Services.AddTransient<IUserService, UserService>();
         builder.Services.AddTransient<IShoppingListService, ShoppingListService>();
 
