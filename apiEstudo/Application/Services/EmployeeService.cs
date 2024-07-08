@@ -1,36 +1,30 @@
-﻿//using apiEstudo.Application.ServicesInterfaces;
-//using apiEstudo.Domain.Model;
-//using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Domain.Model;
+using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-//namespace apiEstudo.Application.Services
-//{
-//    public class EmployeeService : BaseService<Employee, IEmployeeRepository, EmployeeDTO>, IEmployeeService
-//    {
-//        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
-//        { }
+namespace apiEstudo.Application.Services
+{
+    public class EmployeeService : BaseService<Employee, IEmployeeRepository, InputCreateEmployee, InputUpdateEmployee, InputIdentityUpdateEmployee, InputIdentityDeleteEmployee, OutputEmployee>, IEmployeeService
+    {
+        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
+        { }
 
-//        public bool Update(EmployeeUpdateViewModel view)
-//        {
-//            if (view == null) return false;
-//            var employee = _repository.Get(view.Id);
-//            if (employee == null) return false;
+        public override long Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
+        {
+            var OriginalItem = _repository.Get(inputIdentityUpdateEmployee.Id);
+            if(OriginalItem == null) throw new NotFoundException();
+            return _repository.Update(new Employee(inputIdentityUpdateEmployee.InputUpdate.Name,
+                inputIdentityUpdateEmployee.InputUpdate.Age,
+                inputIdentityUpdateEmployee.InputUpdate.TaskId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+        }
 
-//            employee.Name = view.Name;
-//            employee.Age = view.Age;
-//            employee.EmployeeTaskId = view.taskId;
-
-//            _repository.Update(employee);
-//            return true;
-
-//        }
-
-//        public bool Create(EmployeeCreateViewModel View)
-//        {
-//            if (View == null) return false;
-
-//            var entity = new Employee(View.Name, View.Age, View.taskId, null);
-//            _repository.Create(entity);
-//            return true;
-//        }
-//    }
-//}
+        public override long Create(InputCreateEmployee inputCreateEmployee)
+        {
+            if (inputCreateEmployee == null) throw new ArgumentNullException();
+            return _repository.Create(new Employee(inputCreateEmployee.Name, inputCreateEmployee.Age, inputCreateEmployee.TaskId, null).SetCreationDate());
+        }
+    }
+}

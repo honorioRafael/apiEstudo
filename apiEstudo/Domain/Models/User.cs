@@ -1,4 +1,6 @@
-﻿namespace apiEstudo.Domain.Models
+﻿using apiEstudo.Application.Arguments;
+
+namespace apiEstudo.Domain.Models
 {
     public class User : BaseEntry<User>
     {
@@ -14,9 +16,9 @@
         public User()
         { }
 
-        //public static implicit operator UserDTO(User user)
+        //public static implicit operator OutputUser(User user)
         //{
-        //    return user == null ? default : new UserDTO { Id = user.Id, Name = user.Name };
+        //    return user == null ? default : new OutputUser { Id = user.Id };
         //}
     }
 }

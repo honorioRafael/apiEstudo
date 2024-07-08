@@ -35,7 +35,7 @@ namespace apiEstudo.Application.Services
 
         public virtual long Update(TInputIdentityUpdate inputIdentityUpdate)
         {
-            throw new NotImplementedException();
+                throw new NotImplementedException();
         }
 
         public virtual long Create(TInputCreate inputCreate)

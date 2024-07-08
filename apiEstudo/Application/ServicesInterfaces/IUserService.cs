@@ -1,10 +1,10 @@
-﻿//using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Models;
 
-//namespace apiEstudo.Application.ServicesInterfaces
-//{
-//    public interface IUserService : IBaseService<User, UserDTO>
-//    {
-//        public void Create(UserCreateViewModel view);
-//        public User? Auth(UserCreateViewModel view);
-//    }
-//}
+namespace apiEstudo.Application.ServicesInterfaces
+{
+    public interface IUserService : IBaseService<InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDelete_0, Output_0>
+    {
+        public User? Auth(InputCreateUser view);
+    }
+}

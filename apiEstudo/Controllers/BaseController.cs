@@ -22,23 +22,8 @@ namespace apiEstudo.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var Query = _service.GetAll();
-            return Ok(Query);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            var Query = _service.Get(id);
-            if (Query == null) return NotFound();
-            return Ok(Query);
-        }
-
         [HttpPost]
-        public IActionResult Create(TInputCreate inputCreate)
+        public virtual IActionResult Create(TInputCreate inputCreate)
         {
             try
             {
@@ -57,7 +42,7 @@ namespace apiEstudo.Controllers
 
 
         [HttpPut]
-        public IActionResult Update(TInputIdentityUpdate inputIdentityUpdate)
+        public virtual IActionResult Update(TInputIdentityUpdate inputIdentityUpdate)
         {
             try
             {
@@ -75,7 +60,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(TInputIdentityDelete inputIdentityDelete)
+        public virtual IActionResult Delete(TInputIdentityDelete inputIdentityDelete)
         {
             try
             {
@@ -91,6 +76,21 @@ namespace apiEstudo.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public virtual IActionResult GetAll()
+        {
+            var Query = _service.GetAll();
+            return Ok(Query);
+        }
+
+        [HttpGet("{id}")]
+        public virtual IActionResult Get(int id)
+        {
+            var Query = _service.Get(id);
+            if (Query == null) return NotFound();
+            return Ok(Query);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿//using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.Models;
 
-//namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
-//{
-//    public interface IUserRepository : IBaseRepository<User, UserDTO>
-//    { }
-//}
+namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
+{
+    public interface IUserRepository : IBaseRepository<User>
+    { }
+}

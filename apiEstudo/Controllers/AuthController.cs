@@ -1,66 +1,84 @@
-﻿//using apiEstudo.Application.Services;
-//using apiEstudo.Application.ServicesInterfaces;
-//using apiEstudo.Domain.Models;
-//using Microsoft.AspNetCore.Mvc;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Services;
+using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
-//namespace apiEstudo.Controllers
-//{
-//    [ApiController]
-//    [Route("api/v1/Auth")]
-//    public class AuthController : Controller
-//    {
-//        private readonly IUserService _userService;
+namespace apiEstudo.Controllers
+{
+    [ApiController]
+    [Route("api/v1/Auth")]
+    public class AuthController : BaseController<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDelete_0, Output_0>
+    {
+        public AuthController(IUserService service) : base(service)
+        { }
 
-//        public AuthController(IUserService userService)
-//        {
-//            _userService = userService;
-//        }
+        [HttpPost]
+        public override IActionResult Create(InputCreateUser view)
+        {
+            try
+            {
+                _service.Create(view);
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
+            }
+            catch (NameInUseException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-//        [HttpPost]
-//        public IActionResult Create(UserCreateViewModel view)
-//        {
-//            try
-//            {
-//                _userService.Create(view);
-//                return Ok();
-//            }
-//            catch (ArgumentNullException ex)
-//            {
-//                return NotFound();
-//            }
-//            catch (NameInUseException ex)
-//            {
-//                return BadRequest(ex.Message);
-//            }
-//            catch (Exception ex)
-//            {
-//                return BadRequest(ex.Message);
-//            }
-//        }
+        [HttpPost("Login")]
+        public IActionResult Auth(InputCreateUser view)
+        {
+            try
+            {
+                User? UserAccount = _service.Auth(view);
 
-//        [HttpPost("Login")]
-//        public IActionResult Auth(UserCreateViewModel view)
-//        {
-//            try
-//            {
-//                User? UserAccount = _userService.Auth(view);
+                var token = TokenService.GenerateToken(UserAccount);
+                return Ok(token);
 
-//                var token = TokenService.GenerateToken(UserAccount);
-//                return Ok(token);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound();
+            }
+            catch (WrongPasswordException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-//            }
-//            catch (ArgumentNullException ex)
-//            {
-//                return NotFound();
-//            }
-//            catch (WrongPasswordException ex)
-//            {
-//                return BadRequest(ex.Message);
-//            }
-//            catch (Exception ex)
-//            {
-//                return BadRequest(ex.Message);
-//            }
-//        }
-//    }
-//}
+        [HttpDelete]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult Delete(InputIdentityDelete_0 inputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet("{id}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult GetAll()
+        {
+            return base.GetAll();
+        }
+    }
+}

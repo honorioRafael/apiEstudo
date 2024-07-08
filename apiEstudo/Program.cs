@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 
 internal class Program
@@ -21,7 +22,11 @@ internal class Program
 
         // Add services to the container.
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers();/* AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            options.JsonSerializerOptions.MaxDepth = 64; // Opcional
+        });*/
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
@@ -62,20 +67,20 @@ internal class Program
         x.UseSqlServer("Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"));
 
         // Repositories
-        //builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+        builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         builder.Services.AddTransient<IEmployeeTaskRepository, EmployeeTaskRepository>();
         //builder.Services.AddTransient<IProductRepository, ProductRepository>();
         builder.Services.AddTransient<IBrandRepository, BrandRepository>();
         //builder.Services.AddTransient<IShoppingRepository, ShoppingRepository>();
-        //builder.Services.AddTransient<IUserRepository, UserRepository>();
+        builder.Services.AddTransient<IUserRepository, UserRepository>();
 
         // Services
-        //builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+        builder.Services.AddTransient<IEmployeeService, EmployeeService>();
         builder.Services.AddTransient<IEmployeeTaskService, EmployeeTaskService>();
         builder.Services.AddTransient<IBrandService, BrandService>();
         //builder.Services.AddTransient<IProductService, ProductService>();
         //builder.Services.AddTransient<IShoppingService, ShoppingService>();
-        //builder.Services.AddTransient<IUserService, UserService>();
+        builder.Services.AddTransient<IUserService, UserService>();
 
         // JWT Token
         var key = Encoding.ASCII.GetBytes(Key.Secret);

@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Domain.Model
 {
@@ -26,6 +27,9 @@ namespace apiEstudo.Domain.Model
         public Employee()
         { }
 
-            
+        public static implicit operator OutputEmployee(Employee employee)
+        {
+            return employee == null ? default : new OutputEmployee(employee.Name, employee.Age, employee.EmployeeTask).LoadInternalData(employee.Id, employee.CreationDate, employee.ChangeDate);
+        }
     }
 }
