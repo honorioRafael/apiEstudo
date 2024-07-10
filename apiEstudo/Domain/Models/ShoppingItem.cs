@@ -24,7 +24,7 @@ namespace apiEstudo.Domain.Models
 
         public static implicit operator OutputShoppingItem(ShoppingItem shop)
         {
-            return shop == null ? default : new OutputShoppingItem(shop.Quantity, shop.Product).LoadInternalData(shop.Id, shop.CreationDate, shop.ChangeDate);
+            return shop == null ? default : new OutputShoppingItem(shop.Id, shop.Quantity, shop.Product).LoadInternalData(shop.Id, shop.CreationDate, shop.ChangeDate);
         }
     }
 }

@@ -17,10 +17,10 @@ namespace apiEstudo.Infraestrutura.Repositories
             _dbset = _context.Set<TEntry>();
         }
 
+        // Create
         public virtual long Create(TEntry entry)
         {
-            _context.Add(entry);
-            _context.SaveChanges();
+            CreateMultiple([entry]);
 
             return entry.Id;
         }
@@ -32,8 +32,8 @@ namespace apiEstudo.Infraestrutura.Repositories
 
             return (from i in entry select i.Id).ToList();
         }
-
-
+        
+        // Getters
         public virtual List<TEntry>? GetAll()
         {
             return _dbset.ToList();
@@ -54,20 +54,34 @@ namespace apiEstudo.Infraestrutura.Repositories
             throw new NotImplementedException();
         }
 
+        // Update
         public virtual long Update(TEntry entry)
         {
-            _context.Update(entry);
-            _context.SaveChanges();
+            UpdateMultiple([entry]);
 
             return entry.Id;
         }
 
-        public virtual bool Delete(TEntry classe)
+        public List<int> UpdateMultiple(List<TEntry> entry)
         {
-            _context.Remove(classe);
+            _context.UpdateRange(entry);
             _context.SaveChanges();
 
+            return (from i in entry select i.Id).ToList(); 
+        }
+
+        // Delete
+        public virtual bool Delete(TEntry entry)
+        {
+            DeleteMultiple([entry]);
+
             return true;
+        }
+
+        public void DeleteMultiple(List<TEntry> entry)
+        {
+            _context.RemoveRange(entry);
+            _context.SaveChanges();
         }
     }
 }
