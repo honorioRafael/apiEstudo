@@ -6,14 +6,14 @@ namespace apiEstudo.Application.Arguments
     {
         public double Value { get; private set; }
         public virtual OutputEmployee Employee { get; private set; }
-        public virtual List<OutputShoppingList> Products { get; private set; }
+        public virtual List<OutputShoppingItem> Products { get; private set; }
 
         public OutputShopping()
         {
             
         }
 
-        public OutputShopping(double value, OutputEmployee employee, List<OutputShoppingList> products)
+        public OutputShopping(double value, OutputEmployee employee, List<OutputShoppingItem> products)
         {
             Value = value;
             Employee = employee;

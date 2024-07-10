@@ -73,7 +73,7 @@ internal class Program
         builder.Services.AddTransient<IBrandRepository, BrandRepository>();
         builder.Services.AddTransient<IShoppingRepository, ShoppingRepository>();
         builder.Services.AddTransient<IUserRepository, UserRepository>();
-        builder.Services.AddTransient<IShoppingListRepository, ShoppingListRepository>();
+        builder.Services.AddTransient<IShoppingItemRepository, ShoppingItemRepository>();
 
         // Services
         builder.Services.AddTransient<IEmployeeService, EmployeeService>();
@@ -82,7 +82,6 @@ internal class Program
         builder.Services.AddTransient<IProductService, ProductService>();
         builder.Services.AddTransient<IShoppingService, ShoppingService>();
         builder.Services.AddTransient<IUserService, UserService>();
-        builder.Services.AddTransient<IShoppingListService, ShoppingListService>();
 
         // JWT Token
         var key = Encoding.ASCII.GetBytes(Key.Secret);

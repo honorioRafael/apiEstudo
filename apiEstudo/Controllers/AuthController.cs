@@ -1,4 +1,5 @@
-﻿using apiEstudo.Application.Arguments;
+﻿using apiEstudo.Application;
+using apiEstudo.Application.Arguments;
 using apiEstudo.Application.Services;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;

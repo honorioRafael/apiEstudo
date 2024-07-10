@@ -35,7 +35,7 @@ namespace apiEstudo.Application.Services
 
         public virtual long Update(TInputIdentityUpdate inputIdentityUpdate)
         {
-                throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public virtual long Create(TInputCreate inputCreate)
@@ -51,7 +51,8 @@ namespace apiEstudo.Application.Services
         public virtual void Delete(TInputIdentityDelete inputIdentityDelete)
         {
             var ToBeDeleted = _repository.Get(inputIdentityDelete.Id);
-            if (ToBeDeleted == null) throw new ArgumentNullException();
+            if (ToBeDeleted == null) 
+                throw new NotFoundException("Não foi encontrado nenhum registro com o ID informado.");
             _repository.Delete(ToBeDeleted);
         }
 

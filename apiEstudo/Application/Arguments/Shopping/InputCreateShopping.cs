@@ -6,7 +6,7 @@ namespace apiEstudo.Application.Arguments
     public class InputCreateShopping : BaseInputCreate<InputCreateShopping>
     {
         public int EmployeeId { get; set; }
-        public List<InputCreateShoppingList> Products { get; set; }
+        public List<InputCreateShoppingItem> Products { get; set; }
         public double Value { get; set; }
     }
 }

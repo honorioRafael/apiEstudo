@@ -4,9 +4,9 @@ using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ShoppingListRepository : BaseRepository<ShoppingList>, IShoppingListRepository
+    public class ShoppingItemRepository : BaseRepository<ShoppingItem>, IShoppingItemRepository
     {
-        public ShoppingListRepository(ConnectionContext context) : base(context)
+        public ShoppingItemRepository(ConnectionContext context) : base(context)
         { }
     }
 }

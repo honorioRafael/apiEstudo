@@ -1,4 +1,5 @@
-﻿using apiEstudo.Application.Arguments;
+﻿using apiEstudo.Application;
+using apiEstudo.Application.Arguments;
 using apiEstudo.Application.Arguments.Base;
 using apiEstudo.Application.Arguments.BaseViewModel;
 using apiEstudo.Application.ServicesInterfaces;
@@ -34,10 +35,18 @@ namespace apiEstudo.Controllers
             {
                 return NotFound();
             }
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -53,6 +62,14 @@ namespace apiEstudo.Controllers
             {
                 return NotFound();
             }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -67,9 +84,13 @@ namespace apiEstudo.Controllers
                 _service.Delete(inputIdentityDelete);
                 return Ok();
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
                 return NotFound();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             //Exceptions customizadas / tratativas
             catch (Exception ex)

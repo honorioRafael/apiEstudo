@@ -13,7 +13,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public override List<Shopping>? GetAll()
         {
-            return _dbset.Include(x => x.Products)
+            return _dbset.Include(x => x.ListShoppingItem)
                 .ThenInclude(p => p.Product)
                 .ThenInclude(p => p.Brand)
                 .Include(x => x.Employee)
@@ -22,7 +22,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public override Shopping? Get(int id)
         {
-            return _dbset.Where(x => x.Id == id).Include(x => x.Products)
+            return _dbset.Where(x => x.Id == id).Include(x => x.ListShoppingItem)
                 .ThenInclude(p => p.Product)
                 .ThenInclude(p => p.Brand)
                 .Include(x => x.Employee)

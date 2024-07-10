@@ -16,13 +16,13 @@ namespace apiEstudo.Mappings
             modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new ShoppingMap());
             modelBuilder.ApplyConfiguration(new UserMap());
-            modelBuilder.ApplyConfiguration(new ShoppingListMap());
+            modelBuilder.ApplyConfiguration(new ShoppingItemMap());
         }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeTask> Tasks { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Brand> Marcas { get; set; }
         public DbSet<Shopping> Compras { get; set; }
-        public DbSet<ShoppingList> ShoppingLists { get; set; }
+        public DbSet<ShoppingItem> ShoppingLists { get; set; }
     }
 }

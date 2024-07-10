@@ -15,47 +15,34 @@ namespace apiEstudo.Application.Services
         public User? Auth(InputCreateUser view)
         {
             var UserEntity = _repository.GetByName(view.Name);
-            if (UserEntity == null) throw new ArgumentNullException();
-            if (UserEntity.Password != view.Password) throw new WrongPasswordException("A senha informada é inválida");
+            if (UserEntity == null) 
+                throw new ArgumentNullException();
+            if (UserEntity.Password != view.Password) 
+                throw new WrongPasswordException("A senha informada é inválida");
 
             return UserEntity;
         }
 
         public void Create(InputCreateUser view)
         {
-            if (view == null) throw new ArgumentNullException();
-            User? UserBeingUsed = _repository.GetByName(view.Name);
-            if (UserBeingUsed != null) throw new NameInUseException("O nome de usuário ja está em uso!");
+            if (view == null) 
+                throw new ArgumentNullException();
+            var NameInUse = _repository.GetByName(view.Name);
+            if (NameInUse != null) 
+                throw new NameInUseException("O nome de usuário ja está em uso!");
 
             var Entity = new User(view.Name, view.Password);
             _repository.Create(Entity);
         }
 
-        public override long Update(InputIdentityUpdateUser inputIdentityUpdate)
+        public override long Update(InputIdentityUpdateUser inputIdentityUpdateUser)
         {
-            var OriginalItem = _repository.Get(inputIdentityUpdate.Id);
+            var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
             if (OriginalItem == null) throw new NotFoundException();
+            if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != OriginalItem.Name)
+                throw new InvalidArgumentException("Esse nome ja está em uso!");
 
-            return _repository.Update(new User(inputIdentityUpdate.InputUpdate.Name, inputIdentityUpdate.InputUpdate.Password).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
-        }
-    }
-
-    public class NameInUseException : Exception
-    {
-        public NameInUseException(string message) : base(message)
-        { }
-    }
-
-    public class WrongPasswordException : Exception
-    {
-        public WrongPasswordException(string message) : base(message)
-        { }
-    }
-
-    public class NotFoundException : Exception
-    {
-        public NotFoundException(string message = "Id não localizado") : base(message)
-        {
+            return _repository.Update(new User(inputIdentityUpdateUser.InputUpdate.Name, inputIdentityUpdateUser.InputUpdate.Password).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
         }
     }
 }

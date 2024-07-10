@@ -8,21 +8,21 @@ namespace apiEstudo.Domain.Models
         public int EmployeeId { get; private set; }
         public double Value { get; private set; }
         public virtual Employee Employee { get; private set; }
-        public virtual List<ShoppingList>? Products { get; private set; }
+        public virtual List<ShoppingItem>? ListShoppingItem { get; private set; }
 
         public Shopping() { }
 
-        public Shopping(int employeeid, List<ShoppingList>? products, double value, Employee employee)
+        public Shopping(int employeeid, List<ShoppingItem>? shoppingListItem, double value, Employee employee)
         {
             EmployeeId = employeeid;
             Value = value;
             Employee = employee;
-            Products = products;
+            ListShoppingItem = shoppingListItem;
         }
 
         public static implicit operator OutputShopping(Shopping shop)
         {
-            return shop == null ? default : new OutputShopping(shop.Value, shop.Employee, (from item in shop.Products select (OutputShoppingList)item).ToList()).LoadInternalData(shop.Id, shop.CreationDate, shop.ChangeDate);
+            return shop == null ? default : new OutputShopping(shop.Value, shop.Employee, (from item in shop.ListShoppingItem select (OutputShoppingItem)item).ToList()).LoadInternalData(shop.Id, shop.CreationDate, shop.ChangeDate);
         }
     }
 }

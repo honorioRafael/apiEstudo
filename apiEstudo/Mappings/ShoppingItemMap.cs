@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace apiEstudo.Mappings
 {
-    public class ShoppingListMap : IEntityTypeConfiguration<ShoppingList>
+    public class ShoppingItemMap : IEntityTypeConfiguration<ShoppingItem>
     {
-        public void Configure(EntityTypeBuilder<ShoppingList> builder)
+        public void Configure(EntityTypeBuilder<ShoppingItem> builder)
         {
             builder.ToTable("produtos_compra");
             builder.HasKey(x => x.Id);
@@ -15,7 +15,7 @@ namespace apiEstudo.Mappings
             builder.Property(x => x.Quantity).HasColumnName("quantity");
 
             builder.HasOne(x => x.Shopping)
-                .WithMany(s => s.Products)
+                .WithMany(s => s.ListShoppingItem)
                 .HasForeignKey(x => x.ShoppingId)
                 .OnDelete(DeleteBehavior.Restrict);
 

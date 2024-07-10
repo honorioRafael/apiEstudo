@@ -1,14 +1,14 @@
 ﻿namespace apiEstudo.Application.Arguments
 {
-    public class OutputShoppingList : BaseOutput<OutputShoppingList>
+    public class OutputShoppingItem : BaseOutput<OutputShoppingItem>
     {
         public double Quantity { get; set; }
         public OutputProduct Produto { get; set; }
 
-        public OutputShoppingList()
+        public OutputShoppingItem()
         { }
 
-        public OutputShoppingList(double quantity, OutputProduct produto)
+        public OutputShoppingItem(double quantity, OutputProduct produto)
         {
             Quantity = quantity;
             Produto = produto;
