@@ -1,5 +1,4 @@
 ﻿using apiEstudo.Domain.Models;
-using System.Threading.Tasks;
 
 namespace apiEstudo.Application.Arguments
 {
@@ -13,7 +12,7 @@ namespace apiEstudo.Application.Arguments
         { }
 
         public OutputEmployee(string name, int age, EmployeeTask task)
-        { 
+        {
             Name = name;
             Age = age;
 

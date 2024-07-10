@@ -53,7 +53,7 @@ namespace apiEstudo.Infraestrutura.Repositories
         {
             throw new NotImplementedException();
         }
-        
+
         public virtual long Update(TEntry entry)
         {
             _context.Update(entry);

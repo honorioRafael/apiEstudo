@@ -51,7 +51,7 @@ namespace apiEstudo.Application.Services
         public virtual void Delete(TInputIdentityDelete inputIdentityDelete)
         {
             var ToBeDeleted = _repository.Get(inputIdentityDelete.Id);
-            if (ToBeDeleted == null) 
+            if (ToBeDeleted == null)
                 throw new NotFoundException("Não foi encontrado nenhum registro com o ID informado.");
             _repository.Delete(ToBeDeleted);
         }

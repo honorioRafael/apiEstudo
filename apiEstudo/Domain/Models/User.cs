@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
-
-namespace apiEstudo.Domain.Models
+﻿namespace apiEstudo.Domain.Models
 {
     public class User : BaseEntry<User>
     {

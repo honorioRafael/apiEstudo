@@ -1,7 +1,6 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
@@ -15,9 +14,9 @@ namespace apiEstudo.Application.Services
         public User? Auth(InputCreateUser view)
         {
             var UserEntity = _repository.GetByName(view.Name);
-            if (UserEntity == null) 
+            if (UserEntity == null)
                 throw new ArgumentNullException();
-            if (UserEntity.Password != view.Password) 
+            if (UserEntity.Password != view.Password)
                 throw new WrongPasswordException("A senha informada é inválida");
 
             return UserEntity;
@@ -25,10 +24,10 @@ namespace apiEstudo.Application.Services
 
         public void Create(InputCreateUser view)
         {
-            if (view == null) 
+            if (view == null)
                 throw new ArgumentNullException();
             var NameInUse = _repository.GetByName(view.Name);
-            if (NameInUse != null) 
+            if (NameInUse != null)
                 throw new NameInUseException("O nome de usuário ja está em uso!");
 
             var Entity = new User(view.Name, view.Password);

@@ -8,12 +8,12 @@ namespace apiEstudo.Mappings
     {
         public void Configure(EntityTypeBuilder<EmployeeTask> builder)
         {
-            builder.ToTable("tasks");
+            builder.ToTable("tarefas");
             builder.Property(x => x.Id).HasColumnName("id");
-            builder.Property(x => x.Name).HasColumnName("name");
-            builder.Property(x => x.Description).HasColumnName("description");
-            builder.Property(x => x.CreationDate).HasColumnName("creationdate");
-            builder.Property(x => x.ChangeDate).HasColumnName("changedate");
+            builder.Property(x => x.Name).HasColumnName("nome");
+            builder.Property(x => x.Description).HasColumnName("descricao");
+            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
+            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
         }
     }
 }

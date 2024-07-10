@@ -1,5 +1,4 @@
-﻿using apiEstudo.Application;
-using apiEstudo.Application.Arguments;
+﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

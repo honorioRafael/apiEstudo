@@ -1,6 +1,4 @@
 ﻿using apiEstudo.Application.Arguments.Base;
-using Microsoft.AspNetCore.Components.Forms;
-using System.Diagnostics.CodeAnalysis;
 
 namespace apiEstudo.Application.Arguments
 {

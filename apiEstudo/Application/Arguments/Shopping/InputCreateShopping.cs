@@ -1,5 +1,4 @@
 ﻿using apiEstudo.Application.Arguments.Base;
-using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.Arguments
 {

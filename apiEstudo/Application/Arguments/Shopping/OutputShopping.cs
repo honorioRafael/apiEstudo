@@ -1,6 +1,4 @@
-﻿using apiEstudo.Domain.Model;
-
-namespace apiEstudo.Application.Arguments
+﻿namespace apiEstudo.Application.Arguments
 {
     public class OutputShopping : BaseOutput<OutputShopping>
     {
@@ -10,7 +8,7 @@ namespace apiEstudo.Application.Arguments
 
         public OutputShopping()
         {
-            
+
         }
 
         public OutputShopping(double value, OutputEmployee employee, List<OutputShoppingItem> products)

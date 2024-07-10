@@ -1,5 +1,4 @@
-﻿using apiEstudo.Application.Arguments.Base;
-using apiEstudo.Application.Arguments.BaseViewModel;
+﻿using apiEstudo.Application.Arguments.BaseViewModel;
 
 namespace apiEstudo.Application.Arguments
 {

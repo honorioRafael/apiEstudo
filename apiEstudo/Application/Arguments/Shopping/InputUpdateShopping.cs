@@ -1,5 +1,4 @@
 ﻿using apiEstudo.Application.Arguments.Base;
-using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.Arguments
 {
@@ -7,5 +6,7 @@ namespace apiEstudo.Application.Arguments
     {
         public int EmployeeId { get; set; }
         public double Value { get; set; }
+
+
     }
 }

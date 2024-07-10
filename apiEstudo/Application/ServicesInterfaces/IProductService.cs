@@ -1,6 +1,5 @@
-﻿using apiEstudo.Application.Arguments.Product;
-using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Product;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {

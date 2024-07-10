@@ -1,7 +1,6 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.Arguments.Product;
 using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
@@ -17,7 +16,7 @@ namespace apiEstudo.Application.Services
 
         public override long Create(InputCreateProduct inputCreateProduct)
         {
-            if (inputCreateProduct == null) 
+            if (inputCreateProduct == null)
                 throw new ArgumentNullException();
             if (_brandRepository.Get(inputCreateProduct.BrandId) == null)
                 throw new NotFoundException("ID da marca não localizado.");

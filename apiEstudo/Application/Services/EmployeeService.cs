@@ -1,9 +1,7 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Model;
-using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace apiEstudo.Application.Services
 {
@@ -18,11 +16,11 @@ namespace apiEstudo.Application.Services
         public override long Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
         {
             var OriginalItem = _repository.Get(inputIdentityUpdateEmployee.Id);
-            if (OriginalItem == null) 
+            if (OriginalItem == null)
                 throw new NotFoundException();
-            if (_employeeTaskRepository.Get(inputIdentityUpdateEmployee.InputUpdate.TaskId) == null) 
+            if (_employeeTaskRepository.Get(inputIdentityUpdateEmployee.InputUpdate.TaskId) == null)
                 throw new NotFoundException("Employee Task ID inválido!");
-            if (inputIdentityUpdateEmployee.InputUpdate.Age < 0) 
+            if (inputIdentityUpdateEmployee.InputUpdate.Age < 0)
                 throw new InvalidArgumentException("Idade inválida!");
 
             return _repository.Update(new Employee(inputIdentityUpdateEmployee.InputUpdate.Name,
@@ -32,11 +30,11 @@ namespace apiEstudo.Application.Services
 
         public override long Create(InputCreateEmployee inputCreateEmployee)
         {
-            if (inputCreateEmployee == null) 
+            if (inputCreateEmployee == null)
                 throw new ArgumentNullException();
-            if (_employeeTaskRepository.Get(inputCreateEmployee.TaskId) == null) 
+            if (_employeeTaskRepository.Get(inputCreateEmployee.TaskId) == null)
                 throw new NotFoundException("Employee Task ID inválido!");
-            if (inputCreateEmployee.Age < 0) 
+            if (inputCreateEmployee.Age < 0)
                 throw new InvalidArgumentException("Idade inválida!");
 
             return _repository.Create(new Employee(inputCreateEmployee.Name, inputCreateEmployee.Age, inputCreateEmployee.TaskId, null).SetCreationDate());

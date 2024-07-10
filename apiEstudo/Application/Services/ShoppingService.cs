@@ -2,8 +2,6 @@
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
-using apiEstudo.Application.Services;
-using apiEstudo.Application.Argument;
 
 namespace apiEstudo.Application.Services
 {
@@ -19,7 +17,7 @@ namespace apiEstudo.Application.Services
 
         public override long Create(InputCreateShopping inputCreateShopping)
         {
-            if (inputCreateShopping == null) 
+            if (inputCreateShopping == null)
                 throw new ArgumentNullException();
             if (_employeeRepository.Get(inputCreateShopping.EmployeeId) == null)
                 throw new InvalidArgumentException("Employee ID inválido!");
@@ -38,7 +36,12 @@ namespace apiEstudo.Application.Services
 
             _shoppingItemRepository.CreateMultiple(
                 (from product in inputCreateShoppingItem
-                 select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());                                                    
+                 select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());
         }
+
+        //public override long Update(InputIdentityUpdateShopping inputIdentityUpdateShopping)
+        //{
+
+        //}
     }
 }

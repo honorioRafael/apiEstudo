@@ -10,10 +10,10 @@ namespace apiEstudo.Mappings
         {
             builder.ToTable("marcas");
             builder.HasKey(x => x.Id).HasName("Id");
-            builder.Property(x => x.Name).HasColumnName("name");
+            builder.Property(x => x.Name).HasColumnName("nome");
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.CreationDate).HasColumnName("creationdate");
-            builder.Property(x => x.ChangeDate).HasColumnName("changedate");
+            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
+            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Application.Arguments.Brand;
 using apiEstudo.Application.Services;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace apiEstudo.Application
 {
