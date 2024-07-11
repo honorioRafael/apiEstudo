@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ShoppingRepository : BaseRepository<Shopping>, IShoppingRepository
+    public class ShoppingRepository : BaseRepository_2<Shopping>, IShoppingRepository
     {
         public ShoppingRepository(ConnectionContext context) : base(context)
         {
@@ -17,7 +17,8 @@ namespace apiEstudo.Infraestrutura.Repositories
                 .ThenInclude(p => p.Product)
                 .ThenInclude(p => p.Brand)
                 .Include(x => x.Employee)
-                .ThenInclude(x => x.EmployeeTask).ToList();
+                .ThenInclude(x => x.EmployeeTask)
+                .Include(x => x.ShippingStatus).ToList();
         }
 
         public override Shopping? Get(int id)
@@ -26,7 +27,8 @@ namespace apiEstudo.Infraestrutura.Repositories
                 .ThenInclude(p => p.Product)
                 .ThenInclude(p => p.Brand)
                 .Include(x => x.Employee)
-                .ThenInclude(x => x.EmployeeTask).AsNoTracking().FirstOrDefault();
+                .ThenInclude(x => x.EmployeeTask)
+                .Include(x => x.ShippingStatus).AsNoTracking().FirstOrDefault();
         }
     }
 }

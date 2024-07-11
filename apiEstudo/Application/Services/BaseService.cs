@@ -1,6 +1,4 @@
 ﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Application.Arguments.Base;
-using apiEstudo.Application.Arguments.BaseViewModel;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
@@ -14,7 +12,7 @@ namespace apiEstudo.Application.Services
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
-        where TRepository : IBaseRepository<TEntry>
+        where TRepository : IBaseRepository_2<TEntry>
     {
         protected readonly TRepository _repository;
 

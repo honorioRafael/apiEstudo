@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments.Base;
-
-namespace apiEstudo.Application.Arguments
+﻿namespace apiEstudo.Application.Arguments
 {
     public class InputCreateEmployee : BaseInputCreate<InputCreateEmployee>
     {

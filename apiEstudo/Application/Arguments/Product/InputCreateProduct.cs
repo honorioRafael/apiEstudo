@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments.Base;
-
-namespace apiEstudo.Application.Arguments.Product
+﻿namespace apiEstudo.Application.Arguments.Product
 {
     public class InputCreateProduct : BaseInputCreate<InputCreateProduct>
     {

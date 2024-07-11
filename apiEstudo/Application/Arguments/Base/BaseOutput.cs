@@ -15,4 +15,8 @@
             return (TOutput)this;
         }
     }
+
+    public class Output_0 : BaseOutput<Output_0>
+    {
+    }
 }

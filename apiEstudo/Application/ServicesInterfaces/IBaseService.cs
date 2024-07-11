@@ -1,6 +1,4 @@
 ﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Application.Arguments.Base;
-using apiEstudo.Application.Arguments.BaseViewModel;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {

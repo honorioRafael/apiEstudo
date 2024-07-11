@@ -1,7 +1,5 @@
 ﻿using apiEstudo.Application;
 using apiEstudo.Application.Arguments;
-using apiEstudo.Application.Arguments.Base;
-using apiEstudo.Application.Arguments.BaseViewModel;
 using apiEstudo.Application.ServicesInterfaces;
 using Microsoft.AspNetCore.Mvc;
 

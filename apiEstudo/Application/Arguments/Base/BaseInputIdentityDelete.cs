@@ -1,4 +1,4 @@
-﻿namespace apiEstudo.Application.Arguments.BaseViewModel
+﻿namespace apiEstudo.Application.Arguments
 {
     public class BaseInputIdentityDelete<TInputInputIdentityDelete> where TInputInputIdentityDelete : BaseInputIdentityDelete<TInputInputIdentityDelete>
     {
@@ -7,6 +7,13 @@
         public BaseInputIdentityDelete(int id)
         {
             Id = id;
+        }
+    }
+
+    public class InputIdentityDelete_0 : BaseInputIdentityDelete<InputIdentityDelete_0>
+    {
+        public InputIdentityDelete_0(int id) : base(id)
+        {
         }
     }
 }

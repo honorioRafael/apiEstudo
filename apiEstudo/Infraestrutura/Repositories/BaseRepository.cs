@@ -5,13 +5,49 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public abstract class BaseRepository<TEntry> : IBaseRepository<TEntry>
+    public abstract class BaseRepository_1<TEntry> : IBaseRepository<TEntry>
         where TEntry : BaseEntry<TEntry>
     {
         protected readonly ConnectionContext _context;
         protected readonly DbSet<TEntry> _dbset;
 
-        public BaseRepository(ConnectionContext context)
+        public BaseRepository_1(ConnectionContext context)
+        {
+            _context = context;
+            _dbset = _context.Set<TEntry>();
+        }
+
+        // Getters
+        public virtual List<TEntry>? GetAll()
+        {
+            return _dbset.ToList();
+        }
+
+        public virtual List<TEntry>? GetListByListId(List<int> listId)
+        {
+            return _dbset.Where(x => listId.Contains(x.Id)).ToList();
+        }
+
+        public virtual TEntry? Get(int id)
+        {
+            return _dbset.Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
+        }
+
+        public virtual TEntry? GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+
+    public abstract class BaseRepository_2<TEntry> : IBaseRepository_2<TEntry>
+        where TEntry : BaseEntry<TEntry>
+    {
+        protected readonly ConnectionContext _context;
+        protected readonly DbSet<TEntry> _dbset;
+
+        public BaseRepository_2(ConnectionContext context)
         {
             _context = context;
             _dbset = _context.Set<TEntry>();
@@ -32,7 +68,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
             return (from i in entry select i.Id).ToList();
         }
-        
+
         // Getters
         public virtual List<TEntry>? GetAll()
         {
@@ -67,7 +103,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             _context.UpdateRange(entry);
             _context.SaveChanges();
 
-            return (from i in entry select i.Id).ToList(); 
+            return (from i in entry select i.Id).ToList();
         }
 
         // Delete

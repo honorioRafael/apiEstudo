@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments.BaseViewModel;
-
-namespace apiEstudo.Application.Arguments
+﻿namespace apiEstudo.Application.Arguments
 {
     public class InputIdentityDeleteShopping : BaseInputIdentityDelete<InputIdentityDeleteShopping>
     {

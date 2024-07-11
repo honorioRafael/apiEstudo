@@ -13,14 +13,14 @@ namespace apiEstudo.Application
 
         public override long Create(InputCreateEmployeeTask inputCreateEmployeeTask)
         {
-            if (inputCreateEmployeeTask == null) 
+            if (inputCreateEmployeeTask == null)
                 throw new ArgumentNullException();
             return _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
         }
 
         public override long Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
         {
-            if (inputIdentityUpdateEmployeeTask == null) 
+            if (inputIdentityUpdateEmployeeTask == null)
                 throw new ArgumentNullException();
             var originalEmployeeTask = _repository.Get(inputIdentityUpdateEmployeeTask.Id);
             return _repository.Update(new EmployeeTask(inputIdentityUpdateEmployeeTask.InputUpdate.Name, inputIdentityUpdateEmployeeTask.InputUpdate.Description).LoadInternalData(originalEmployeeTask.Id, originalEmployeeTask.CreationDate, originalEmployeeTask.ChangeDate).SetChangeDate());

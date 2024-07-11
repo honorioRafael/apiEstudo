@@ -7,16 +7,37 @@ namespace apiEstudo.Application.Services
 {
     public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService
     {
-        public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository) : base(shoppingRepository)
+        public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository, IShippingStatusRepository shippingStatusRepository) : base(shoppingRepository)
         {
             _shoppingItemRepository = shoppingItemRepository;
             _employeeRepository = employeeRepository;
             _productRepository = productRepository;
+            _shippingStatusRepository = shippingStatusRepository;
         }
         private readonly IShoppingItemRepository _shoppingItemRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IShippingStatusRepository _shippingStatusRepository;
 
+        //
+        // Shipping
+        //
+
+        public long UpdateShippingStatus(int shippingStatusID, InputIdentityUpdateShoppingShippingStatus inputIdentityUpdateShoppingShippingStatus)
+        {
+            if (_shippingStatusRepository.Get(shippingStatusID) == null || shippingStatusID < 0)
+                throw new InvalidArgumentException("Shipping ID inválido!");
+
+            var SelectedShopping = _repository.Get(inputIdentityUpdateShoppingShippingStatus.Id);
+            if (SelectedShopping == null)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
+            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, null, SelectedShopping.Value, null, shippingStatusID, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
+        }
+
+        //
+        // Create
+        //
         public override long Create(InputCreateShopping inputCreateShopping)
         {
             if (inputCreateShopping == null)
@@ -28,15 +49,18 @@ namespace apiEstudo.Application.Services
             if (inputCreateShopping.Value < 0)
                 throw new InvalidArgumentException("Valor inválido!");
 
-            var ShopId = _repository.Create(new Shopping(inputCreateShopping.EmployeeId, null, inputCreateShopping.Value, null).SetCreationDate());
+            var ShopId = _repository.Create(new Shopping(inputCreateShopping.EmployeeId, null, inputCreateShopping.Value, null, 1, null).SetCreationDate());
 
             CreateMultipleShoppingItens(Convert.ToInt32(ShopId), inputCreateShopping.CreatedItens);
             return ShopId;
         }
 
+        //
+        // Update
+        //
         public override long Update(InputIdentityUpdateShopping inputIdentityUpdateShopping)
         {
-            if (inputIdentityUpdateShopping == null) 
+            if (inputIdentityUpdateShopping == null)
                 throw new ArgumentNullException();
 
             var OriginalShopping = _repository.Get(inputIdentityUpdateShopping.Id);
@@ -51,7 +75,7 @@ namespace apiEstudo.Application.Services
             if (inputIdentityUpdateShopping.InputUpdate.CreatedItens != null)
             {
                 CreateMultipleShoppingItens(OriginalShopping.Id, inputIdentityUpdateShopping.InputUpdate.CreatedItens);
-            }           
+            }
 
             // produtos compra - Update
             if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens != null)
@@ -65,7 +89,7 @@ namespace apiEstudo.Application.Services
                 DeleteMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.DeletedItens);
             }
 
-            _repository.Update(new Shopping(inputIdentityUpdateShopping.InputUpdate.EmployeeId, null, inputIdentityUpdateShopping.InputUpdate.Value, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate).SetChangeDate());            
+            _repository.Update(new Shopping(inputIdentityUpdateShopping.InputUpdate.EmployeeId, null, inputIdentityUpdateShopping.InputUpdate.Value, null, OriginalShopping.ShippingStatusId, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate).SetChangeDate());
             return OriginalShopping.Id;
 
         }
@@ -79,7 +103,7 @@ namespace apiEstudo.Application.Services
 
             _shoppingItemRepository.CreateMultiple(
                 (from product in inputCreateShoppingItem
-                    select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());
+                 select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());
         }
 
         private void UpdateMultipleShoppingItens(List<InputIdentityUpdateShoppingItem> inputIdentityUpdateShoppingitem)

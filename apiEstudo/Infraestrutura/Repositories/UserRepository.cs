@@ -4,7 +4,7 @@ using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository_2<User>, IUserRepository
     {
         public UserRepository(ConnectionContext context) : base(context)
         { }

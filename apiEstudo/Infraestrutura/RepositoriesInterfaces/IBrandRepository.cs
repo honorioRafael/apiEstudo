@@ -2,7 +2,7 @@
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IBrandRepository : IBaseRepository<Brand>
+    public interface IBrandRepository : IBaseRepository_2<Brand>
     {
     }
 }

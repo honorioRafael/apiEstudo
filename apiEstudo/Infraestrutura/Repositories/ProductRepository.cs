@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    public class ProductRepository : BaseRepository_2<Product>, IProductRepository
     {
         public ProductRepository(ConnectionContext context) : base(context)
         {

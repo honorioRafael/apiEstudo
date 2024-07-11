@@ -73,6 +73,7 @@ internal class Program
         builder.Services.AddTransient<IShoppingRepository, ShoppingRepository>();
         builder.Services.AddTransient<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IShoppingItemRepository, ShoppingItemRepository>();
+        builder.Services.AddTransient<IShippingStatusRepository, ShippingStatusRepository>();
 
         // Services
         builder.Services.AddTransient<IEmployeeService, EmployeeService>();

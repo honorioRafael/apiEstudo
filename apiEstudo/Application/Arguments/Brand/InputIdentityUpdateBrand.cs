@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments.Base;
-
-namespace apiEstudo.Application.Arguments.Brand
+﻿namespace apiEstudo.Application.Arguments.Brand
 {
     public class InputIdentityUpdateBrand : BaseInputIdentityUpdate<InputUpdateBrand>
     {
