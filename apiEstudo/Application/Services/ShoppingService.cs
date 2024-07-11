@@ -24,6 +24,9 @@ namespace apiEstudo.Application.Services
 
         public long UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
         {
+            if (inputApproveShippingStatus.Id < 0)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
             var SelectedShopping = _repository.Get(inputApproveShippingStatus.Id);
             if (SelectedShopping == null)
                 throw new InvalidArgumentException("Shopping ID inválido!");
@@ -33,6 +36,9 @@ namespace apiEstudo.Application.Services
 
         public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
         {
+            if(inputCancelShippingStatus.Id < 0)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
             var SelectedShopping = _repository.Get(inputCancelShippingStatus.Id);
             if (SelectedShopping == null)
                 throw new InvalidArgumentException("Shopping ID inválido!");

@@ -1,15 +1,16 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/ShippingStatus")]
     public class ShippingStatusController : BaseController<IShippingStatusService, OutputShippingStatus>
     {
         public ShippingStatusController(IShippingStatusService service) : base(service) { }
-    
 
         [ApiExplorerSettings(IgnoreApi = true)]
         public override IActionResult Get(int id)
