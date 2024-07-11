@@ -5,12 +5,19 @@ namespace apiEstudo.Domain.Models
 {
     public class ShippingStatus : BaseEntry<ShippingStatus>
     {
+        #region Properties
+        #region Base Ignore
         [NotMapped]
         public override DateTime? CreationDate { get => base.CreationDate; protected set => base.CreationDate = value; }
         [NotMapped]
         public override DateTime? ChangeDate { get => base.ChangeDate; set => base.ChangeDate = value; }
+        #endregion
+
         public string Description { get; set; }
+
         public virtual List<Shopping> ListShoppings { get; set; }
+
+        #endregion
 
         public ShippingStatus()
         { }

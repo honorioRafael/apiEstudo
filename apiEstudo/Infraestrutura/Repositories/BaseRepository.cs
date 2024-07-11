@@ -17,7 +17,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             _dbset = _context.Set<TEntry>();
         }
 
-        // Create
+        #region Create
         public virtual long Create(TEntry entry)
         {
             CreateMultiple([entry]);
@@ -33,7 +33,9 @@ namespace apiEstudo.Infraestrutura.Repositories
             return (from i in entry select i.Id).ToList();
         }
 
-        // Getters
+        #endregion
+
+        #region Get
         public virtual List<TEntry>? GetAll()
         {
             return _dbset.ToList();
@@ -49,7 +51,9 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
         }
 
-        // Update
+        #endregion
+
+        #region Update
         public virtual long Update(TEntry entry)
         {
             UpdateMultiple([entry]);
@@ -65,7 +69,9 @@ namespace apiEstudo.Infraestrutura.Repositories
             return (from i in entry select i.Id).ToList();
         }
 
-        // Delete
+        #endregion
+
+        #region Delete
         public virtual bool Delete(TEntry entry)
         {
             DeleteMultiple([entry]);
@@ -78,5 +84,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             _context.RemoveRange(entry);
             _context.SaveChanges();
         }
+
+        #endregion
     }
 }

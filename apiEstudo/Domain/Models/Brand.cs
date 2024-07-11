@@ -7,10 +7,9 @@ namespace apiEstudo.Domain.Models
         public string Name { get; set; }
         public virtual List<Product> ListProduct { get; set; }
 
-        public Brand(string name/*, List<Product> listProduct*/)
+        public Brand(string name)
         {
             Name = name;
-            //ListProduct = listProduct;
         }
 
         public static implicit operator OutputBrand(Brand brand)

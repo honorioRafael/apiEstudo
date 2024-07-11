@@ -4,11 +4,17 @@ namespace apiEstudo.Domain.Models
 {
     public class ShoppingItem : BaseEntry<ShoppingItem>
     {
+        #region Properties
         public int ShoppingId { get; set; }
         public int ProductId { get; set; }
         public double Quantity { get; set; }
+
+        #region Internal
         public virtual Product Product { get; set; }
         public virtual Shopping Shopping { get; set; }
+        #endregion
+
+        #endregion
 
         public ShoppingItem()
         { }

@@ -70,12 +70,11 @@ namespace apiEstudo.Application.Services
         }
     }
 
-    public abstract class BaseService<TEntry, TRepository, TInputIdentityUpdate, TOutput> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputUpdate_0, TInputIdentityUpdate, BaseInputIdentityDelete_0, TOutput>
-        where TInputIdentityUpdate : BaseInputIdentityUpdate<BaseInputUpdate_0>
+    public abstract class BaseService_1<TEntry, TRepository, TOutput> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>
         where TRepository : IBaseRepository<TEntry>
     {
-        protected BaseService(TRepository contextInterface) : base(contextInterface) { }
+        protected BaseService_1(TRepository contextInterface) : base(contextInterface) { }
     }
 }

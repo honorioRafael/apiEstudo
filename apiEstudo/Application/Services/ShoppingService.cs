@@ -1,7 +1,6 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
@@ -36,7 +35,7 @@ namespace apiEstudo.Application.Services
 
         public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
         {
-            if(inputCancelShippingStatus.Id < 0)
+            if (inputCancelShippingStatus.Id < 0)
                 throw new InvalidArgumentException("Shopping ID inválido!");
 
             var SelectedShopping = _repository.Get(inputCancelShippingStatus.Id);

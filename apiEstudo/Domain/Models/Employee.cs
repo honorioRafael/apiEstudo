@@ -9,11 +9,21 @@ namespace apiEstudo.Domain.Model
     //[Table("Employee")
     public class Employee : BaseEntry<Employee>
     {
+        #region Properties
         public string? Name { get; set; }
         public int Age { get; set; }
         public int EmployeeTaskId { get; set; }
+
+        #region Internal
         public EmployeeTask EmployeeTask { get; set; }
-        public virtual ICollection<Shopping> Shoppings { get; set; }
+
+        #endregion
+
+        #region External
+        public virtual List<Shopping> Shoppings { get; set; }
+
+        #endregion
+        #endregion
 
         public Employee(string? name, int age, int employeeTaskId, EmployeeTask employeeTask)
         {

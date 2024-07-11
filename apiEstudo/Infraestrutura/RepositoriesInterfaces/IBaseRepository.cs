@@ -6,7 +6,7 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         where TEntry : BaseEntry<TEntry>
     {
         public List<TEntry>? GetAll();
-        public TEntry? Get(int id);        
+        public TEntry? Get(int id);
         List<TEntry>? GetListByListId(List<int> listId);
         public long Create(TEntry classe);
         public List<int> CreateMultiple(List<TEntry> entry);

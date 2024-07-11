@@ -2,8 +2,8 @@
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
-    public interface IShippingStatusService : IBaseService<OutputShippingStatus>
+    public interface IShippingStatusService : IBaseService_1<OutputShippingStatus>
     {
-        
+
     }
 }

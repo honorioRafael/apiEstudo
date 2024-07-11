@@ -8,7 +8,7 @@ namespace apiEstudo.Controllers
     [ApiController]
     [Authorize]
     [Route("api/v1/ShippingStatus")]
-    public class ShippingStatusController : BaseController<IShippingStatusService, OutputShippingStatus>
+    public class ShippingStatusController : BaseController_1<IShippingStatusService, OutputShippingStatus>
     {
         public ShippingStatusController(IShippingStatusService service) : base(service) { }
 

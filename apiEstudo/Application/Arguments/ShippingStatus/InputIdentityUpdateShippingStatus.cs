@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace apiEstudo.Application.Arguments
+﻿namespace apiEstudo.Application.Arguments
 {
     //
     // MODELO 

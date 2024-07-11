@@ -13,10 +13,5 @@
 
         public User()
         { }
-
-        //public static implicit operator OutputUser(User user)
-        //{
-        //    return user == null ? default : new OutputUser { Id = user.Id };
-        //}
     }
 }

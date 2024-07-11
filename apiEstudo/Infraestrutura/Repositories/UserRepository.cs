@@ -11,7 +11,6 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public User? GetByName(string name)
         {
-            Console.WriteLine(name.GetType());
             return _dbset.Where(x => x.Name == name).FirstOrDefault();
         }
     }

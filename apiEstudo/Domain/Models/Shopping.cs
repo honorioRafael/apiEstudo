@@ -5,12 +5,21 @@ namespace apiEstudo.Domain.Models
 {
     public class Shopping : BaseEntry<Shopping>
     {
-        public int EmployeeId { get; private set; }
+        #region Properties
         public double Value { get; private set; }
-        public virtual Employee Employee { get; private set; }
-        public virtual List<ShoppingItem>? ListShoppingItem { get; private set; }
+        public int EmployeeId { get; private set; }
         public int ShippingStatusId { get; set; }
+
+        #region Internal
+        public virtual Employee Employee { get; private set; }
         public virtual ShippingStatus ShippingStatus { get; set; }
+        #endregion
+
+        #region External
+        public virtual List<ShoppingItem>? ListShoppingItem { get; private set; }
+        #endregion
+
+        #endregion
 
         public Shopping() { }
 

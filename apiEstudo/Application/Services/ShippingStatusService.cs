@@ -5,7 +5,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class ShippingStatusService : BaseService<ShippingStatus, IShippingStatusRepository, BaseInputIdentityUpdate_0, OutputShippingStatus>, IShippingStatusService
+    public class ShippingStatusService : BaseService_1<ShippingStatus, IShippingStatusRepository, OutputShippingStatus>, IShippingStatusService
     {
         public ShippingStatusService(IShippingStatusRepository contextInterface) : base(contextInterface) { }
     }

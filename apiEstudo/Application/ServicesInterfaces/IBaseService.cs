@@ -17,7 +17,7 @@ namespace apiEstudo.Application.ServicesInterfaces
         List<TOutput>? GetListByListId(List<int> listId);
     }
 
-    public interface IBaseService<TOutput> : IBaseService<BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>        
+    public interface IBaseService_1<TOutput> : IBaseService<BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>
         where TOutput : BaseOutput<TOutput>
     { }
 }
