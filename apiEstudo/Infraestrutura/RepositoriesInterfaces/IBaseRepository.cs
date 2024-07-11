@@ -6,20 +6,8 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         where TEntry : BaseEntry<TEntry>
     {
         public List<TEntry>? GetAll();
-        public TEntry? Get(int id);
-        public TEntry? GetByName(string name);
+        public TEntry? Get(int id);        
         List<TEntry>? GetListByListId(List<int> listId);
-    }
-
-    public interface IBaseRepository_1<TEntry> : IBaseRepository<TEntry>
-        where TEntry : BaseEntry<TEntry>
-    {
-
-    }
-
-    public interface IBaseRepository_2<TEntry> : IBaseRepository<TEntry>
-        where TEntry : BaseEntry<TEntry>
-    {
         public long Create(TEntry classe);
         public List<int> CreateMultiple(List<TEntry> entry);
         public long Update(TEntry classe);

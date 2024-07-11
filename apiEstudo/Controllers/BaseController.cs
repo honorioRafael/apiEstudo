@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace apiEstudo.Controllers
 {
-    public class BaseController<TService, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : ControllerBase
+    public abstract class BaseController<TService, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : ControllerBase
         where TService : IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
         where TInputCreate : BaseInputCreate<TInputCreate>
         where TInputUpdate : BaseInputUpdate<TInputUpdate>
@@ -111,5 +111,12 @@ namespace apiEstudo.Controllers
             if (Query == null) return NotFound();
             return Ok(Query);
         }
+    }
+
+    public abstract class BaseController<TService, TOutput> : BaseController<TService, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>
+        where TService : IBaseService<BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>
+        where TOutput : BaseOutput<TOutput>
+    {
+        public BaseController(TService service) : base(service) { }
     }
 }

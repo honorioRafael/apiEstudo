@@ -2,9 +2,9 @@
 {
     public class BaseOutput<TOutput> where TOutput : BaseOutput<TOutput>
     {
-        public int Id { get; set; }
-        public DateTime? CreationDate { get; set; }
-        public DateTime? ChangeDate { get; set; }
+        public virtual int Id { get; set; }
+        public virtual DateTime? CreationDate { get; set; }
+        public virtual DateTime? ChangeDate { get; set; }
 
         public virtual TOutput LoadInternalData(int id, DateTime? creationDate, DateTime? changeDate)
         {
@@ -16,7 +16,5 @@
         }
     }
 
-    public class Output_0 : BaseOutput<Output_0>
-    {
-    }
+    public class BaseOutput_0 : BaseOutput<BaseOutput_0> { }
 }

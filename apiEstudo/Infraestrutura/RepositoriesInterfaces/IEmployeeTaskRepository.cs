@@ -2,7 +2,7 @@
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IEmployeeTaskRepository : IBaseRepository_2<EmployeeTask>
+    public interface IEmployeeTaskRepository : IBaseRepository<EmployeeTask>
     {
     }
 }

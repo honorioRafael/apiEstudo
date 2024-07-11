@@ -9,7 +9,7 @@ namespace apiEstudo.Controllers
 {
     [ApiController]
     [Route("api/v1/Auth")]
-    public class AuthController : BaseController<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDelete_0, Output_0>
+    public class AuthController : BaseController<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>
     {
         public AuthController(IUserService service) : base(service)
         { }
@@ -63,7 +63,7 @@ namespace apiEstudo.Controllers
 
         [HttpDelete]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public override IActionResult Delete(InputIdentityDelete_0 inputIdentityDelete)
+        public override IActionResult Delete(BaseInputIdentityDelete_0 inputIdentityDelete)
         {
             throw new NotImplementedException();
         }

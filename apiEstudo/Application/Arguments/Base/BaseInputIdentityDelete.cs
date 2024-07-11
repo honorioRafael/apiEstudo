@@ -4,16 +4,13 @@
     {
         public int Id { get; set; }
 
+        public BaseInputIdentityDelete() { }
+
         public BaseInputIdentityDelete(int id)
         {
             Id = id;
         }
     }
 
-    public class InputIdentityDelete_0 : BaseInputIdentityDelete<InputIdentityDelete_0>
-    {
-        public InputIdentityDelete_0(int id) : base(id)
-        {
-        }
-    }
+    public class BaseInputIdentityDelete_0 : BaseInputIdentityDelete<BaseInputIdentityDelete_0> { }
 }

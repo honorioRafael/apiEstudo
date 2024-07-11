@@ -3,8 +3,8 @@
     public abstract class BaseEntry<TEntry> where TEntry : BaseEntry<TEntry>
     {
         public int Id { get; protected set; }
-        public DateTime? CreationDate { get; protected set; }
-        public DateTime? ChangeDate { get; set; }
+        public virtual DateTime? CreationDate { get; protected set; }
+        public virtual DateTime? ChangeDate { get; set; }
 
         public TEntry LoadInternalData(int id, DateTime? creationDate, DateTime? changeDate)
         {

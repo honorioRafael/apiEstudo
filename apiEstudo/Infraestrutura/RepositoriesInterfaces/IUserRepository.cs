@@ -2,6 +2,8 @@
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IUserRepository : IBaseRepository_2<User>
-    { }
+    public interface IUserRepository : IBaseRepository<User>
+    {
+        public User? GetByName(string username);
+    }
 }

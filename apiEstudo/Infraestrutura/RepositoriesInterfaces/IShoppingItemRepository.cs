@@ -2,6 +2,6 @@
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IShoppingItemRepository : IBaseRepository_2<ShoppingItem>
+    public interface IShoppingItemRepository : IBaseRepository<ShoppingItem>
     { }
 }

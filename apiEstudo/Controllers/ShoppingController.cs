@@ -10,16 +10,14 @@ namespace apiEstudo.Controllers
     [Route("api/v1/Shopping")]
     public class ShoppingController : BaseController<IShoppingService, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>
     {
-        public ShoppingController(IShoppingService service) : base(service)
-        {
-        }
+        public ShoppingController(IShoppingService service) : base(service) { }
 
-        [HttpPut("ShippingStatus/Cancel")]
-        public IActionResult CancelShipping(InputIdentityUpdateShoppingShippingStatus inputIdentityUpdateShoppingShippingStatus)
+        [HttpPost("CancelShipping")]
+        public IActionResult CancelShipping(InputCancelShippingStatus inputIdentityUpdateShoppingShippingStatus)
         {
             try
             {
-                return Ok(_service.UpdateShippingStatus(3, inputIdentityUpdateShoppingShippingStatus));
+                return Ok(_service.UpdateShippingStatusCancel(inputIdentityUpdateShoppingShippingStatus));
             }
             catch (Exception ex)
             {
@@ -27,12 +25,12 @@ namespace apiEstudo.Controllers
             }
         }
 
-        [HttpPut("ShippingStatus/Approve")]
-        public IActionResult ApproveShipping(InputIdentityUpdateShoppingShippingStatus inputIdentityUpdateShoppingShippingStatus)
+        [HttpPost("ApproveShipping")]
+        public IActionResult ApproveShipping(InputApproveShippingStatus inputIdentityUpdateShoppingShippingStatus)
         {
             try
             {
-                return Ok(_service.UpdateShippingStatus(2, inputIdentityUpdateShoppingShippingStatus));
+                return Ok(_service.UpdateShippingStatusApprove(inputIdentityUpdateShoppingShippingStatus));
             }
             catch (Exception ex)
             {

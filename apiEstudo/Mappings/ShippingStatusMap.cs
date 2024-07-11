@@ -11,9 +11,7 @@ namespace apiEstudo.Mappings
             builder.ToTable("envio_status");
             builder.HasKey(x => x.Id).HasName("id");
             builder.Property(x => x.Description).HasColumnName("descricao");
-            builder.Property(x => x.Description).IsRequired();
-            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
-            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
+            builder.Property(x => x.Description).IsRequired(); ;
         }
     }
 }

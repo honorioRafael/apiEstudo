@@ -5,7 +5,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class UserService : BaseService<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, InputIdentityDelete_0, Output_0>, IUserService
+    public class UserService : BaseService<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>, IUserService
     {
         public UserService(IUserRepository contextInterface) : base(contextInterface)
         {

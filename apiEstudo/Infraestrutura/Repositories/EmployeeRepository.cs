@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class EmployeeRepository : BaseRepository_2<Employee>, IEmployeeRepository
+    public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
         public EmployeeRepository(ConnectionContext contexto) : base(contexto)
         { }

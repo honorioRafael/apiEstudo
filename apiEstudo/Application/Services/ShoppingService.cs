@@ -1,38 +1,43 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
     public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService
     {
-        public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository, IShippingStatusRepository shippingStatusRepository) : base(shoppingRepository)
+        public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository) : base(shoppingRepository)
         {
             _shoppingItemRepository = shoppingItemRepository;
             _employeeRepository = employeeRepository;
             _productRepository = productRepository;
-            _shippingStatusRepository = shippingStatusRepository;
         }
         private readonly IShoppingItemRepository _shoppingItemRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
-        private readonly IShippingStatusRepository _shippingStatusRepository;
 
         //
         // Shipping
         //
 
-        public long UpdateShippingStatus(int shippingStatusID, InputIdentityUpdateShoppingShippingStatus inputIdentityUpdateShoppingShippingStatus)
+        public long UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
         {
-            if (_shippingStatusRepository.Get(shippingStatusID) == null || shippingStatusID < 0)
-                throw new InvalidArgumentException("Shipping ID inválido!");
-
-            var SelectedShopping = _repository.Get(inputIdentityUpdateShoppingShippingStatus.Id);
+            var SelectedShopping = _repository.Get(inputApproveShippingStatus.Id);
             if (SelectedShopping == null)
                 throw new InvalidArgumentException("Shopping ID inválido!");
 
-            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, null, SelectedShopping.Value, null, shippingStatusID, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
+            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, null, SelectedShopping.Value, null, 2, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
+        }
+
+        public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
+        {
+            var SelectedShopping = _repository.Get(inputCancelShippingStatus.Id);
+            if (SelectedShopping == null)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
+            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, null, SelectedShopping.Value, null, 3, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate()); ;
         }
 
         //

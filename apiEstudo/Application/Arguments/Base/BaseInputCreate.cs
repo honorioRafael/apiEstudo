@@ -4,7 +4,7 @@
     {
     }
 
-    public class InputCreate_0 : BaseInputCreate<InputCreate_0>
+    public class BaseInputCreate_0 : BaseInputCreate<BaseInputCreate_0>
     {
     }
 }

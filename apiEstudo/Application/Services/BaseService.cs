@@ -12,7 +12,7 @@ namespace apiEstudo.Application.Services
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
-        where TRepository : IBaseRepository_2<TEntry>
+        where TRepository : IBaseRepository<TEntry>
     {
         protected readonly TRepository _repository;
 
@@ -68,5 +68,14 @@ namespace apiEstudo.Application.Services
         {
             return EntryToOutput(_repository.GetListByListId(listId));
         }
+    }
+
+    public abstract class BaseService<TEntry, TRepository, TInputIdentityUpdate, TOutput> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputUpdate_0, TInputIdentityUpdate, BaseInputIdentityDelete_0, TOutput>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<BaseInputUpdate_0>
+        where TOutput : BaseOutput<TOutput>
+        where TEntry : BaseEntry<TEntry>
+        where TRepository : IBaseRepository<TEntry>
+    {
+        protected BaseService(TRepository contextInterface) : base(contextInterface) { }
     }
 }

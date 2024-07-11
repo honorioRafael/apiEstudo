@@ -82,6 +82,7 @@ internal class Program
         builder.Services.AddTransient<IProductService, ProductService>();
         builder.Services.AddTransient<IShoppingService, ShoppingService>();
         builder.Services.AddTransient<IUserService, UserService>();
+        builder.Services.AddTransient<IShippingStatusService, ShippingStatusService>();
 
         // JWT Token
         var key = Encoding.ASCII.GetBytes(Key.Secret);

@@ -1,9 +1,14 @@
 ﻿using apiEstudo.Application.Arguments;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
 {
     public class ShippingStatus : BaseEntry<ShippingStatus>
     {
+        [NotMapped]
+        public override DateTime? CreationDate { get => base.CreationDate; protected set => base.CreationDate = value; }
+        [NotMapped]
+        public override DateTime? ChangeDate { get => base.ChangeDate; set => base.ChangeDate = value; }
         public string Description { get; set; }
         public virtual List<Shopping> ListShoppings { get; set; }
 
@@ -18,7 +23,7 @@ namespace apiEstudo.Domain.Models
 
         public static implicit operator OutputShippingStatus(ShippingStatus shippingStatus)
         {
-            return shippingStatus == null ? default : new OutputShippingStatus(shippingStatus.Description);
+            return shippingStatus == null ? default : new OutputShippingStatus(shippingStatus.Id, shippingStatus.Description);
         }
     }
 }
