@@ -11,14 +11,14 @@ namespace apiEstudo.Application
         public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
         { }
 
-        public override long Create(InputCreateEmployeeTask inputCreateEmployeeTask)
+        public override int Create(InputCreateEmployeeTask inputCreateEmployeeTask)
         {
             if (inputCreateEmployeeTask == null)
                 throw new ArgumentNullException();
-            return _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
+            return _repository.Create(inputCreateEmployeeTask);// _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
         }
 
-        public override long Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
+        public override int Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
         {
             if (inputIdentityUpdateEmployeeTask == null)
                 throw new ArgumentNullException();

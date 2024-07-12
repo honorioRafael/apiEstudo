@@ -14,7 +14,7 @@ namespace apiEstudo.Application.Services
         }
         private readonly IBrandRepository _brandRepository;
 
-        public override long Create(InputCreateProduct inputCreateProduct)
+        public override int Create(InputCreateProduct inputCreateProduct)
         {
             if (inputCreateProduct == null)
                 throw new ArgumentNullException();
@@ -23,10 +23,10 @@ namespace apiEstudo.Application.Services
             if (inputCreateProduct.Quantity < 0)
                 throw new InvalidArgumentException("Quantidade inválida!");
 
-            return _repository.Create(new Product(inputCreateProduct.Name, inputCreateProduct.Quantity, inputCreateProduct.BrandId, null).SetCreationDate());
+            return _repository.Create(inputCreateProduct);// _repository.Create(new Product(inputCreateProduct.Name, inputCreateProduct.Quantity, inputCreateProduct.BrandId, null).SetCreationDate());
         }
 
-        public override long Update(InputIdentityUpdateProduct inputIdentityUpdate)
+        public override int Update(InputIdentityUpdateProduct inputIdentityUpdate)
         {
             var OriginalItem = _repository.Get(inputIdentityUpdate.Id);
             if (OriginalItem == null) throw new NotFoundException();

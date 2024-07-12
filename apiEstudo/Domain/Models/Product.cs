@@ -21,8 +21,6 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public Product() { }
-
         public Product(string name, int quantity, int brandId, Brand brand)
         {
             Name = name;
@@ -30,6 +28,7 @@ namespace apiEstudo.Domain.Models
             BrandId = brandId;
             Brand = brand;
         }
+        public Product() { }
 
         public static implicit operator OutputProduct(Product product)
         {

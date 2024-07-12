@@ -1,11 +1,13 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Product;
+using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    public class ProductRepository : BaseRepository<Product, InputCreateProduct, InputUpdateProduct>, IProductRepository
     {
         public ProductRepository(ConnectionContext context) : base(context)
         {

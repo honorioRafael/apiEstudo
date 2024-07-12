@@ -9,8 +9,8 @@ namespace apiEstudo.Application.ServicesInterfaces
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
     {
-        public long Create(TInputCreate inputCreate);
-        public long Update(TInputIdentityUpdate inputIdentityUpdate);
+        public int Create(TInputCreate inputCreate);
+        public int Update(TInputIdentityUpdate inputIdentityUpdate);
         public void Delete(TInputIdentityDelete inputIdentityDelete);
         public List<TOutput>? GetAll();
         public TOutput? Get(int id);

@@ -1,11 +1,12 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Model;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
+    public class EmployeeRepository : BaseRepository<Employee, InputCreateEmployee, InputUpdateEmployee>, IEmployeeRepository
     {
         public EmployeeRepository(ConnectionContext contexto) : base(contexto)
         { }

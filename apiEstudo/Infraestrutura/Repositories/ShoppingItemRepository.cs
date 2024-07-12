@@ -1,10 +1,11 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ShoppingItemRepository : BaseRepository<ShoppingItem>, IShoppingItemRepository
+    public class ShoppingItemRepository : BaseRepository<ShoppingItem, InputCreateShoppingItem, InputUpdateShoppingItem>, IShoppingItemRepository
     {
         public ShoppingItemRepository(ConnectionContext context) : base(context)
         { }

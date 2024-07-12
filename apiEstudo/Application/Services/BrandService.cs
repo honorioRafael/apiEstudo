@@ -11,15 +11,15 @@ namespace apiEstudo.Application.Services
         public BrandService(IBrandRepository contextInterface) : base(contextInterface)
         { }
 
-        public override long Create(InputCreateBrand inputCreateBrand)
+        public override int Create(InputCreateBrand inputCreateBrand)
         {
             if (inputCreateBrand == null)
                 throw new ArgumentNullException();
 
-            return _repository.Create(new Brand(inputCreateBrand.Name));
+            return _repository.Create(inputCreateBrand);//_repository.Create(new Brand(inputCreateBrand.Name));
         }
 
-        public override long Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
+        public override int Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
         {
             if (inputIdentityUpdateBrand == null)
                 throw new ArgumentNullException();

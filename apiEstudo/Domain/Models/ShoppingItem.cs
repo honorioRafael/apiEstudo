@@ -16,9 +16,6 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public ShoppingItem()
-        { }
-
         public ShoppingItem(int shoppingId, int productId, double quantity, Product product, Shopping shopping)
         {
             ShoppingId = shoppingId;
@@ -27,6 +24,9 @@ namespace apiEstudo.Domain.Models
             Product = product;
             Shopping = shopping;
         }
+
+        public ShoppingItem()
+        { }
 
         public static implicit operator OutputShoppingItem(ShoppingItem shop)
         {

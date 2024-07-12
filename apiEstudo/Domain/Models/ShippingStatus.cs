@@ -19,14 +19,13 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public ShippingStatus()
-        { }
-
         public ShippingStatus(string description, List<Shopping> listShoppings)
         {
             Description = description;
             ListShoppings = listShoppings;
         }
+        public ShippingStatus()
+        { }
 
         public static implicit operator OutputShippingStatus(ShippingStatus shippingStatus)
         {

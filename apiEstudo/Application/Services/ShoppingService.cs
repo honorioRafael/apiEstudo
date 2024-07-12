@@ -17,38 +17,8 @@ namespace apiEstudo.Application.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
 
-        //
-        // Shipping
-        //
-
-        public long UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
-        {
-            if (inputApproveShippingStatus.Id < 0)
-                throw new InvalidArgumentException("Shopping ID inválido!");
-
-            var SelectedShopping = _repository.Get(inputApproveShippingStatus.Id);
-            if (SelectedShopping == null)
-                throw new InvalidArgumentException("Shopping ID inválido!");
-
-            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, null, SelectedShopping.Value, null, 2, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
-        }
-
-        public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
-        {
-            if (inputCancelShippingStatus.Id < 0)
-                throw new InvalidArgumentException("Shopping ID inválido!");
-
-            var SelectedShopping = _repository.Get(inputCancelShippingStatus.Id);
-            if (SelectedShopping == null)
-                throw new InvalidArgumentException("Shopping ID inválido!");
-
-            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, null, SelectedShopping.Value, null, 3, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate()); ;
-        }
-
-        //
-        // Create
-        //
-        public override long Create(InputCreateShopping inputCreateShopping)
+        #region Create
+        public override int Create(InputCreateShopping inputCreateShopping)
         {
             if (inputCreateShopping == null)
                 throw new ArgumentNullException();
@@ -59,16 +29,16 @@ namespace apiEstudo.Application.Services
             if (inputCreateShopping.Value < 0)
                 throw new InvalidArgumentException("Valor inválido!");
 
-            var ShopId = _repository.Create(new Shopping(inputCreateShopping.EmployeeId, null, inputCreateShopping.Value, null, 1, null).SetCreationDate());
+            var ShopId = _repository.Create(inputCreateShopping); // _repository.Create(new Shopping(inputCreateShopping.EmployeeId, null, inputCreateShopping.Value, null, 1, null).SetCreationDate());
 
-            CreateMultipleShoppingItens(Convert.ToInt32(ShopId), inputCreateShopping.CreatedItens);
+            CreateMultipleShoppingItens((from i in inputCreateShopping.CreatedItens select new InputCreateShoppingItem(ShopId, i.ProductId, i.Quantity)).ToList());
             return ShopId;
         }
 
-        //
-        // Update
-        //
-        public override long Update(InputIdentityUpdateShopping inputIdentityUpdateShopping)
+        #endregion
+
+        #region Update        
+        public override int Update(InputIdentityUpdateShopping inputIdentityUpdateShopping)
         {
             if (inputIdentityUpdateShopping == null)
                 throw new ArgumentNullException();
@@ -84,36 +54,68 @@ namespace apiEstudo.Application.Services
             // produtos compra - Create
             if (inputIdentityUpdateShopping.InputUpdate.CreatedItens != null)
             {
-                CreateMultipleShoppingItens(OriginalShopping.Id, inputIdentityUpdateShopping.InputUpdate.CreatedItens);
+                if (inputIdentityUpdateShopping.InputUpdate.CreatedItens.Any(x => _productRepository.Get(x.ProductId) == null))
+                    throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
+                if (inputIdentityUpdateShopping.InputUpdate.CreatedItens.Any(x => x.Quantity < 0))
+                    throw new InvalidArgumentException("Há um produto com quantidade inválida.");
+                CreateMultipleShoppingItens((from i in inputIdentityUpdateShopping.InputUpdate.CreatedItens select new InputCreateShoppingItem(OriginalShopping.Id, i.ProductId, i.Quantity)).ToList());
             }
 
             // produtos compra - Update
             if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens != null)
             {
+                if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens.Any(x => _productRepository.Get(x.InputUpdate.ProductId) == null))
+                    throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
+                if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens.Any(x => x.InputUpdate.Quantity < 0))
+                    throw new InvalidArgumentException("Há um produto com quantidade inválida.");
                 UpdateMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.UpdatedItens);
             }
 
             // produtos compra - Delete
             if (inputIdentityUpdateShopping.InputUpdate.DeletedItens != null)
             {
+                if (inputIdentityUpdateShopping.InputUpdate.DeletedItens.Any(x => _productRepository.Get(x.Id) == null))
+                    throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
                 DeleteMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.DeletedItens);
             }
 
-            _repository.Update(new Shopping(inputIdentityUpdateShopping.InputUpdate.EmployeeId, null, inputIdentityUpdateShopping.InputUpdate.Value, null, OriginalShopping.ShippingStatusId, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate).SetChangeDate());
+            _repository.Update(new Shopping(inputIdentityUpdateShopping.InputUpdate.EmployeeId, inputIdentityUpdateShopping.InputUpdate.Value, OriginalShopping.ShippingStatusId, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate).SetChangeDate());
             return OriginalShopping.Id;
 
         }
+        #endregion
 
-        private void CreateMultipleShoppingItens(int shopId, List<InputCreateShoppingItem> inputCreateShoppingItem)
+        #region Shipping
+        public int UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
         {
-            if (inputCreateShoppingItem.Any(x => _productRepository.Get(x.ProductId) == null))
-                throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
-            if (inputCreateShoppingItem.Any(x => x.Quantity < 0))
-                throw new InvalidArgumentException("Há um produto com quantidade inválida.");
+            if (inputApproveShippingStatus.Id < 0)
+                throw new InvalidArgumentException("Shopping ID inválido!");
 
-            _shoppingItemRepository.CreateMultiple(
-                (from product in inputCreateShoppingItem
-                 select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());
+            var SelectedShopping = _repository.Get(inputApproveShippingStatus.Id);
+            if (SelectedShopping == null)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
+            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 2, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
+        }
+
+        public int UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
+        {
+            if (inputCancelShippingStatus.Id < 0)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
+            var SelectedShopping = _repository.Get(inputCancelShippingStatus.Id);
+            if (SelectedShopping == null)
+                throw new InvalidArgumentException("Shopping ID inválido!");
+
+            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 3, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate()); ;
+        }
+
+        private void CreateMultipleShoppingItens(List<InputCreateShoppingItem> inputCreateShoppingItem)
+        {
+            _shoppingItemRepository.CreateMultiple(inputCreateShoppingItem);
+            //_shoppingItemRepository.CreateMultiple(
+            //  (from product in inputCreateShoppingItem
+            // select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());
         }
 
         private void UpdateMultipleShoppingItens(List<InputIdentityUpdateShoppingItem> inputIdentityUpdateShoppingitem)
@@ -122,8 +124,6 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Há um id inválido na lista de alteração.");
             if (inputIdentityUpdateShoppingitem.Any(x => _productRepository.Get(x.InputUpdate.ProductId) == null))
                 throw new InvalidArgumentException("Há um id de produto inválido na lista de alteração.");
-            if (inputIdentityUpdateShoppingitem.Any(x => x.InputUpdate.Quantity < 0))
-                throw new InvalidArgumentException("Há um produto com quantidade inválida.");
 
             _shoppingItemRepository.UpdateMultiple((from item in inputIdentityUpdateShoppingitem
                                                     let originalItem = _shoppingItemRepository.Get(item.Id)
@@ -132,11 +132,9 @@ namespace apiEstudo.Application.Services
 
         private void DeleteMultipleShoppingItens(List<InputIdentityDeleteShoppingItem> inputIdentityDeleteShoppingItems)
         {
-            if (inputIdentityDeleteShoppingItems.Any(x => _shoppingItemRepository.Get(x.Id) == null))
-                throw new InvalidArgumentException("Há um id inválido na lista de exclusão.");
-
             _shoppingItemRepository.DeleteMultiple((from item in inputIdentityDeleteShoppingItems
                                                     select _shoppingItemRepository.Get(item.Id)).ToList());
         }
+        #endregion
     }
 }

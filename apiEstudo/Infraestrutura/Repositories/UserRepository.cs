@@ -1,10 +1,11 @@
-﻿using apiEstudo.Domain.Models;
+﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository<User, InputCreateUser, InputUpdateUser>, IUserRepository
     {
         public UserRepository(ConnectionContext context) : base(context)
         { }

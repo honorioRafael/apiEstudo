@@ -12,7 +12,7 @@ namespace apiEstudo.Application.Services
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
-        where TRepository : IBaseRepository<TEntry>
+        where TRepository : IBaseRepository<TEntry, TInputCreate, TInputUpdate>
     {
         protected readonly TRepository _repository;
 
@@ -31,17 +31,17 @@ namespace apiEstudo.Application.Services
             return EntryToOutput(_repository.GetAll());
         }
 
-        public virtual long Update(TInputIdentityUpdate inputIdentityUpdate)
+        public virtual int Update(TInputIdentityUpdate inputIdentityUpdate)
         {
             throw new NotImplementedException();
         }
 
-        public virtual long Create(TInputCreate inputCreate)
+        public virtual int Create(TInputCreate inputCreate)
         {
             return CreateMultiple([inputCreate]).FirstOrDefault();
         }
 
-        public virtual List<long> CreateMultiple(List<TInputCreate> listInputCreate)
+        public virtual List<int> CreateMultiple(List<TInputCreate> listInputCreate)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +73,7 @@ namespace apiEstudo.Application.Services
     public abstract class BaseService_1<TEntry, TRepository, TOutput> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>
-        where TRepository : IBaseRepository<TEntry>
+        where TRepository : IBaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0>
     {
         protected BaseService_1(TRepository contextInterface) : base(contextInterface) { }
     }

@@ -8,7 +8,7 @@ namespace apiEstudo.Domain.Models
         #region Properties
         public double Value { get; private set; }
         public int EmployeeId { get; private set; }
-        public int ShippingStatusId { get; set; }
+        public int ShippingStatusId { get; private set; }
 
         #region Internal
         public virtual Employee Employee { get; private set; }
@@ -21,17 +21,16 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public Shopping() { }
-
-        public Shopping(int employeeid, List<ShoppingItem>? shoppingListItem, double value, Employee employee, int shippingStatusId, ShippingStatus shippingStatus)
+        public Shopping(int employeeid, double value, int shippingStatusId, Employee employee, ShippingStatus shippingStatus)
         {
             EmployeeId = employeeid;
             Value = value;
             Employee = employee;
-            ListShoppingItem = shoppingListItem;
             ShippingStatusId = shippingStatusId;
             ShippingStatus = shippingStatus;
         }
+
+        public Shopping() { }
 
         public static implicit operator OutputShopping(Shopping shop)
         {

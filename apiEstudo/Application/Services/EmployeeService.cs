@@ -13,7 +13,7 @@ namespace apiEstudo.Application.Services
         }
         private readonly IEmployeeTaskRepository _employeeTaskRepository;
 
-        public override long Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
+        public override int Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
         {
             var OriginalItem = _repository.Get(inputIdentityUpdateEmployee.Id);
             if (OriginalItem == null)
@@ -28,7 +28,7 @@ namespace apiEstudo.Application.Services
                 inputIdentityUpdateEmployee.InputUpdate.TaskId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
         }
 
-        public override long Create(InputCreateEmployee inputCreateEmployee)
+        public override int Create(InputCreateEmployee inputCreateEmployee)
         {
             if (inputCreateEmployee == null)
                 throw new ArgumentNullException();
@@ -37,7 +37,8 @@ namespace apiEstudo.Application.Services
             if (inputCreateEmployee.Age < 0)
                 throw new InvalidArgumentException("Idade inválida!");
 
-            return _repository.Create(new Employee(inputCreateEmployee.Name, inputCreateEmployee.Age, inputCreateEmployee.TaskId, null).SetCreationDate());
+            return _repository.Create(inputCreateEmployee);
+            // _repository.Create(new Employee(inputCreateEmployee.Name, inputCreateEmployee.Age, inputCreateEmployee.TaskId, null).SetCreationDate());
         }
     }
 }

@@ -31,7 +31,6 @@ namespace apiEstudo.Domain.Model
             Age = age;
             EmployeeTaskId = employeeTaskId;
             EmployeeTask = employeeTask;
-            CreationDate = DateTime.Now;
         }
 
         public Employee()

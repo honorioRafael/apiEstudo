@@ -16,6 +16,8 @@ namespace apiEstudo.Domain.Models
             CreationDate = DateTime.Now;
         }
 
+        public EmployeeTask() { }
+
         public static implicit operator OutputEmployeeTask(EmployeeTask employeeTask)
         {
             return employeeTask == null ? default : new OutputEmployeeTask(employeeTask.Name, employeeTask.Description).LoadInternalData(employeeTask.Id, employeeTask.CreationDate, employeeTask.ChangeDate);

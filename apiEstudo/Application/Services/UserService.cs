@@ -22,19 +22,19 @@ namespace apiEstudo.Application.Services
             return UserEntity;
         }
 
-        public void Create(InputCreateUser view)
+        public void Create(InputCreateUser inputCreateUser)
         {
-            if (view == null)
+            if (inputCreateUser == null)
                 throw new ArgumentNullException();
-            var NameInUse = _repository.GetByName(view.Name);
+            var NameInUse = _repository.GetByName(inputCreateUser.Name);
             if (NameInUse != null)
                 throw new NameInUseException("O nome de usuário ja está em uso!");
 
-            var Entity = new User(view.Name, view.Password);
-            _repository.Create(Entity);
+            //var Entity = new User(view.Name, view.Password);
+            _repository.Create(inputCreateUser);
         }
 
-        public override long Update(InputIdentityUpdateUser inputIdentityUpdateUser)
+        public override int Update(InputIdentityUpdateUser inputIdentityUpdateUser)
         {
             var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
             if (OriginalItem == null) throw new NotFoundException();

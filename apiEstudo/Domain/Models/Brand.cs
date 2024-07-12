@@ -12,6 +12,8 @@ namespace apiEstudo.Domain.Models
             Name = name;
         }
 
+        public Brand() { }
+
         public static implicit operator OutputBrand(Brand brand)
         {
             return brand == null ? default : new OutputBrand(brand.Name).LoadInternalData(brand.Id, brand.CreationDate, brand.ChangeDate);

@@ -4,7 +4,7 @@ namespace apiEstudo.Application.ServicesInterfaces
 {
     public interface IShoppingService : IBaseService<InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>
     {
-        public long UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus);
-        public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus);
+        public int UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus);
+        public int UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus);
     }
 }
