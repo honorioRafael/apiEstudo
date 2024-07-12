@@ -5,7 +5,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class EmployeeService : BaseService<Employee, IEmployeeRepository, InputCreateEmployee, InputUpdateEmployee, InputIdentityUpdateEmployee, InputIdentityDeleteEmployee, OutputEmployee>, IEmployeeService
+    public class EmployeeService : BaseService_2<Employee, IEmployeeRepository, InputCreateEmployee, InputUpdateEmployee, InputIdentityUpdateEmployee, InputIdentityDeleteEmployee, OutputEmployee>, IEmployeeService
     {
         public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeTaskRepository employeeTaskRepository) : base(employeeRepository)
         {
@@ -28,11 +28,11 @@ namespace apiEstudo.Application.Services
                 inputIdentityUpdateEmployee.InputUpdate.TaskId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
         }
 
-        public override int Create(InputCreateEmployee inputCreateEmployee)
+        public int Create(InputCreateEmployee inputCreateEmployee)
         {
             if (inputCreateEmployee == null)
                 throw new ArgumentNullException();
-            if (_employeeTaskRepository.Get(inputCreateEmployee.TaskId) == null)
+            if (_employeeTaskRepository.Get(inputCreateEmployee.EmployeeTaskId) == null)
                 throw new NotFoundException("Employee Task ID inválido!");
             if (inputCreateEmployee.Age < 0)
                 throw new InvalidArgumentException("Idade inválida!");

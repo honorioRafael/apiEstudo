@@ -1,16 +1,18 @@
 ﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Application.Arguments.Base;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public abstract class BaseRepository<TEntry, TInputCreate, TInputUpdate> : IBaseRepository<TEntry, TInputCreate, TInputUpdate>
+    public abstract class BaseRepository<TEntry, TInputCreate, TInputUpdate, TInputCreateComplete, TInputInternalCreate> : IBaseRepository<TEntry, TInputCreate, TInputUpdate, TInputCreateComplete, TInputInternalCreate>
         where TEntry : BaseEntry<TEntry>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
         where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputInternalCreate : BaseInputInternalCreate<TInputInternalCreate>
+        where TInputCreateComplete : BaseInputCreateComplete<TInputCreate, TInputInternalCreate>
     {
         protected readonly ConnectionContext _context;
         protected readonly DbSet<TEntry> _dbset;
@@ -31,7 +33,6 @@ namespace apiEstudo.Infraestrutura.Repositories
         {
             var inputCreateProperties = typeof(TInputCreate).GetProperties();
             var entitiesToBeCreated = new List<TEntry>();
-            var constructorParameters = typeof(TEntry).GetConstructors()[0].GetParameters();
 
             foreach (var inputCreate in listInputCreate)
             {
@@ -47,17 +48,6 @@ namespace apiEstudo.Infraestrutura.Repositories
                 }
 
                 entitiesToBeCreated.Add(createdObject.SetCreationDate());
-                //object[] ListConstructorParameterValues = new object[ConstructorParameters.Length];
-                //for (int i = 0; i < ConstructorParameters.Length; i++)
-                //{
-                //    if (i < InputCreateProperties.Length) 
-                //        ListConstructorParameterValues[i] = IsEqual(ConstructorParameters[i], InputCreateProperties[i]) ? InputCreateProperties[i].GetValue(inputCreate) : ConstructorParameters[i].DefaultValue;                                                                
-                //    else
-                //        ListConstructorParameterValues[i] = ConstructorParameters[i].DefaultValue;
-                //}
-
-                //TEntry CreatedObject = (TEntry)Activator.CreateInstance(typeof(TEntry), ListConstructorParameterValues);
-                //EntitiesToBeCreated.Add(CreatedObject.SetCreationDate());
             }
 
             _context.AddRange(entitiesToBeCreated);
@@ -66,10 +56,45 @@ namespace apiEstudo.Infraestrutura.Repositories
             return (from i in entitiesToBeCreated select i.Id).ToList();
         }
 
-        private bool IsEqual(ParameterInfo param, PropertyInfo prop)
+        public virtual List<int> CreateMultiple(List<TInputCreateComplete> listInputCreateComplete)
         {
-            if (param.ParameterType == prop.PropertyType) return true;
-            return false;
+            var entitiesToBeCreated = new List<TEntry>();
+
+            foreach (var inputCreateComplete in listInputCreateComplete)
+            {
+                TEntry createdObject = (TEntry)Activator.CreateInstance(typeof(TEntry));
+                var inputCreate = inputCreateComplete.GetType().GetProperty(nameof(BaseInputCreateComplete_0.InputCreate));
+                var inputInternalCreate = inputCreateComplete.GetType().GetProperty(nameof(BaseInputCreateComplete_0.InputInternalCreate));
+                if (inputCreate != null)
+                {
+                    foreach (var propertyCreate in inputCreate.PropertyType.GetProperties())
+                    {
+                        var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
+                        var propertyCreateValue = propertyCreate.GetValue(inputCreateComplete.InputCreate);
+
+                        if (entryProperty == null) continue;
+                        entryProperty.SetValue(createdObject, propertyCreateValue);
+                    }
+                }
+                if (inputInternalCreate != null)
+                {
+                    foreach (var propertyCreate in inputInternalCreate.PropertyType.GetProperties())
+                    {
+                        var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
+                        var propertyCreateValue = propertyCreate.GetValue(inputCreateComplete.InputInternalCreate);
+
+                        if (entryProperty == null) continue;
+                        entryProperty.SetValue(createdObject, propertyCreateValue);
+                    }
+                }
+
+                entitiesToBeCreated.Add(createdObject.SetCreationDate());
+            }
+
+            _context.AddRange(entitiesToBeCreated);
+            _context.SaveChanges();
+
+            return (from i in entitiesToBeCreated select i.Id).ToList();
         }
 
         #endregion
@@ -82,7 +107,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
         public virtual List<TEntry>? GetListByListId(List<int> listId)
         {
-            return _dbset.Where(x => listId.Contains(x.Id)).ToList();
+            return _dbset.Where(x => listId.Contains(x.Id)).AsNoTracking().ToList();
         }
 
         public virtual TEntry? Get(int id)
@@ -93,6 +118,38 @@ namespace apiEstudo.Infraestrutura.Repositories
         #endregion
 
         #region Update
+        /*public virtual int Update(TInputUpdate inputUpdate)
+        {
+            return UpdateMultiple([inputUpdate]).FirstOrDefault();
+        }
+
+        public List<int> UpdateMultiple(List<TInputUpdate> listInputUpdate)
+        {
+            var inputUpdateProperties = typeof(TInputUpdate).GetProperties();
+            var entitiesToBeUpdated = new List<TEntry>();
+
+            foreach (var inputUpdate in listInputUpdate)
+            {
+                TEntry createdObject = Get(inputUpdate);
+
+                foreach (var propertyCreate in inputCreateProperties)
+                {
+                    var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
+                    var propertyCreateValue = propertyCreate.GetValue(inputCreate);
+
+                    if (entryProperty == null) continue;
+                    entryProperty.SetValue(createdObject, propertyCreateValue);
+                }
+
+                entitiesToBeCreated.Add(createdObject.SetCreationDate());
+            }
+            _context.UpdateRange(entry);
+            _context.SaveChanges();
+
+            return (from i in entry select i.Id).ToList();
+        }*/
+
+
         public virtual int Update(TEntry entry)
         {
             UpdateMultiple([entry]);
@@ -107,6 +164,7 @@ namespace apiEstudo.Infraestrutura.Repositories
 
             return (from i in entry select i.Id).ToList();
         }
+
 
         #endregion
 
@@ -125,5 +183,21 @@ namespace apiEstudo.Infraestrutura.Repositories
         }
 
         #endregion
+    }
+
+    public abstract class BaseRepository_1<TEntry> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0>, IBaseRepository_1<TEntry>
+        where TEntry : BaseEntry<TEntry>, new()
+    {
+        protected BaseRepository_1(ConnectionContext context) : base(context)
+        { }
+    }
+
+    public abstract class BaseRepository_2<TEntry, TInputCreate, TInputUpdate> : BaseRepository<TEntry, TInputCreate, TInputUpdate, BaseInputCreateComplete<TInputCreate, BaseInputInternalCreate_0>, BaseInputInternalCreate_0>, IBaseRepository_2<TEntry, TInputCreate, TInputUpdate>
+        where TEntry : BaseEntry<TEntry>, new()
+        where TInputCreate : BaseInputCreate<TInputCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+    {
+        protected BaseRepository_2(ConnectionContext context) : base(context)
+        { }
     }
 }

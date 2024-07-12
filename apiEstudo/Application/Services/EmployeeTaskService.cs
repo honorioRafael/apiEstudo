@@ -6,12 +6,12 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application
 {
-    public class EmployeeTaskService : BaseService<EmployeeTask, IEmployeeTaskRepository, InputCreateEmployeeTask, InputUpdateEmployeeTask, InputIdentityUpdateEmployeeTask, InputIdentityDeleteEmployeeTask, OutputEmployeeTask>, IEmployeeTaskService
+    public class EmployeeTaskService : BaseService_2<EmployeeTask, IEmployeeTaskRepository, InputCreateEmployeeTask, InputUpdateEmployeeTask, InputIdentityUpdateEmployeeTask, InputIdentityDeleteEmployeeTask, OutputEmployeeTask>, IEmployeeTaskService
     {
         public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
         { }
 
-        public override int Create(InputCreateEmployeeTask inputCreateEmployeeTask)
+        public int Create(InputCreateEmployeeTask inputCreateEmployeeTask)
         {
             if (inputCreateEmployeeTask == null)
                 throw new ArgumentNullException();

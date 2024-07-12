@@ -9,7 +9,7 @@ namespace apiEstudo.Controllers
     [ApiController]
     [Authorize]
     [Route("api/v1/Product")]
-    public class ProductController : BaseController<IProductService, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct>
+    public class ProductController : BaseController_2<IProductService, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct>
     {
         public ProductController(IProductService service) : base(service)
         {

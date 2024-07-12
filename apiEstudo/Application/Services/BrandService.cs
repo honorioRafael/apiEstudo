@@ -6,12 +6,12 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class BrandService : BaseService<Brand, IBrandRepository, InputCreateBrand, InputUpdateBrand, InputIdentityUpdateBrand, InputIdentityDeleteBrand, OutputBrand>, IBrandService
+    public class BrandService : BaseService_2<Brand, IBrandRepository, InputCreateBrand, InputUpdateBrand, InputIdentityUpdateBrand, InputIdentityDeleteBrand, OutputBrand>, IBrandService
     {
         public BrandService(IBrandRepository contextInterface) : base(contextInterface)
         { }
 
-        public override int Create(InputCreateBrand inputCreateBrand)
+        public int Create(InputCreateBrand inputCreateBrand)
         {
             if (inputCreateBrand == null)
                 throw new ArgumentNullException();

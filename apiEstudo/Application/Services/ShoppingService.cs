@@ -1,38 +1,60 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
+using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService
+    public class ShoppingService : BaseService<Shopping, IShoppingRepository, InputCreateShopping, InputCreateShoppingComplete, InputInternalCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>, IShoppingService
     {
-        public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository) : base(shoppingRepository)
+        public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository, IShoppingItemService shoppingItemService) : base(shoppingRepository)
         {
             _shoppingItemRepository = shoppingItemRepository;
             _employeeRepository = employeeRepository;
             _productRepository = productRepository;
+            _shoppingItemService = shoppingItemService;
         }
         private readonly IShoppingItemRepository _shoppingItemRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IShoppingItemService _shoppingItemService;
 
         #region Create
-        public override int Create(InputCreateShopping inputCreateShopping)
+        public override List<int> CreateMultiple(List<InputCreateShopping> listInputCreateShopping)
         {
-            if (inputCreateShopping == null)
+            if (listInputCreateShopping == null)
                 throw new ArgumentNullException();
-            if (_employeeRepository.Get(inputCreateShopping.EmployeeId) == null)
+            List<Employee> listRelatedEmployee = _employeeRepository.GetListByListId((from i in listInputCreateShopping select i.EmployeeId).ToList());
+            if (listRelatedEmployee.Count == 0)
                 throw new InvalidArgumentException("Employee ID inválido!");
-            if (inputCreateShopping.CreatedItens == null)
+
+            var listCreate = (from i in listInputCreateShopping
+                              let relatedEmployee = (from j in listRelatedEmployee where j.Id == i.EmployeeId select i).FirstOrDefault()
+                              let index = listInputCreateShopping.IndexOf(i)
+                              let createdItens = i.CreatedItens
+                              select new
+                              {
+                                  InputCreate = i,
+                                  Index = index,
+                                  CreatedItens = createdItens
+                              }).ToList();
+            if ((from i in listCreate select i).Any(x => x.CreatedItens.Count == 0))
                 throw new InvalidArgumentException("Insira um produto para criar uma compra.");
-            if (inputCreateShopping.Value < 0)
+            if ((from i in listCreate select i).Any(x => x.InputCreate.Value < 0))
                 throw new InvalidArgumentException("Valor inválido!");
 
-            var ShopId = _repository.Create(inputCreateShopping); // _repository.Create(new Shopping(inputCreateShopping.EmployeeId, null, inputCreateShopping.Value, null, 1, null).SetCreationDate());
+            List<int> listShoppingId = _repository.CreateMultiple((from i in listCreate select new InputCreateShoppingComplete(i.InputCreate, new InputInternalCreateShopping(1))).ToList());
 
-            CreateMultipleShoppingItens((from i in inputCreateShopping.CreatedItens select new InputCreateShoppingItem(ShopId, i.ProductId, i.Quantity)).ToList());
-            return ShopId;
+            var listCreateShoppingItem = (from i in listCreate
+                                          let parentId = listShoppingId[i.Index]
+                                          let createdItens = (from j in i.CreatedItens select new InputCreateShoppingItemComplete(j, new InputInternalCreateShoppingItem(parentId))).ToList()
+                                          select createdItens).SelectMany(x => x).ToList();
+            if (_productRepository.GetListByListId((from i in listCreateShoppingItem select i.InputCreate.ProductId).ToList()).Count == 0)
+                throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
+
+            _shoppingItemService.CreateMultiple(listCreateShoppingItem);
+            return listShoppingId;
         }
 
         #endregion
@@ -58,7 +80,7 @@ namespace apiEstudo.Application.Services
                     throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
                 if (inputIdentityUpdateShopping.InputUpdate.CreatedItens.Any(x => x.Quantity < 0))
                     throw new InvalidArgumentException("Há um produto com quantidade inválida.");
-                CreateMultipleShoppingItens((from i in inputIdentityUpdateShopping.InputUpdate.CreatedItens select new InputCreateShoppingItem(OriginalShopping.Id, i.ProductId, i.Quantity)).ToList());
+                //CreateMultipleShoppingItens((from i in inputIdentityUpdateShopping.InputUpdate.CreatedItens select new InputCreateShoppingItem(OriginalShopping.Id, i.ProductId, i.Quantity)).ToList());
             }
 
             // produtos compra - Update
@@ -110,12 +132,9 @@ namespace apiEstudo.Application.Services
             return _repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 3, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate()); ;
         }
 
-        private void CreateMultipleShoppingItens(List<InputCreateShoppingItem> inputCreateShoppingItem)
+        private void CreateMultipleShoppingItens(List<InputCreateShoppingItemComplete> inputCreateShoppingItem)
         {
-            _shoppingItemRepository.CreateMultiple(inputCreateShoppingItem);
-            //_shoppingItemRepository.CreateMultiple(
-            //  (from product in inputCreateShoppingItem
-            // select new ShoppingItem(shopId, product.ProductId, product.Quantity, null, null).SetCreationDate()).ToList());
+            //_shoppingItemRepository.CreateMultiple<InputCreateShoppingItemComplete, InputInternalCreateShoppingItem>(inputCreateShoppingItem);
         }
 
         private void UpdateMultipleShoppingItens(List<InputIdentityUpdateShoppingItem> inputIdentityUpdateShoppingitem)

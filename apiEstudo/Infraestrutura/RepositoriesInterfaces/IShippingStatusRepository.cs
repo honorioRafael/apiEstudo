@@ -1,9 +1,8 @@
-﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IShippingStatusRepository : IBaseRepository<ShippingStatus, BaseInputCreate_0, BaseInputUpdate_0>
+    public interface IShippingStatusRepository : IBaseRepository_1<ShippingStatus>
     {
 
     }

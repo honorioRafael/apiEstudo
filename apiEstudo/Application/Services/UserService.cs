@@ -5,7 +5,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class UserService : BaseService<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>, IUserService
+    public class UserService : BaseService_2<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>, IUserService
     {
         public UserService(IUserRepository contextInterface) : base(contextInterface)
         {
@@ -22,7 +22,7 @@ namespace apiEstudo.Application.Services
             return UserEntity;
         }
 
-        public void Create(InputCreateUser inputCreateUser)
+        public int Create(InputCreateUser inputCreateUser)
         {
             if (inputCreateUser == null)
                 throw new ArgumentNullException();
@@ -30,8 +30,7 @@ namespace apiEstudo.Application.Services
             if (NameInUse != null)
                 throw new NameInUseException("O nome de usuário ja está em uso!");
 
-            //var Entity = new User(view.Name, view.Password);
-            _repository.Create(inputCreateUser);
+            return _repository.Create(inputCreateUser);
         }
 
         public override int Update(InputIdentityUpdateUser inputIdentityUpdateUser)

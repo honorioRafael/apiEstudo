@@ -6,7 +6,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class ProductService : BaseService<Product, IProductRepository, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct>, IProductService
+    public class ProductService : BaseService_2<Product, IProductRepository, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct>, IProductService
     {
         public ProductService(IProductRepository contextInterface, IBrandRepository brandRepository) : base(contextInterface)
         {
@@ -14,7 +14,7 @@ namespace apiEstudo.Application.Services
         }
         private readonly IBrandRepository _brandRepository;
 
-        public override int Create(InputCreateProduct inputCreateProduct)
+        public int Create(InputCreateProduct inputCreateProduct)
         {
             if (inputCreateProduct == null)
                 throw new ArgumentNullException();
