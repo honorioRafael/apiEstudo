@@ -22,7 +22,7 @@ namespace apiEstudo.Application.Services
             return UserEntity;
         }
 
-        public int Create(InputCreateUser inputCreateUser)
+        public long Create(InputCreateUser inputCreateUser)
         {
             if (inputCreateUser == null)
                 throw new ArgumentNullException();
@@ -34,7 +34,7 @@ namespace apiEstudo.Application.Services
             return _repository.Create(UserToCreate);
         }
 
-        public int Update(InputIdentityUpdateUser inputIdentityUpdateUser)
+        public long Update(InputIdentityUpdateUser inputIdentityUpdateUser)
         {
             var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
             if (OriginalItem == null) throw new NotFoundException();

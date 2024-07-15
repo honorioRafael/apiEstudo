@@ -2,6 +2,6 @@
 {
     public class InputIdentityUpdateBrand : BaseInputIdentityUpdate<InputUpdateBrand>
     {
-        public InputIdentityUpdateBrand(int id, InputUpdateBrand inputUpdate) : base(id, inputUpdate) { }
+        public InputIdentityUpdateBrand(long id, InputUpdateBrand inputUpdate) : base(id, inputUpdate) { }
     }
 }

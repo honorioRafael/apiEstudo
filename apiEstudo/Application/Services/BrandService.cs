@@ -11,12 +11,12 @@ namespace apiEstudo.Application.Services
         public BrandService(IBrandRepository contextInterface) : base(contextInterface)
         { }
 
-        public int Create(InputCreateBrand inputCreateBrand)
+        public long Create(InputCreateBrand inputCreateBrand)
         {
             return CreateMultiple([inputCreateBrand]).FirstOrDefault();
         }
 
-        public override List<int> CreateMultiple(List<InputCreateBrand> listInputCreateBrand)
+        public override List<long> CreateMultiple(List<InputCreateBrand> listInputCreateBrand)
         {
             if (listInputCreateBrand == null)
                 throw new ArgumentNullException();
@@ -24,7 +24,7 @@ namespace apiEstudo.Application.Services
             var createdBrand = InternalCreate(listInputCreateBrand);
             return _repository.CreateMultiple(createdBrand);
         }
-        public override List<int> UpdateMultiple(List<InputIdentityUpdateBrand> listInputIdentityUpdateBrand)
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateBrand> listInputIdentityUpdateBrand)
         {
             if (listInputIdentityUpdateBrand == null)
                 throw new ArgumentNullException();

@@ -107,7 +107,7 @@ namespace apiEstudo.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual IActionResult Get(int id)
+        public virtual IActionResult Get(long id)
         {
             var Query = _service.Get(id);
             if (Query == null) return NotFound();

@@ -21,12 +21,12 @@ namespace apiEstudo.Infraestrutura.Repositories
         }
 
         #region Create
-        public virtual int Create(TEntry entry)
+        public virtual long Create(TEntry entry)
         {
             return CreateMultiple([entry]).First();
         }
 
-        public virtual List<int> CreateMultiple(List<TEntry> listInputCreate)
+        public virtual List<long> CreateMultiple(List<TEntry> listInputCreate)
         {
             _context.AddRange(listInputCreate);
             _context.SaveChanges();
@@ -42,12 +42,12 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.ToList();
         }
 
-        public virtual List<TEntry>? GetListByListId(List<int> listId)
+        public virtual List<TEntry>? GetListByListId(List<long> listId)
         {
             return _dbset.Where(x => listId.Contains(x.Id)).AsNoTracking().ToList();
         }
 
-        public virtual TEntry? Get(int id)
+        public virtual TEntry? Get(long id)
         {
             return _dbset.Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
         }
@@ -55,12 +55,12 @@ namespace apiEstudo.Infraestrutura.Repositories
         #endregion
 
         #region Update
-        public virtual int Update(TEntry inputUpdate)
+        public virtual long Update(TEntry inputUpdate)
         {
             return UpdateMultiple([inputUpdate]).FirstOrDefault();
         }
 
-        public List<int> UpdateMultiple(List<TEntry> listInputUpdate)
+        public List<long> UpdateMultiple(List<TEntry> listInputUpdate)
         {
             _context.UpdateRange(listInputUpdate);
             _context.SaveChanges();

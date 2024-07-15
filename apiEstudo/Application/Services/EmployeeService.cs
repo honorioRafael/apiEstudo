@@ -15,7 +15,7 @@ namespace apiEstudo.Application.Services
         }
         private readonly IEmployeeTaskRepository _employeeTaskRepository;
 
-        public override List<int> UpdateMultiple(List<InputIdentityUpdateEmployee> listInputIdentityUpdateEmployee)
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateEmployee> listInputIdentityUpdateEmployee)
         {
             if (listInputIdentityUpdateEmployee.Count == 0)
                 throw new ArgumentNullException();
@@ -33,7 +33,7 @@ namespace apiEstudo.Application.Services
             return _repository.UpdateMultiple(employeesToUpdate);
         }
 
-        public override List<int> CreateMultiple(List<InputCreateEmployee> listInputCreate)
+        public override List<long> CreateMultiple(List<InputCreateEmployee> listInputCreate)
         {
             if (listInputCreate.Count == 0)
                 throw new ArgumentNullException();

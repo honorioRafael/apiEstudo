@@ -7,7 +7,7 @@ namespace apiEstudo.Domain.Models
         #region Properties
         public string Name { get; set; }
         public int Quantity { get; set; }
-        public int BrandId { get; set; }
+        public long BrandId { get; set; }
 
         #region Internal
         public virtual Brand Brand { get; private set; }
@@ -21,7 +21,7 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public Product(string name, int quantity, int brandId, Brand brand)
+        public Product(string name, int quantity, long brandId, Brand brand)
         {
             Name = name;
             Quantity = quantity;

@@ -13,7 +13,7 @@ namespace apiEstudo.Controllers
         public ShippingStatusController(IShippingStatusService service) : base(service) { }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public override IActionResult Get(int id)
+        public override IActionResult Get(long id)
         {
             throw new NotImplementedException();
         }

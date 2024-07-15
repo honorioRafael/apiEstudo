@@ -14,7 +14,7 @@ namespace apiEstudo.Application.Arguments
         public OutputShippingStatus()
         { }
 
-        public OutputShippingStatus(int id, string description)
+        public OutputShippingStatus(long id, string description)
         {
             Id = id;
             Description = description;

@@ -2,11 +2,11 @@
 {
     public class BaseInputIdentityDelete<TInputInputIdentityDelete> where TInputInputIdentityDelete : BaseInputIdentityDelete<TInputInputIdentityDelete>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public BaseInputIdentityDelete() { }
 
-        public BaseInputIdentityDelete(int id)
+        public BaseInputIdentityDelete(long id)
         {
             Id = id;
         }

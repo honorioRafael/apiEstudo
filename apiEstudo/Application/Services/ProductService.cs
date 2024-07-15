@@ -15,7 +15,7 @@ namespace apiEstudo.Application.Services
         }
         private readonly IBrandRepository _brandRepository;
 
-        public override List<int> CreateMultiple(List<InputCreateProduct> listInputCreate)
+        public override List<long> CreateMultiple(List<InputCreateProduct> listInputCreate)
         {
             if (listInputCreate.Count == 0)
                 throw new ArgumentNullException();
@@ -29,7 +29,7 @@ namespace apiEstudo.Application.Services
             return _repository.CreateMultiple(productsToCreate);
         }
 
-        public override List<int> UpdateMultiple(List<InputIdentityUpdateProduct> listInputIdentityUpdateProduct)
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateProduct> listInputIdentityUpdateProduct)
         {
             List<Brand>? listRelatedBrands = _brandRepository.GetListByListId((from i in listInputIdentityUpdateProduct select i.InputUpdate.BrandId).ToList());
             if (listRelatedBrands == null || listRelatedBrands.Count == 0)

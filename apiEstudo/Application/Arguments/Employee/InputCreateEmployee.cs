@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public int Age { get; set; }
-        public int EmployeeTaskId { get; set; }
+        public long EmployeeTaskId { get; set; }
     }
 }

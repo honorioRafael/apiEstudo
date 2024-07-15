@@ -2,8 +2,8 @@
 {
     public class InputApproveShippingStatus
     {
-        public int Id { get; set; }
-        public InputApproveShippingStatus(int id)
+        public long Id { get; set; }
+        public InputApproveShippingStatus(long id)
         {
             Id = id;
         }

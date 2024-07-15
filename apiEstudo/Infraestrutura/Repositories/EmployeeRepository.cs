@@ -16,7 +16,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Include(x => x.EmployeeTask).ToList();
         }
 
-        public override Employee? Get(int id)
+        public override Employee? Get(long id)
         {
             return _dbset.Include(x => x.EmployeeTask).Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
         }

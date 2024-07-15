@@ -12,15 +12,15 @@ namespace apiEstudo.Application.ServicesInterfaces
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
     {
-        int Create(TInputCreate inputCreate);
-        List<int> CreateMultiple(List<TInputCreate> listInputCreate);
-        List<int> CreateMultiple(List<TInputCreateComplete> listInputCreate);
-        int Update(TInputIdentityUpdate inputIdentityUpdate);
-        List<int> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate);
+        long Create(TInputCreate inputCreate);
+        List<long> CreateMultiple(List<TInputCreate> listInputCreate);
+        List<long> CreateMultiple(List<TInputCreateComplete> listInputCreate);
+        long Update(TInputIdentityUpdate inputIdentityUpdate);
+        List<long> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate);
         void Delete(TInputIdentityDelete inputIdentityDelete);
         void DeleteMultiple(List<TInputIdentityDelete> inputIdentityDelete);
         List<TOutput>? GetAll();
-        TOutput? Get(int id);
+        TOutput? Get(long id);
     }
 
     public interface IBaseService_1<TOutput> : IBaseService<BaseInputCreate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>

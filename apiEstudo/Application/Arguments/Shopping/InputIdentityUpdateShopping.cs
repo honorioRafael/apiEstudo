@@ -2,7 +2,7 @@
 {
     public class InputIdentityUpdateShopping : BaseInputIdentityUpdate<InputUpdateShopping>
     {
-        public InputIdentityUpdateShopping(int id, InputUpdateShopping inputUpdate) : base(id, inputUpdate)
+        public InputIdentityUpdateShopping(long id, InputUpdateShopping inputUpdate) : base(id, inputUpdate)
         {
         }
     }

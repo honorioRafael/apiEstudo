@@ -11,7 +11,7 @@ namespace apiEstudo.Application
         public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
         { }
 
-        public override List<int> CreateMultiple(List<InputCreateEmployeeTask> listInputCreateEmployeeTask)
+        public override List<long> CreateMultiple(List<InputCreateEmployeeTask> listInputCreateEmployeeTask)
         {
             if (listInputCreateEmployeeTask.Count == 0)
                 throw new ArgumentNullException();
@@ -20,7 +20,7 @@ namespace apiEstudo.Application
             return _repository.CreateMultiple(employeeTaskToCreate);// _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
         }
 
-        public override List<int> UpdateMultiple(List<InputIdentityUpdateEmployeeTask> listInputIdentityUpdate)
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateEmployeeTask> listInputIdentityUpdate)
         {
             if (listInputIdentityUpdate.Count == 0)
                 throw new ArgumentNullException();

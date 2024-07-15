@@ -18,7 +18,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             return _dbset.Include(x => x.Brand).ToList();
         }
 
-        public override Product? Get(int id)
+        public override Product? Get(long id)
         {
             return _dbset.Where(x => x.Id == id).Include(x => x.Brand).AsNoTracking().FirstOrDefault();
         }

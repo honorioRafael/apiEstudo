@@ -22,7 +22,7 @@ namespace apiEstudo.Infraestrutura.Repositories
                 .Include(x => x.ShippingStatus).ToList();
         }
 
-        public override Shopping? Get(int id)
+        public override Shopping? Get(long id)
         {
             return _dbset.Where(x => x.Id == id).Include(x => x.ListShoppingItem)
                 .ThenInclude(p => p.Product)

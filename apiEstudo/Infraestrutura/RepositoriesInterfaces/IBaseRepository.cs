@@ -9,12 +9,12 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         where TInputCreate : BaseInputCreate<TInputCreate>
     {
         List<TEntry>? GetAll();
-        TEntry? Get(int id);
-        List<TEntry>? GetListByListId(List<int> listId);
-        int Create(TEntry classe);
-        List<int> CreateMultiple(List<TEntry> entry);
-        int Update(TEntry classe);
-        List<int> UpdateMultiple(List<TEntry> entry);
+        TEntry? Get(long id);
+        List<TEntry>? GetListByListId(List<long> listId);
+        long Create(TEntry classe);
+        List<long> CreateMultiple(List<TEntry> entry);
+        long Update(TEntry classe);
+        List<long> UpdateMultiple(List<TEntry> entry);
         void Delete(TEntry classe);
         void DeleteMultiple(List<TEntry> entry);
     }

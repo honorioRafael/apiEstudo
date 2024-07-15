@@ -4,11 +4,11 @@ namespace apiEstudo.Application.Arguments
 {
     public class InputInternalCreateShoppingItem : BaseInputInternalCreate<InputInternalCreateShoppingItem>
     {
-        public InputInternalCreateShoppingItem(int shoppingId)
+        public InputInternalCreateShoppingItem(long shoppingId)
         {
             ShoppingId = shoppingId;
         }
 
-        public int ShoppingId { get; set; }
+        public long ShoppingId { get; set; }
     }
 }

@@ -2,11 +2,11 @@
 {
     public class InputCreateShopping : BaseInputCreate<InputCreateShopping>
     {
-        public int EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
         public double Value { get; set; }
         public List<InputCreateShoppingItem> CreatedItens { get; set; }
 
-        public InputCreateShopping(int employeeId, double value, List<InputCreateShoppingItem> createdItens)
+        public InputCreateShopping(long employeeId, double value, List<InputCreateShoppingItem> createdItens)
         {
             EmployeeId = employeeId;
             Value = value;

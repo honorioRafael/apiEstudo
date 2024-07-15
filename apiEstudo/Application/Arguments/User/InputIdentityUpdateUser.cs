@@ -2,7 +2,7 @@
 {
     public class InputIdentityUpdateUser : BaseInputIdentityUpdate<InputUpdateUser>
     {
-        public InputIdentityUpdateUser(int id, InputUpdateUser inputUpdate) : base(id, inputUpdate)
+        public InputIdentityUpdateUser(long id, InputUpdateUser inputUpdate) : base(id, inputUpdate)
         { }
     }
 }

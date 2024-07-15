@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public int Quantity { get; set; }
-        public int BrandId { get; set; }
+        public long BrandId { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace apiEstudo.Application.Services
             _productRepository = productRepository;
         }
 
-        public override List<int> CreateMultiple(List<InputCreateShoppingItemComplete> listInputCreateComplete)
+        public override List<long> CreateMultiple(List<InputCreateShoppingItemComplete> listInputCreateComplete)
         {
             var shoppingItemToCreate = InternalCreate(listInputCreateComplete);
             return _repository.CreateMultiple(shoppingItemToCreate);
         }
 
-        public List<int> UpdateMultiple(List<InputIdentityUpdateShoppingItem> listInputIdentityUpdate)
+        public List<long> UpdateMultiple(List<InputIdentityUpdateShoppingItem> listInputIdentityUpdate)
         {
             List<ShoppingItem> ShoppingItensToBeUpdated = GetListByListId((from i in listInputIdentityUpdate select i.Id).ToList());
             if (ShoppingItensToBeUpdated.Count == 0)

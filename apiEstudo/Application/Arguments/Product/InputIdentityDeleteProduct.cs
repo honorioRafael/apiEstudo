@@ -2,7 +2,7 @@
 {
     public class InputIdentityDeleteProduct : BaseInputIdentityDelete<InputIdentityDeleteProduct>
     {
-        public InputIdentityDeleteProduct(int id) : base(id)
+        public InputIdentityDeleteProduct(long id) : base(id)
         {
         }
     }

@@ -2,9 +2,9 @@
 {
     public class InputCancelShippingStatus
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public InputCancelShippingStatus(int id)
+        public InputCancelShippingStatus(long id)
         {
             Id = id;
         }

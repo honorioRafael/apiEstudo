@@ -25,7 +25,7 @@ namespace apiEstudo.Application.Services
         }
 
         #region Get
-        public virtual TOutput? Get(int id)
+        public virtual TOutput? Get(long id)
         {
             return EntryToOutput(_repository.Get(id));
         }
@@ -35,7 +35,7 @@ namespace apiEstudo.Application.Services
             return EntryToOutput(_repository.GetAll());
         }
 
-        public List<TEntry>? GetListByListId(List<int> listId)
+        public List<TEntry>? GetListByListId(List<long> listId)
         {
             return _repository.GetListByListId(listId);
         }
@@ -43,12 +43,12 @@ namespace apiEstudo.Application.Services
         #endregion
 
         #region Update
-        public int Update(TInputIdentityUpdate inputIdentityUpdate)
+        public long Update(TInputIdentityUpdate inputIdentityUpdate)
         {
             return UpdateMultiple([inputIdentityUpdate]).First();
         }
 
-        public virtual List<int> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate)
+        public virtual List<long> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate)
         {
             throw new NotImplementedException();
         }
@@ -83,17 +83,17 @@ namespace apiEstudo.Application.Services
         #endregion
 
         #region Create
-        public int Create(TInputCreate inputCreate)
+        public long Create(TInputCreate inputCreate)
         {
             return CreateMultiple([inputCreate]).FirstOrDefault();
         }
 
-        public virtual List<int> CreateMultiple(List<TInputCreate> listInputCreate)
+        public virtual List<long> CreateMultiple(List<TInputCreate> listInputCreate)
         {
             throw new NotImplementedException();
         }
 
-        public virtual List<int> CreateMultiple(List<TInputCreateComplete> listInputCreateComplete)
+        public virtual List<long> CreateMultiple(List<TInputCreateComplete> listInputCreateComplete)
         {
             throw new NotImplementedException();
         }

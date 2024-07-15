@@ -2,7 +2,7 @@
 {
     public class InputIdentityUpdateEmployee : BaseInputIdentityUpdate<InputUpdateEmployee>
     {
-        public InputIdentityUpdateEmployee(int id, InputUpdateEmployee inputUpdate) : base(id, inputUpdate)
+        public InputIdentityUpdateEmployee(long id, InputUpdateEmployee inputUpdate) : base(id, inputUpdate)
         { }
     }
 }

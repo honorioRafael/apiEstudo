@@ -2,6 +2,6 @@
 {
     public class InputIdentityDeleteBrand : BaseInputIdentityDelete<InputIdentityDeleteBrand>
     {
-        public InputIdentityDeleteBrand(int id) : base(id) { }
+        public InputIdentityDeleteBrand(long id) : base(id) { }
     }
 }

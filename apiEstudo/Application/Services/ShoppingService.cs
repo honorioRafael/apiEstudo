@@ -22,7 +22,7 @@ namespace apiEstudo.Application.Services
         }
 
         #region Create
-        public override List<int> CreateMultiple(List<InputCreateShopping> listInputCreateShopping)
+        public override List<long> CreateMultiple(List<InputCreateShopping> listInputCreateShopping)
         {
             if (listInputCreateShopping == null)
                 throw new ArgumentNullException();
@@ -46,10 +46,10 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Valor inválido!");
 
             var shoppingToCreate = InternalCreate((from i in listCreate select new InputCreateShoppingComplete(i.InputCreate, new InputInternalCreateShopping(1))).ToList());
-            List<int> listShoppingId = _repository.CreateMultiple(shoppingToCreate);
+            List<long> listShoppingId = _repository.CreateMultiple(shoppingToCreate);
 
             var listCreateShoppingItem = (from i in listCreate
-                                          let parentId = listShoppingId[i.Index]
+                                          let parentId = 1// listShoppingId[i.Index]
                                           let createdItens = (from j in i.CreatedItens select new InputCreateShoppingItemComplete(j, new InputInternalCreateShoppingItem(parentId))).ToList()
                                           select createdItens).SelectMany(x => x).ToList();
 
@@ -60,7 +60,7 @@ namespace apiEstudo.Application.Services
         #endregion
 
         #region Update        
-        public override List<int> UpdateMultiple(List<InputIdentityUpdateShopping> listInputIdentityUpdateShopping)
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateShopping> listInputIdentityUpdateShopping)
         {
             if (listInputIdentityUpdateShopping.Count == 0)
                 throw new ArgumentNullException();
@@ -120,7 +120,7 @@ namespace apiEstudo.Application.Services
         #endregion
 
         #region Shipping
-        public int UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
+        public long UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
         {
             if (inputApproveShippingStatus.Id < 0)
                 throw new InvalidArgumentException("Shopping ID inválido!");
@@ -132,7 +132,7 @@ namespace apiEstudo.Application.Services
             return _repository.Update(new Shopping(OriginalShopping.EmployeeId, OriginalShopping.Value, 2, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate));
         }
 
-        public int UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
+        public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
         {
             if (inputCancelShippingStatus.Id < 0)
                 throw new InvalidArgumentException("Shopping ID inválido!");

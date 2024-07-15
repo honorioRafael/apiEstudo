@@ -2,11 +2,11 @@
 {
     public abstract class BaseEntry<TEntry> where TEntry : BaseEntry<TEntry>
     {
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
         public virtual DateTime? CreationDate { get; protected set; }
         public virtual DateTime? ChangeDate { get; set; }
 
-        public TEntry LoadInternalData(int id, DateTime? creationDate, DateTime? changeDate)
+        public TEntry LoadInternalData(long id, DateTime? creationDate, DateTime? changeDate)
         {
             Id = id;
             CreationDate = creationDate;

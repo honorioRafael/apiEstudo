@@ -2,7 +2,7 @@
 {
     public class InputIdentityDeleteEmployee : BaseInputIdentityDelete<InputIdentityDeleteEmployee>
     {
-        public InputIdentityDeleteEmployee(int id) : base(id)
+        public InputIdentityDeleteEmployee(long id) : base(id)
         { }
     }
 }

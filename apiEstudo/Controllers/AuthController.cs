@@ -70,7 +70,7 @@ namespace apiEstudo.Controllers
 
         [HttpGet("{id}")]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public override IActionResult Get(int id)
+        public override IActionResult Get(long id)
         {
             throw new NotImplementedException();
         }

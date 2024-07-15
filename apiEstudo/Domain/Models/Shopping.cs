@@ -7,8 +7,8 @@ namespace apiEstudo.Domain.Models
     {
         #region Properties
         public double Value { get; private set; }
-        public int EmployeeId { get; private set; }
-        public int ShippingStatusId { get; private set; }
+        public long EmployeeId { get; private set; }
+        public long ShippingStatusId { get; private set; }
 
         #region Internal
         public virtual Employee Employee { get; private set; }
@@ -21,7 +21,7 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public Shopping(int employeeid, double value, int shippingStatusId, Employee employee, ShippingStatus shippingStatus)
+        public Shopping(long employeeid, double value, long shippingStatusId, Employee employee, ShippingStatus shippingStatus)
         {
             EmployeeId = employeeid;
             Value = value;

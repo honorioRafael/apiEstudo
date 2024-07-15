@@ -8,7 +8,7 @@
         public OutputShoppingItem()
         { }
 
-        public OutputShoppingItem(int id, double quantity, OutputProduct produto)
+        public OutputShoppingItem(long id, double quantity, OutputProduct produto)
         {
             Quantity = quantity;
             Produto = produto;

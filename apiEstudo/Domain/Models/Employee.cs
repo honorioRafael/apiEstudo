@@ -12,7 +12,7 @@ namespace apiEstudo.Domain.Model
         #region Properties
         public string? Name { get; set; }
         public int Age { get; set; }
-        public int EmployeeTaskId { get; set; }
+        public long EmployeeTaskId { get; set; }
 
         #region Internal
         public EmployeeTask EmployeeTask { get; set; }
@@ -25,7 +25,7 @@ namespace apiEstudo.Domain.Model
         #endregion
         #endregion
 
-        public Employee(string? name, int age, int employeeTaskId, EmployeeTask employeeTask)
+        public Employee(string? name, int age, long employeeTaskId, EmployeeTask employeeTask)
         {
             Name = name;
             Age = age;

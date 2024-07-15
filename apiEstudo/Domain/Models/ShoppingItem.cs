@@ -5,8 +5,8 @@ namespace apiEstudo.Domain.Models
     public class ShoppingItem : BaseEntry<ShoppingItem>
     {
         #region Properties
-        public int ShoppingId { get; set; }
-        public int ProductId { get; set; }
+        public long ShoppingId { get; set; }
+        public long ProductId { get; set; }
         public double Quantity { get; set; }
 
         #region Internal
@@ -16,7 +16,7 @@ namespace apiEstudo.Domain.Models
 
         #endregion
 
-        public ShoppingItem(int shoppingId, int productId, double quantity, Product product, Shopping shopping)
+        public ShoppingItem(long shoppingId, long productId, double quantity, Product product, Shopping shopping)
         {
             ShoppingId = shoppingId;
             ProductId = productId;
