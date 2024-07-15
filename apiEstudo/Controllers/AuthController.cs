@@ -22,7 +22,7 @@ namespace apiEstudo.Controllers
                 _service.Create(view);
                 return Ok();
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
                 return NotFound();
             }

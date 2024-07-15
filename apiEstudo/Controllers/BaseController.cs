@@ -15,7 +15,6 @@ namespace apiEstudo.Controllers
         where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
         where TOutput : BaseOutput<TOutput>
-
     {
         protected readonly TService _service;
 
@@ -32,7 +31,7 @@ namespace apiEstudo.Controllers
                 return Ok(_service.Create(inputCreate));
             }
             //Exceptions customizadas / tratativas
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
                 return NotFound();
             }

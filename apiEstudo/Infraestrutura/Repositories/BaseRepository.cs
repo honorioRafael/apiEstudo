@@ -7,13 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public abstract class BaseRepository<TEntry, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate> : IBaseRepository<TEntry, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate>
+    public abstract class BaseRepository<TEntry, TInputCreate> : IBaseRepository<TEntry, TInputCreate>
         where TEntry : BaseEntry<TEntry>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
-        where TInputInternalCreate : BaseInputInternalCreate<TInputInternalCreate>
-        where TInputCreateComplete : BaseInputCreateComplete<TInputCreate, TInputInternalCreate>
-        where TInputUpdate : BaseInputUpdate<TInputUpdate>
-        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
     {
         protected readonly ConnectionContext _context;
         protected readonly DbSet<TEntry> _dbset;
@@ -89,20 +85,10 @@ namespace apiEstudo.Infraestrutura.Repositories
         #endregion
     }
 
-    public abstract class BaseRepository_1<TEntry> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0>, IBaseRepository_1<TEntry>
+    public abstract class BaseRepository_1<TEntry> : BaseRepository<TEntry, BaseInputCreate_0>, IBaseRepository_1<TEntry>
         where TEntry : BaseEntry<TEntry>, new()
     {
         protected BaseRepository_1(ConnectionContext context) : base(context)
-        { }
-    }
-
-    public abstract class BaseRepository_2<TEntry, TInputCreate, TInputUpdate, TInputIdentityUpdate> : BaseRepository<TEntry, TInputCreate, BaseInputCreateComplete<TInputCreate, BaseInputInternalCreate_0>, BaseInputInternalCreate_0, TInputUpdate, TInputIdentityUpdate>, IBaseRepository_2<TEntry, TInputCreate, TInputUpdate, TInputIdentityUpdate>
-        where TEntry : BaseEntry<TEntry>, new()
-        where TInputCreate : BaseInputCreate<TInputCreate>
-        where TInputUpdate : BaseInputUpdate<TInputUpdate>
-        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
-    {
-        protected BaseRepository_2(ConnectionContext context) : base(context)
         { }
     }
 }

@@ -2,7 +2,6 @@
 {
     public class OutputShoppingItem : BaseOutput<OutputShoppingItem>
     {
-        public int Id { get; set; }
         public double Quantity { get; set; }
         public OutputProduct Produto { get; set; }
 

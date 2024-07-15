@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class ShoppingRepository : BaseRepository<Shopping, InputCreateShopping, InputCreateShoppingComplete, InputInternalCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping>, IShoppingRepository
+    public class ShoppingRepository : BaseRepository<Shopping, InputCreateShopping>, IShoppingRepository
     {
         public ShoppingRepository(ConnectionContext context) : base(context)
         {

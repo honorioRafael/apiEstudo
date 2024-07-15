@@ -6,7 +6,7 @@ using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class BrandRepository : BaseRepository_2<Brand, InputCreateBrand, InputUpdateBrand, InputIdentityUpdateBrand>, IBrandRepository
+    public class BrandRepository : BaseRepository<Brand, InputCreateBrand>, IBrandRepository
     {
         public BrandRepository(ConnectionContext context) : base(context)
         {

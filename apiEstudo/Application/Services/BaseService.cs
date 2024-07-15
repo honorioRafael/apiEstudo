@@ -8,7 +8,7 @@ namespace apiEstudo.Application.Services
 {
     public abstract class BaseService<TEntry, TRepository, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : IBaseService<TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
         where TEntry : BaseEntry<TEntry>, new()
-        where TRepository : IBaseRepository<TEntry, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate>
+        where TRepository : IBaseRepository<TEntry, TInputCreate>
         where TInputCreate : BaseInputCreate<TInputCreate>
         where TInputInternalCreate : BaseInputInternalCreate<TInputInternalCreate>
         where TInputCreateComplete : BaseInputCreateComplete<TInputCreate, TInputInternalCreate>
@@ -206,7 +206,7 @@ namespace apiEstudo.Application.Services
 
     public abstract class BaseService_2<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : BaseService<TEntry, TRepository, TInputCreate, BaseInputCreateComplete<TInputCreate, BaseInputInternalCreate_0>, BaseInputInternalCreate_0, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>, IBaseService_2<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
         where TEntry : BaseEntry<TEntry>, new()
-        where TRepository : IBaseRepository_2<TEntry, TInputCreate, TInputUpdate, TInputIdentityUpdate>
+        where TRepository : IBaseRepository<TEntry, TInputCreate>
         where TInputCreate : BaseInputCreate<TInputCreate>
         where TInputUpdate : BaseInputUpdate<TInputUpdate>
         where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
