@@ -1,6 +1,5 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.Arguments.Base;
-using System.Formats.Tar;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
@@ -17,10 +16,11 @@ namespace apiEstudo.Application.ServicesInterfaces
         List<int> CreateMultiple(List<TInputCreate> listInputCreate);
         List<int> CreateMultiple(List<TInputCreateComplete> listInputCreate);
         int Update(TInputIdentityUpdate inputIdentityUpdate);
-        List<int> UpdateRange(List<TInputIdentityUpdate> listInputIdentityUpdate);
+        List<int> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate);
         void Delete(TInputIdentityDelete inputIdentityDelete);
+        void DeleteMultiple(List<TInputIdentityDelete> inputIdentityDelete);
         List<TOutput>? GetAll();
-        TOutput? Get(int id);        
+        TOutput? Get(int id);
     }
 
     public interface IBaseService_1<TOutput> : IBaseService<BaseInputCreate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>

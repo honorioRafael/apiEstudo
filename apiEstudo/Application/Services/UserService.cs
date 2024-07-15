@@ -41,7 +41,8 @@ namespace apiEstudo.Application.Services
             if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != OriginalItem.Name)
                 throw new InvalidArgumentException("Esse nome ja está em uso!");
 
-            return base.Update(inputIdentityUpdateUser);// _repository.Update(new User(inputIdentityUpdateUser.InputUpdate.Name, inputIdentityUpdateUser.InputUpdate.Password).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            var UserToUpdate = InternalUpdate([inputIdentityUpdateUser], [OriginalItem]).First();
+            return _repository.Update(UserToUpdate);
         }
     }
 }

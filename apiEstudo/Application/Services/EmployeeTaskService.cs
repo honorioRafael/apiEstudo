@@ -20,12 +20,17 @@ namespace apiEstudo.Application
             return _repository.CreateMultiple(employeeTaskToCreate);// _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
         }
 
-        public int Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
+        public override List<int> UpdateMultiple(List<InputIdentityUpdateEmployeeTask> listInputIdentityUpdate)
         {
-            if (inputIdentityUpdateEmployeeTask == null)
+            if (listInputIdentityUpdate.Count == 0)
                 throw new ArgumentNullException();
-         
-            return base.Update(inputIdentityUpdateEmployeeTask);// _repository.Update(new EmployeeTask(inputIdentityUpdateEmployeeTask.InputUpdate.Name, inputIdentityUpdateEmployeeTask.InputUpdate.Description).LoadInternalData(originalEmployeeTask.Id, originalEmployeeTask.CreationDate, originalEmployeeTask.ChangeDate).SetChangeDate());
+
+            List<EmployeeTask> EmployeeTasksToBeUpdated = GetListByListId((from i in listInputIdentityUpdate select i.Id).ToList());
+            if (EmployeeTasksToBeUpdated.Count == 0)
+                throw new NotFoundException("EmployeeTask ID não localizado!");
+
+            var employeeTasksToUpdate = InternalUpdate(listInputIdentityUpdate, EmployeeTasksToBeUpdated);
+            return _repository.UpdateMultiple(employeeTasksToUpdate);
         }
     }
 }

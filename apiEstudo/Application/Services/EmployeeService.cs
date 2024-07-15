@@ -13,14 +13,21 @@ namespace apiEstudo.Application.Services
         }
         private readonly IEmployeeTaskRepository _employeeTaskRepository;
 
-        public int Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
+        public override List<int> UpdateMultiple(List<InputIdentityUpdateEmployee> listInputIdentityUpdateEmployee)
         {
-            if (inputIdentityUpdateEmployee.InputUpdate.Age < 0)
+            if (listInputIdentityUpdateEmployee.Count == 0)
+                throw new ArgumentNullException();
+            if (listInputIdentityUpdateEmployee.Any(x => x.InputUpdate.Age < 0))
                 throw new InvalidArgumentException("Idade inválida!");
+            if (listInputIdentityUpdateEmployee.Any(x => _employeeTaskRepository.Get(x.InputUpdate.TaskId) == null))
+                throw new NotFoundException("Há um ID de Tarefa inválido na lista de atualização!");
 
-            return base.Update(inputIdentityUpdateEmployee);// _repository.Update(new Employee(inputIdentityUpdateEmployee.InputUpdate.Name,
-                //inputIdentityUpdateEmployee.InputUpdate.Age,
-                //inputIdentityUpdateEmployee.InputUpdate.TaskId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            List<Employee> EmployeesToBeUpdated = GetListByListId((from i in listInputIdentityUpdateEmployee select i.Id).ToList());
+            if (EmployeesToBeUpdated.Count == 0)
+                throw new NotFoundException("Employee ID não localizado!");
+
+            var employeesToUpdate = InternalUpdate(listInputIdentityUpdateEmployee, EmployeesToBeUpdated);
+            return _repository.UpdateMultiple(employeesToUpdate);
         }
 
         public override List<int> CreateMultiple(List<InputCreateEmployee> listInputCreate)

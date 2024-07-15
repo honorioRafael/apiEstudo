@@ -24,19 +24,22 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Quantidade inválida!");
 
             var productsToCreate = InternalCreate(listInputCreate);
-            return _repository.CreateMultiple(productsToCreate);// _repository.Create(new Product(inputCreateProduct.Name, inputCreateProduct.Quantity, inputCreateProduct.BrandId, null).SetCreationDate());
+            return _repository.CreateMultiple(productsToCreate);
         }
 
-        public int Update(InputIdentityUpdateProduct inputIdentityUpdate)
-        {          
-            if (_brandRepository.Get(inputIdentityUpdate.InputUpdate.BrandId) == null)
+        public override List<int> UpdateMultiple(List<InputIdentityUpdateProduct> listInputIdentityUpdateProduct)
+        {
+            if (listInputIdentityUpdateProduct.Any(x => _brandRepository.Get(x.InputUpdate.BrandId) == null))
                 throw new NotFoundException("ID da marca não localizado.");
-            if (inputIdentityUpdate.InputUpdate.Quantity < 0)
+            if (listInputIdentityUpdateProduct.Any(x => x.InputUpdate.Quantity < 0))
                 throw new InvalidArgumentException("Quantidade inválida!");
 
-            return base.Update(inputIdentityUpdate);// _repository.Update(new Product(inputIdentityUpdate.InputUpdate.Name,
-                //inputIdentityUpdate.InputUpdate.Quantity,
-                //inputIdentityUpdate.InputUpdate.BrandId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            List<Product> ProductsToBeUpdated = GetListByListId((from i in listInputIdentityUpdateProduct select i.Id).ToList());
+            if (ProductsToBeUpdated.Count == 0)
+                throw new NotFoundException("Product ID não localizado!");
+
+            var productsToUpdate = InternalUpdate(listInputIdentityUpdateProduct, ProductsToBeUpdated);
+            return _repository.UpdateMultiple(productsToUpdate);
         }
     }
 }

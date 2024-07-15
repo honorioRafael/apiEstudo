@@ -69,34 +69,15 @@ namespace apiEstudo.Infraestrutura.Repositories
             _context.UpdateRange(listInputUpdate);
             _context.SaveChanges();
 
-            return (from i in listInputUpdate select i.Id).ToList();                                                                                        
+            return (from i in listInputUpdate select i.Id).ToList();
         }
-
-
-        /*public virtual int Update(TEntry entry)
-        {
-            UpdateMultiple([entry]);
-
-            return entry.Id;
-        }
-
-        public List<int> UpdateMultiple(List<TEntry> entry)
-        {
-            _context.UpdateRange(entry);
-            _context.SaveChanges();
-
-            return (from i in entry select i.Id).ToList();
-        }*/
-
 
         #endregion
 
         #region Delete
-        public virtual bool Delete(TEntry entry)
+        public virtual void Delete(TEntry entry)
         {
             DeleteMultiple([entry]);
-
-            return true;
         }
 
         public void DeleteMultiple(List<TEntry> entry)

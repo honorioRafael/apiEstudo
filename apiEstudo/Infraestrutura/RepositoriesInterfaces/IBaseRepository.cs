@@ -19,7 +19,7 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         List<int> CreateMultiple(List<TEntry> entry);
         int Update(TEntry classe);
         List<int> UpdateMultiple(List<TEntry> entry);
-        bool Delete(TEntry classe);
+        void Delete(TEntry classe);
         void DeleteMultiple(List<TEntry> entry);
     }
 

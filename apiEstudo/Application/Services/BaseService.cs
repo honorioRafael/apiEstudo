@@ -3,8 +3,6 @@ using apiEstudo.Application.Arguments.Base;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace apiEstudo.Application.Services
 {
@@ -47,23 +45,25 @@ namespace apiEstudo.Application.Services
         #region Update
         public int Update(TInputIdentityUpdate inputIdentityUpdate)
         {
-            return UpdateRange([inputIdentityUpdate]).First();
+            return UpdateMultiple([inputIdentityUpdate]).First();
         }
 
-        public List<int> UpdateRange(List<TInputIdentityUpdate> listInputIdentityUpdate)
+        public virtual List<int> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<TEntry> InternalUpdate(List<TInputIdentityUpdate> listInputIdentityUpdate, List<TEntry> listEntitiesToBeUpdated)
         {
             var inputUpdateProperties = typeof(TInputUpdate).GetProperties();
-            var entitiesToBeUpdated = GetListByListId((from i in listInputIdentityUpdate select i.Id).ToList());
+            //var entitiesToBeUpdated = GetListByListId((from i in listInputIdentityUpdate select i.Id).ToList());
             var listUpdatedEntities = new List<TEntry>();
-
-            if(entitiesToBeUpdated.Count == 0)
-                throw new NotFoundException("ID não localizado!");
 
             foreach (var inputUpdate in listInputIdentityUpdate)
             {
-                TEntry originalObject = (from i in entitiesToBeUpdated
+                TEntry originalObject = (from i in listEntitiesToBeUpdated
                                          where i.Id == inputUpdate.Id
-                                         select i).First();                
+                                         select i).First();
 
                 foreach (var propertyUpdate in inputUpdateProperties)
                 {
@@ -77,7 +77,7 @@ namespace apiEstudo.Application.Services
                 listUpdatedEntities.Add(originalObject.SetChangeDate());
             }
 
-            return _repository.UpdateMultiple(listUpdatedEntities);
+            return listUpdatedEntities;
         }
 
         #endregion
@@ -169,9 +169,20 @@ namespace apiEstudo.Application.Services
                 throw new NotFoundException("Não foi encontrado nenhum registro com o ID informado.");
             _repository.Delete(ToBeDeleted);
         }
+
+        public virtual void DeleteMultiple(List<TInputIdentityDelete> listInputIdentityDelete)
+        {
+            var ToBeDeleted = _repository.GetListByListId((from i in listInputIdentityDelete select i.Id).ToList());
+            if (ToBeDeleted == null)
+                throw new NotFoundException("Não foi encontrado nenhum registro com o ID informado.");
+
+            _repository.DeleteMultiple(ToBeDeleted);
+        }
+
         #endregion
 
         #region Internal Functions
+
         internal TOutput EntryToOutput(TEntry entrada)
         {
             return (TOutput)(dynamic)entrada;
@@ -182,15 +193,6 @@ namespace apiEstudo.Application.Services
             return (from item in entrada select (TOutput)(dynamic)item).ToList();
         }
 
-        internal List<TEntry> SetCreate(List<TInputCreate> inputCreate)
-        {
-            return default;
-        }
-
-        internal TEntry SetCreate(TInputCreate inputCreate)
-        {
-            return SetCreate(new List<TInputCreate> { inputCreate }).FirstOrDefault();
-        }
         #endregion        
     }
 

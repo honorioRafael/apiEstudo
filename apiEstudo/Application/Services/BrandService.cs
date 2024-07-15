@@ -19,21 +19,22 @@ namespace apiEstudo.Application.Services
         public override List<int> CreateMultiple(List<InputCreateBrand> listInputCreateBrand)
         {
             if (listInputCreateBrand == null)
-                throw new ArgumentNullException();           
-                
+                throw new ArgumentNullException();
+
             var createdBrand = InternalCreate(listInputCreateBrand);
             return _repository.CreateMultiple(createdBrand);
         }
-
-        public int Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
+        public override List<int> UpdateMultiple(List<InputIdentityUpdateBrand> listInputIdentityUpdateBrand)
         {
-            if (inputIdentityUpdateBrand == null)
+            if (listInputIdentityUpdateBrand == null)
                 throw new ArgumentNullException();
 
-            //var originalBrand = _repository.Get(inputIdentityUpdateBrand.Id);
-            //if (originalBrand == null) throw new ArgumentNullException();
-            
-            return base.Update(inputIdentityUpdateBrand);// _repository.Update(new Brand(inputIdentityUpdateBrand.InputUpdate.Name).LoadInternalData(originalBrand.Id, originalBrand.CreationDate, originalBrand.ChangeDate).SetChangeDate());
+            List<Brand> BrandsToBeUpdated = GetListByListId((from i in listInputIdentityUpdateBrand select i.Id).ToList());
+            if (BrandsToBeUpdated.Count == 0)
+                throw new NotFoundException("Brand ID não localizado!");
+
+            var BrandToUpdate = InternalUpdate(listInputIdentityUpdateBrand, BrandsToBeUpdated);
+            return _repository.UpdateMultiple(BrandToUpdate);
         }
     }
 }
