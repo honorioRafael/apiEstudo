@@ -7,12 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public abstract class BaseRepository<TEntry, TInputCreate, TInputUpdate, TInputCreateComplete, TInputInternalCreate> : IBaseRepository<TEntry, TInputCreate, TInputUpdate, TInputCreateComplete, TInputInternalCreate>
+    public abstract class BaseRepository<TEntry, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate> : IBaseRepository<TEntry, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate>
         where TEntry : BaseEntry<TEntry>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
-        where TInputUpdate : BaseInputUpdate<TInputUpdate>
         where TInputInternalCreate : BaseInputInternalCreate<TInputInternalCreate>
         where TInputCreateComplete : BaseInputCreateComplete<TInputCreate, TInputInternalCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
     {
         protected readonly ConnectionContext _context;
         protected readonly DbSet<TEntry> _dbset;
@@ -24,77 +25,17 @@ namespace apiEstudo.Infraestrutura.Repositories
         }
 
         #region Create
-        public virtual int Create(TInputCreate entry)
+        public virtual int Create(TEntry entry)
         {
             return CreateMultiple([entry]).First();
         }
 
-        public virtual List<int> CreateMultiple(List<TInputCreate> listInputCreate)
+        public virtual List<int> CreateMultiple(List<TEntry> listInputCreate)
         {
-            var inputCreateProperties = typeof(TInputCreate).GetProperties();
-            var entitiesToBeCreated = new List<TEntry>();
-
-            foreach (var inputCreate in listInputCreate)
-            {
-                TEntry createdObject = (TEntry)Activator.CreateInstance(typeof(TEntry));
-
-                foreach (var propertyCreate in inputCreateProperties)
-                {
-                    var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
-                    var propertyCreateValue = propertyCreate.GetValue(inputCreate);
-
-                    if (entryProperty == null) continue;
-                    entryProperty.SetValue(createdObject, propertyCreateValue);
-                }
-
-                entitiesToBeCreated.Add(createdObject.SetCreationDate());
-            }
-
-            _context.AddRange(entitiesToBeCreated);
+            _context.AddRange(listInputCreate);
             _context.SaveChanges();
 
-            return (from i in entitiesToBeCreated select i.Id).ToList();
-        }
-
-        public virtual List<int> CreateMultiple(List<TInputCreateComplete> listInputCreateComplete)
-        {
-            var entitiesToBeCreated = new List<TEntry>();
-
-            foreach (var inputCreateComplete in listInputCreateComplete)
-            {
-                TEntry createdObject = (TEntry)Activator.CreateInstance(typeof(TEntry));
-                var inputCreate = inputCreateComplete.GetType().GetProperty(nameof(BaseInputCreateComplete_0.InputCreate));
-                var inputInternalCreate = inputCreateComplete.GetType().GetProperty(nameof(BaseInputCreateComplete_0.InputInternalCreate));
-                if (inputCreate != null)
-                {
-                    foreach (var propertyCreate in inputCreate.PropertyType.GetProperties())
-                    {
-                        var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
-                        var propertyCreateValue = propertyCreate.GetValue(inputCreateComplete.InputCreate);
-
-                        if (entryProperty == null) continue;
-                        entryProperty.SetValue(createdObject, propertyCreateValue);
-                    }
-                }
-                if (inputInternalCreate != null)
-                {
-                    foreach (var propertyCreate in inputInternalCreate.PropertyType.GetProperties())
-                    {
-                        var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
-                        var propertyCreateValue = propertyCreate.GetValue(inputCreateComplete.InputInternalCreate);
-
-                        if (entryProperty == null) continue;
-                        entryProperty.SetValue(createdObject, propertyCreateValue);
-                    }
-                }
-
-                entitiesToBeCreated.Add(createdObject.SetCreationDate());
-            }
-
-            _context.AddRange(entitiesToBeCreated);
-            _context.SaveChanges();
-
-            return (from i in entitiesToBeCreated select i.Id).ToList();
+            return (from i in listInputCreate select i.Id).ToList();
         }
 
         #endregion
@@ -118,39 +59,21 @@ namespace apiEstudo.Infraestrutura.Repositories
         #endregion
 
         #region Update
-        /*public virtual int Update(TInputUpdate inputUpdate)
+        public virtual int Update(TEntry inputUpdate)
         {
             return UpdateMultiple([inputUpdate]).FirstOrDefault();
         }
 
-        public List<int> UpdateMultiple(List<TInputUpdate> listInputUpdate)
+        public List<int> UpdateMultiple(List<TEntry> listInputUpdate)
         {
-            var inputUpdateProperties = typeof(TInputUpdate).GetProperties();
-            var entitiesToBeUpdated = new List<TEntry>();
-
-            foreach (var inputUpdate in listInputUpdate)
-            {
-                TEntry createdObject = Get(inputUpdate);
-
-                foreach (var propertyCreate in inputCreateProperties)
-                {
-                    var entryProperty = typeof(TEntry).GetProperty(propertyCreate.Name);
-                    var propertyCreateValue = propertyCreate.GetValue(inputCreate);
-
-                    if (entryProperty == null) continue;
-                    entryProperty.SetValue(createdObject, propertyCreateValue);
-                }
-
-                entitiesToBeCreated.Add(createdObject.SetCreationDate());
-            }
-            _context.UpdateRange(entry);
+            _context.UpdateRange(listInputUpdate);
             _context.SaveChanges();
 
-            return (from i in entry select i.Id).ToList();
-        }*/
+            return (from i in listInputUpdate select i.Id).ToList();                                                                                        
+        }
 
 
-        public virtual int Update(TEntry entry)
+        /*public virtual int Update(TEntry entry)
         {
             UpdateMultiple([entry]);
 
@@ -163,7 +86,7 @@ namespace apiEstudo.Infraestrutura.Repositories
             _context.SaveChanges();
 
             return (from i in entry select i.Id).ToList();
-        }
+        }*/
 
 
         #endregion
@@ -185,17 +108,18 @@ namespace apiEstudo.Infraestrutura.Repositories
         #endregion
     }
 
-    public abstract class BaseRepository_1<TEntry> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0>, IBaseRepository_1<TEntry>
+    public abstract class BaseRepository_1<TEntry> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0>, IBaseRepository_1<TEntry>
         where TEntry : BaseEntry<TEntry>, new()
     {
         protected BaseRepository_1(ConnectionContext context) : base(context)
         { }
     }
 
-    public abstract class BaseRepository_2<TEntry, TInputCreate, TInputUpdate> : BaseRepository<TEntry, TInputCreate, TInputUpdate, BaseInputCreateComplete<TInputCreate, BaseInputInternalCreate_0>, BaseInputInternalCreate_0>, IBaseRepository_2<TEntry, TInputCreate, TInputUpdate>
+    public abstract class BaseRepository_2<TEntry, TInputCreate, TInputUpdate, TInputIdentityUpdate> : BaseRepository<TEntry, TInputCreate, BaseInputCreateComplete<TInputCreate, BaseInputInternalCreate_0>, BaseInputInternalCreate_0, TInputUpdate, TInputIdentityUpdate>, IBaseRepository_2<TEntry, TInputCreate, TInputUpdate, TInputIdentityUpdate>
         where TEntry : BaseEntry<TEntry>, new()
         where TInputCreate : BaseInputCreate<TInputCreate>
         where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
     {
         protected BaseRepository_2(ConnectionContext context) : base(context)
         { }

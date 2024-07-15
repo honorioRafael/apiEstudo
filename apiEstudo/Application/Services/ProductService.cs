@@ -14,30 +14,29 @@ namespace apiEstudo.Application.Services
         }
         private readonly IBrandRepository _brandRepository;
 
-        public int Create(InputCreateProduct inputCreateProduct)
+        public override List<int> CreateMultiple(List<InputCreateProduct> listInputCreate)
         {
-            if (inputCreateProduct == null)
+            if (listInputCreate.Count == 0)
                 throw new ArgumentNullException();
-            if (_brandRepository.Get(inputCreateProduct.BrandId) == null)
+            if (listInputCreate.Any(x => _brandRepository.Get(x.BrandId) == null))
                 throw new NotFoundException("ID da marca não localizado.");
-            if (inputCreateProduct.Quantity < 0)
+            if (listInputCreate.Any(x => x.Quantity < 0))
                 throw new InvalidArgumentException("Quantidade inválida!");
 
-            return _repository.Create(inputCreateProduct);// _repository.Create(new Product(inputCreateProduct.Name, inputCreateProduct.Quantity, inputCreateProduct.BrandId, null).SetCreationDate());
+            var productsToCreate = InternalCreate(listInputCreate);
+            return _repository.CreateMultiple(productsToCreate);// _repository.Create(new Product(inputCreateProduct.Name, inputCreateProduct.Quantity, inputCreateProduct.BrandId, null).SetCreationDate());
         }
 
-        public override int Update(InputIdentityUpdateProduct inputIdentityUpdate)
-        {
-            var OriginalItem = _repository.Get(inputIdentityUpdate.Id);
-            if (OriginalItem == null) throw new NotFoundException();
+        public int Update(InputIdentityUpdateProduct inputIdentityUpdate)
+        {          
             if (_brandRepository.Get(inputIdentityUpdate.InputUpdate.BrandId) == null)
                 throw new NotFoundException("ID da marca não localizado.");
             if (inputIdentityUpdate.InputUpdate.Quantity < 0)
                 throw new InvalidArgumentException("Quantidade inválida!");
 
-            return _repository.Update(new Product(inputIdentityUpdate.InputUpdate.Name,
-                inputIdentityUpdate.InputUpdate.Quantity,
-                inputIdentityUpdate.InputUpdate.BrandId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            return base.Update(inputIdentityUpdate);// _repository.Update(new Product(inputIdentityUpdate.InputUpdate.Name,
+                //inputIdentityUpdate.InputUpdate.Quantity,
+                //inputIdentityUpdate.InputUpdate.BrandId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
         }
     }
 }

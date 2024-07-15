@@ -6,7 +6,7 @@ using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura
 {
-    public class EmployeeTaskRepository : BaseRepository_2<EmployeeTask, InputCreateEmployeeTask, InputUpdateEmployeeTask>, IEmployeeTaskRepository
+    public class EmployeeTaskRepository : BaseRepository_2<EmployeeTask, InputCreateEmployeeTask, InputUpdateEmployeeTask, InputIdentityUpdateEmployeeTask>, IEmployeeTaskRepository
     {
         public EmployeeTaskRepository(ConnectionContext context) : base(context) { }
 

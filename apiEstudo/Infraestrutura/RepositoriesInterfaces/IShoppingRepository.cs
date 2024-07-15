@@ -3,7 +3,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
-    public interface IShoppingRepository : IBaseRepository<Shopping, InputCreateShopping, InputUpdateShopping, InputCreateShoppingComplete, InputInternalCreateShopping>
+    public interface IShoppingRepository : IBaseRepository<Shopping, InputCreateShopping, InputCreateShoppingComplete, InputInternalCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping>
     {
     }
 }

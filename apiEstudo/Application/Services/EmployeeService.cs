@@ -13,31 +13,27 @@ namespace apiEstudo.Application.Services
         }
         private readonly IEmployeeTaskRepository _employeeTaskRepository;
 
-        public override int Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
+        public int Update(InputIdentityUpdateEmployee inputIdentityUpdateEmployee)
         {
-            var OriginalItem = _repository.Get(inputIdentityUpdateEmployee.Id);
-            if (OriginalItem == null)
-                throw new NotFoundException();
-            if (_employeeTaskRepository.Get(inputIdentityUpdateEmployee.InputUpdate.TaskId) == null)
-                throw new NotFoundException("Employee Task ID inválido!");
             if (inputIdentityUpdateEmployee.InputUpdate.Age < 0)
                 throw new InvalidArgumentException("Idade inválida!");
 
-            return _repository.Update(new Employee(inputIdentityUpdateEmployee.InputUpdate.Name,
-                inputIdentityUpdateEmployee.InputUpdate.Age,
-                inputIdentityUpdateEmployee.InputUpdate.TaskId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            return base.Update(inputIdentityUpdateEmployee);// _repository.Update(new Employee(inputIdentityUpdateEmployee.InputUpdate.Name,
+                //inputIdentityUpdateEmployee.InputUpdate.Age,
+                //inputIdentityUpdateEmployee.InputUpdate.TaskId, null).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
         }
 
-        public int Create(InputCreateEmployee inputCreateEmployee)
+        public override List<int> CreateMultiple(List<InputCreateEmployee> listInputCreate)
         {
-            if (inputCreateEmployee == null)
+            if (listInputCreate.Count == 0)
                 throw new ArgumentNullException();
-            if (_employeeTaskRepository.Get(inputCreateEmployee.EmployeeTaskId) == null)
+            if (listInputCreate.Any(x => _employeeTaskRepository.Get(x.EmployeeTaskId) == null))
                 throw new NotFoundException("Employee Task ID inválido!");
-            if (inputCreateEmployee.Age < 0)
+            if (listInputCreate.Any(x => x.Age < 0))
                 throw new InvalidArgumentException("Idade inválida!");
 
-            return _repository.Create(inputCreateEmployee);
+            var employeesToCreate = InternalCreate(listInputCreate);
+            return _repository.CreateMultiple(employeesToCreate);
             // _repository.Create(new Employee(inputCreateEmployee.Name, inputCreateEmployee.Age, inputCreateEmployee.TaskId, null).SetCreationDate());
         }
     }

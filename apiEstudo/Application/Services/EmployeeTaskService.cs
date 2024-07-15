@@ -11,32 +11,21 @@ namespace apiEstudo.Application
         public EmployeeTaskService(IEmployeeTaskRepository contextInterface) : base(contextInterface)
         { }
 
-        public int Create(InputCreateEmployeeTask inputCreateEmployeeTask)
+        public override List<int> CreateMultiple(List<InputCreateEmployeeTask> listInputCreateEmployeeTask)
         {
-            if (inputCreateEmployeeTask == null)
+            if (listInputCreateEmployeeTask.Count == 0)
                 throw new ArgumentNullException();
-            return _repository.Create(inputCreateEmployeeTask);// _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
+
+            var employeeTaskToCreate = InternalCreate(listInputCreateEmployeeTask);
+            return _repository.CreateMultiple(employeeTaskToCreate);// _repository.Create(new EmployeeTask(inputCreateEmployeeTask.Name, inputCreateEmployeeTask.Description));
         }
 
-        public override int Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
+        public int Update(InputIdentityUpdateEmployeeTask inputIdentityUpdateEmployeeTask)
         {
             if (inputIdentityUpdateEmployeeTask == null)
                 throw new ArgumentNullException();
-            var originalEmployeeTask = _repository.Get(inputIdentityUpdateEmployeeTask.Id);
-            return _repository.Update(new EmployeeTask(inputIdentityUpdateEmployeeTask.InputUpdate.Name, inputIdentityUpdateEmployeeTask.InputUpdate.Description).LoadInternalData(originalEmployeeTask.Id, originalEmployeeTask.CreationDate, originalEmployeeTask.ChangeDate).SetChangeDate());
+         
+            return base.Update(inputIdentityUpdateEmployeeTask);// _repository.Update(new EmployeeTask(inputIdentityUpdateEmployeeTask.InputUpdate.Name, inputIdentityUpdateEmployeeTask.InputUpdate.Description).LoadInternalData(originalEmployeeTask.Id, originalEmployeeTask.CreationDate, originalEmployeeTask.ChangeDate).SetChangeDate());
         }
-
-        //public bool Update(EmployeeTaskUpdateViewModel view)
-        //{
-        //    if (view == null) return false;
-        //    var Task = _repository.Get(view.Id);
-        //    if (Task == null) return false;
-
-        //    Task.Name = view.Name;
-        //    Task.Description = view.Description;
-
-        //    _repository.Update(Task);
-        //    return true;
-        //}
     }
 }

@@ -30,17 +30,18 @@ namespace apiEstudo.Application.Services
             if (NameInUse != null)
                 throw new NameInUseException("O nome de usuário ja está em uso!");
 
-            return _repository.Create(inputCreateUser);
+            var UserToCreate = InternalCreate([inputCreateUser]).First();
+            return _repository.Create(UserToCreate);
         }
 
-        public override int Update(InputIdentityUpdateUser inputIdentityUpdateUser)
+        public int Update(InputIdentityUpdateUser inputIdentityUpdateUser)
         {
             var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
             if (OriginalItem == null) throw new NotFoundException();
             if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != OriginalItem.Name)
                 throw new InvalidArgumentException("Esse nome ja está em uso!");
 
-            return _repository.Update(new User(inputIdentityUpdateUser.InputUpdate.Name, inputIdentityUpdateUser.InputUpdate.Password).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
+            return base.Update(inputIdentityUpdateUser);// _repository.Update(new User(inputIdentityUpdateUser.InputUpdate.Name, inputIdentityUpdateUser.InputUpdate.Password).LoadInternalData(OriginalItem.Id, OriginalItem.CreationDate, OriginalItem.ChangeDate).SetChangeDate());
         }
     }
 }

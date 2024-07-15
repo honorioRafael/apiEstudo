@@ -13,21 +13,27 @@ namespace apiEstudo.Application.Services
 
         public int Create(InputCreateBrand inputCreateBrand)
         {
-            if (inputCreateBrand == null)
-                throw new ArgumentNullException();
-
-            return _repository.Create(inputCreateBrand);//_repository.Create(new Brand(inputCreateBrand.Name));
+            return CreateMultiple([inputCreateBrand]).FirstOrDefault();
         }
 
-        public override int Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
+        public override List<int> CreateMultiple(List<InputCreateBrand> listInputCreateBrand)
+        {
+            if (listInputCreateBrand == null)
+                throw new ArgumentNullException();           
+                
+            var createdBrand = InternalCreate(listInputCreateBrand);
+            return _repository.CreateMultiple(createdBrand);
+        }
+
+        public int Update(InputIdentityUpdateBrand inputIdentityUpdateBrand)
         {
             if (inputIdentityUpdateBrand == null)
                 throw new ArgumentNullException();
 
-            var originalBrand = _repository.Get(inputIdentityUpdateBrand.Id);
-            if (originalBrand == null) throw new ArgumentNullException();
-            //var entry = ;
-            return _repository.Update(new Brand(inputIdentityUpdateBrand.InputUpdate.Name).LoadInternalData(originalBrand.Id, originalBrand.CreationDate, originalBrand.ChangeDate).SetChangeDate());
+            //var originalBrand = _repository.Get(inputIdentityUpdateBrand.Id);
+            //if (originalBrand == null) throw new ArgumentNullException();
+            
+            return base.Update(inputIdentityUpdateBrand);// _repository.Update(new Brand(inputIdentityUpdateBrand.InputUpdate.Name).LoadInternalData(originalBrand.Id, originalBrand.CreationDate, originalBrand.ChangeDate).SetChangeDate());
         }
     }
 }

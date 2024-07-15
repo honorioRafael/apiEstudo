@@ -43,31 +43,29 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Insira um produto para criar uma compra.");
             if ((from i in listCreate select i).Any(x => x.InputCreate.Value < 0))
                 throw new InvalidArgumentException("Valor inválido!");
-
-            List<int> listShoppingId = _repository.CreateMultiple((from i in listCreate select new InputCreateShoppingComplete(i.InputCreate, new InputInternalCreateShopping(1))).ToList());
+                
+            var shoppingToCreate = InternalCreate((from i in listCreate select new InputCreateShoppingComplete(i.InputCreate, new InputInternalCreateShopping(1))).ToList());
+            List<int> listShoppingId = _repository.CreateMultiple(shoppingToCreate);
 
             var listCreateShoppingItem = (from i in listCreate
                                           let parentId = listShoppingId[i.Index]
                                           let createdItens = (from j in i.CreatedItens select new InputCreateShoppingItemComplete(j, new InputInternalCreateShoppingItem(parentId))).ToList()
                                           select createdItens).SelectMany(x => x).ToList();
-            if (_productRepository.GetListByListId((from i in listCreateShoppingItem select i.InputCreate.ProductId).ToList()).Count == 0)
-                throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
+            //if (_productRepository.GetListByListId((from i in listCreateShoppingItem select i.InputCreate.ProductId).ToList()).Count == 0)
+            //    throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
 
-            _shoppingItemService.CreateMultiple(listCreateShoppingItem);
+            CreateMultipleShoppingItens(listCreateShoppingItem);
             return listShoppingId;
         }
 
         #endregion
 
         #region Update        
-        public override int Update(InputIdentityUpdateShopping inputIdentityUpdateShopping)
+        public int Update(InputIdentityUpdateShopping inputIdentityUpdateShopping)
         {
             if (inputIdentityUpdateShopping == null)
                 throw new ArgumentNullException();
 
-            var OriginalShopping = _repository.Get(inputIdentityUpdateShopping.Id);
-            if (OriginalShopping == null)
-                throw new NotFoundException();
             if (_employeeRepository.Get(inputIdentityUpdateShopping.InputUpdate.EmployeeId) == null)
                 throw new InvalidArgumentException("Employee ID inválido!");
             if (inputIdentityUpdateShopping.InputUpdate.Value < 0)
@@ -80,6 +78,9 @@ namespace apiEstudo.Application.Services
                     throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
                 if (inputIdentityUpdateShopping.InputUpdate.CreatedItens.Any(x => x.Quantity < 0))
                     throw new InvalidArgumentException("Há um produto com quantidade inválida.");
+                List<InputCreateShoppingItemComplete> listInputCreateShoppingItemComplete = (from i in inputIdentityUpdateShopping.InputUpdate.CreatedItens
+                                                                                             select new InputCreateShoppingItemComplete(i, new InputInternalCreateShoppingItem(inputIdentityUpdateShopping.Id))).ToList();
+                CreateMultipleShoppingItens(listInputCreateShoppingItemComplete);
                 //CreateMultipleShoppingItens((from i in inputIdentityUpdateShopping.InputUpdate.CreatedItens select new InputCreateShoppingItem(OriginalShopping.Id, i.ProductId, i.Quantity)).ToList());
             }
 
@@ -101,8 +102,8 @@ namespace apiEstudo.Application.Services
                 DeleteMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.DeletedItens);
             }
 
-            _repository.Update(new Shopping(inputIdentityUpdateShopping.InputUpdate.EmployeeId, inputIdentityUpdateShopping.InputUpdate.Value, OriginalShopping.ShippingStatusId, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate).SetChangeDate());
-            return OriginalShopping.Id;
+            //_repository.Update(new Shopping(inputIdentityUpdateShopping.InputUpdate.EmployeeId, inputIdentityUpdateShopping.InputUpdate.Value, OriginalShopping.ShippingStatusId, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate).SetChangeDate());
+            return base.Update(inputIdentityUpdateShopping);
 
         }
         #endregion
@@ -117,7 +118,7 @@ namespace apiEstudo.Application.Services
             if (SelectedShopping == null)
                 throw new InvalidArgumentException("Shopping ID inválido!");
 
-            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 2, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
+            return 1;//_repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 2, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate());
         }
 
         public int UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
@@ -129,12 +130,16 @@ namespace apiEstudo.Application.Services
             if (SelectedShopping == null)
                 throw new InvalidArgumentException("Shopping ID inválido!");
 
-            return _repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 3, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate()); ;
+            return 1;// base.Update(new InputIdentityUpdateShopping(,));
+            //return _repository.Update(new Shopping(SelectedShopping.EmployeeId, SelectedShopping.Value, 3, null, null).LoadInternalData(SelectedShopping.Id, SelectedShopping.CreationDate, SelectedShopping.ChangeDate).SetChangeDate()); ;
         }
 
         private void CreateMultipleShoppingItens(List<InputCreateShoppingItemComplete> inputCreateShoppingItem)
         {
-            //_shoppingItemRepository.CreateMultiple<InputCreateShoppingItemComplete, InputInternalCreateShoppingItem>(inputCreateShoppingItem);
+            if (inputCreateShoppingItem.Any(x => _productRepository.Get(x.InputCreate.ProductId) == null))
+                throw new NotFoundException("Há um id de produto inválido na lista de criação!");
+
+            _shoppingItemService.CreateMultiple(inputCreateShoppingItem);
         }
 
         private void UpdateMultipleShoppingItens(List<InputIdentityUpdateShoppingItem> inputIdentityUpdateShoppingitem)
@@ -143,10 +148,8 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Há um id inválido na lista de alteração.");
             if (inputIdentityUpdateShoppingitem.Any(x => _productRepository.Get(x.InputUpdate.ProductId) == null))
                 throw new InvalidArgumentException("Há um id de produto inválido na lista de alteração.");
-
-            _shoppingItemRepository.UpdateMultiple((from item in inputIdentityUpdateShoppingitem
-                                                    let originalItem = _shoppingItemRepository.Get(item.Id)
-                                                    select new ShoppingItem(originalItem.ShoppingId, item.InputUpdate.ProductId, item.InputUpdate.Quantity, null, null).LoadInternalData(originalItem.Id, originalItem.CreationDate, originalItem.ChangeDate).SetChangeDate()).ToList());
+            
+            _shoppingItemService.UpdateRange(inputIdentityUpdateShoppingitem);            
         }
 
         private void DeleteMultipleShoppingItens(List<InputIdentityDeleteShoppingItem> inputIdentityDeleteShoppingItems)
