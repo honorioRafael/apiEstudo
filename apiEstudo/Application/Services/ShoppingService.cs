@@ -65,14 +65,18 @@ namespace apiEstudo.Application.Services
             if (listInputIdentityUpdateShopping.Count == 0)
                 throw new ArgumentNullException();
 
-            if (listInputIdentityUpdateShopping.Any(x => _employeeRepository.Get(x.InputUpdate.EmployeeId) == null))
+            List<Employee>? listRelatedEmployees = _employeeRepository.GetListByListId((from i in listInputIdentityUpdateShopping
+                                                                                       let j = i.InputUpdate
+                                                                                       select j.EmployeeId).ToList());
+            if (listRelatedEmployees == null || listRelatedEmployees.Count == 0)
                 throw new InvalidArgumentException("Employee ID inválido!");
+
             if (listInputIdentityUpdateShopping.Any(x => x.InputUpdate.Value < 0))
                 throw new InvalidArgumentException("Valor inválido!");
 
             List<Shopping> ShoppingsToBeUpdated = GetListByListId((from i in listInputIdentityUpdateShopping select i.Id).ToList());
             if (ShoppingsToBeUpdated.Count == 0)
-                throw new NotFoundException("Shopping ID não localizado!");
+                throw new InvalidArgumentException("Shopping ID não localizado!");
 
             foreach (var inputIdentityUpdateShopping in listInputIdentityUpdateShopping)
             {
@@ -91,8 +95,9 @@ namespace apiEstudo.Application.Services
                 // produtos compra - Update
                 if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens != null)
                 {
-                    if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens.Any(x => _productRepository.Get(x.InputUpdate.ProductId) == null))
-                        throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
+                    List<Product>? listRelatedProducts = _productRepository.GetListByListId((from i in inputIdentityUpdateShopping.InputUpdate.UpdatedItens select i.InputUpdate.ProductId).ToList());
+                    if (listRelatedProducts  == null || listRelatedProducts.Count == 0)
+                        throw new InvalidArgumentException("Há um id de produto inválido na lista de alteração!");                        
                     if (inputIdentityUpdateShopping.InputUpdate.UpdatedItens.Any(x => x.InputUpdate.Quantity < 0))
                         throw new InvalidArgumentException("Há um produto com quantidade inválida.");
                     UpdateMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.UpdatedItens);
@@ -101,11 +106,13 @@ namespace apiEstudo.Application.Services
                 // produtos compra - Delete
                 if (inputIdentityUpdateShopping.InputUpdate.DeletedItens != null)
                 {
-                    if (inputIdentityUpdateShopping.InputUpdate.DeletedItens.Any(x => _productRepository.Get(x.Id) == null))
-                        throw new InvalidArgumentException("Há um id de produto inválido na lista de criação.");
+                    List<ShoppingItem>? listRelatedProducts = _shoppingItemRepository.GetListByListId((from i in inputIdentityUpdateShopping.InputUpdate.DeletedItens select i.Id).ToList());
+                    if (listRelatedProducts == null || listRelatedProducts.Count == 0)
+                        throw new InvalidArgumentException("Há um ID de produto inválido na lista de deleção.");
                     DeleteMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.DeletedItens);
                 }
             }
+            
             var ShoppingsToUpdate = InternalUpdate(listInputIdentityUpdateShopping, ShoppingsToBeUpdated);
             return _repository.UpdateMultiple(ShoppingsToUpdate);
 
@@ -136,10 +143,13 @@ namespace apiEstudo.Application.Services
 
             return _repository.Update(new Shopping(OriginalShopping.EmployeeId, OriginalShopping.Value, 3, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate)); ;
         }
+        #endregion
 
+        #region ShoppingItens
         private void CreateMultipleShoppingItens(List<InputCreateShoppingItemComplete> inputCreateShoppingItem)
         {
-            if (inputCreateShoppingItem.Any(x => _productRepository.Get(x.InputCreate.ProductId) == null))
+            List<Product>? listRelatedProducts = _productRepository.GetListByListId((from i in inputCreateShoppingItem select i.InputCreate.ProductId).ToList());
+            if (listRelatedProducts == null || listRelatedProducts.Count == 0)
                 throw new NotFoundException("Há um id de produto inválido na lista de criação!");
 
             _shoppingItemService.CreateMultiple(inputCreateShoppingItem);
@@ -147,10 +157,9 @@ namespace apiEstudo.Application.Services
 
         private void UpdateMultipleShoppingItens(List<InputIdentityUpdateShoppingItem> inputIdentityUpdateShoppingitem)
         {
-            if (inputIdentityUpdateShoppingitem.Any(x => _shoppingItemRepository.Get(x.Id) == null))
-                throw new InvalidArgumentException("Há um id inválido na lista de alteração.");
-            if (inputIdentityUpdateShoppingitem.Any(x => _productRepository.Get(x.InputUpdate.ProductId) == null))
-                throw new InvalidArgumentException("Há um id de produto inválido na lista de alteração.");
+            List<Product>? listRelatedProducts = _productRepository.GetListByListId((from i in inputIdentityUpdateShoppingitem select i.InputUpdate.ProductId).ToList());
+            if (listRelatedProducts == null || listRelatedProducts.Count == 0)
+                throw new NotFoundException("Há um id inválido na lista de alteração.");
 
             _shoppingItemService.UpdateMultiple(inputIdentityUpdateShoppingitem);
         }

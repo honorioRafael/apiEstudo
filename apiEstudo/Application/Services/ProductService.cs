@@ -2,6 +2,7 @@
 using apiEstudo.Application.Arguments.Product;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.Models;
+using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
@@ -18,7 +19,8 @@ namespace apiEstudo.Application.Services
         {
             if (listInputCreate.Count == 0)
                 throw new ArgumentNullException();
-            if (listInputCreate.Any(x => _brandRepository.Get(x.BrandId) == null))
+            List<Brand>? listRelatedBrands = _brandRepository.GetListByListId((from i in listInputCreate select i.BrandId).ToList());
+            if (listRelatedBrands == null || listRelatedBrands.Count == 0)                
                 throw new NotFoundException("ID da marca não localizado.");
             if (listInputCreate.Any(x => x.Quantity < 0))
                 throw new InvalidArgumentException("Quantidade inválida!");
@@ -29,8 +31,10 @@ namespace apiEstudo.Application.Services
 
         public override List<int> UpdateMultiple(List<InputIdentityUpdateProduct> listInputIdentityUpdateProduct)
         {
-            if (listInputIdentityUpdateProduct.Any(x => _brandRepository.Get(x.InputUpdate.BrandId) == null))
+            List<Brand>? listRelatedBrands = _brandRepository.GetListByListId((from i in listInputIdentityUpdateProduct select i.InputUpdate.BrandId).ToList());
+            if (listRelatedBrands == null || listRelatedBrands.Count == 0)
                 throw new NotFoundException("ID da marca não localizado.");
+
             if (listInputIdentityUpdateProduct.Any(x => x.InputUpdate.Quantity < 0))
                 throw new InvalidArgumentException("Quantidade inválida!");
 

@@ -13,11 +13,11 @@ namespace apiEstudo.Controllers
         public ShoppingController(IShoppingService service) : base(service) { }
 
         [HttpPost("CancelShipping")]
-        public IActionResult CancelShipping(InputCancelShippingStatus inputIdentityUpdateShoppingShippingStatus)
+        public IActionResult CancelShipping(InputCancelShippingStatus inputCancelShippingStatus)
         {
             try
             {
-                return Ok(_service.UpdateShippingStatusCancel(inputIdentityUpdateShoppingShippingStatus));
+                return Ok(_service.UpdateShippingStatusCancel(inputCancelShippingStatus));
             }
             catch (Exception ex)
             {
@@ -26,11 +26,11 @@ namespace apiEstudo.Controllers
         }
 
         [HttpPost("ApproveShipping")]
-        public IActionResult ApproveShipping(InputApproveShippingStatus inputIdentityUpdateShoppingShippingStatus)
+        public IActionResult ApproveShipping(InputApproveShippingStatus inputApproveShippingStatus)
         {
             try
             {
-                return Ok(_service.UpdateShippingStatusApprove(inputIdentityUpdateShoppingShippingStatus));
+                return Ok(_service.UpdateShippingStatusApprove(inputApproveShippingStatus));
             }
             catch (Exception ex)
             {
