@@ -64,7 +64,7 @@ internal class Program
         //builder.Services.AddTransient<IShoppingRepository, ShoppingRepository>();
         builder.Services.AddTransient<IUserRepository, UserRepository>();
         //builder.Services.AddTransient<IShoppingItemRepository, ShoppingItemRepository>();
-        //builder.Services.AddTransient<IShippingStatusRepository, ShippingStatusRepository>();
+        builder.Services.AddTransient<IShippingStatusRepository, ShippingStatusRepository>();
         builder.Services.AddTransient<IIdControlRepository, IdControlRepository>();
 
         // Services
@@ -74,7 +74,7 @@ internal class Program
         builder.Services.AddTransient<IProductService, ProductService>();
         //builder.Services.AddTransient<IShoppingService, ShoppingService>();
         builder.Services.AddTransient<IUserService, UserService>();
-        //builder.Services.AddTransient<IShippingStatusService, ShippingStatusService>();
+        builder.Services.AddTransient<IShippingStatusService, ShippingStatusService>();
         //builder.Services.AddTransient<IShoppingItemService, ShoppingItemService>();
 
         // JWT Token

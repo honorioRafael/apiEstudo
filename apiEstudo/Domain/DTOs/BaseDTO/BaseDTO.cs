@@ -59,6 +59,20 @@ namespace apiEstudo.Domain.DTOs
 
             return this as TDTO;
         }
+
+        public TDTO Create(long id, TInternalPropertiesDTO internalPropertiesDTO = default(TInternalPropertiesDTO), TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = default(TAuxiliaryPropertiesDTO))
+        {
+            if (internalPropertiesDTO != null)
+                InternalPropertiesDTO = internalPropertiesDTO;
+            else
+                InternalPropertiesDTO = new TInternalPropertiesDTO();
+            InternalPropertiesDTO.SetId(id);
+
+            if (auxiliaryPropertiesDTO != null)
+                AuxiliaryPropertiesDTO = auxiliaryPropertiesDTO;
+
+            return this as TDTO;
+        }
     }
 
 

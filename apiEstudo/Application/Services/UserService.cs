@@ -34,7 +34,7 @@ namespace apiEstudo.Application.Services
             var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(User)), 1);
             var id = idRange.FirstId;
 
-            var UserToCreate = new UserDTO().Create(id, new UserExternalPropertiesDTO(inputCreateUser.Name, inputCreateUser.Password));
+            var UserToCreate = new UserDTO().Create(id, inputCreateUser);
             return _repository.Create(UserToCreate);
         }
 

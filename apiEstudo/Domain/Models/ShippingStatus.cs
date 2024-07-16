@@ -1,4 +1,6 @@
 ﻿using apiEstudo.Application.Arguments;
+using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Model;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
@@ -27,6 +29,16 @@ namespace apiEstudo.Domain.Models
         public ShippingStatus()
         { }
 
-        
+        public static implicit operator ShippingStatusDTO(ShippingStatus shippingStatus)
+        {
+            return shippingStatus == null ? default : new ShippingStatusDTO().Create(
+                shippingStatus.Id,
+                new ShippingStatusInternalPropertiesDTO().LoadInternalData(shippingStatus.Id, shippingStatus.CreationDate, shippingStatus.ChangeDate));
+        }
+
+        public static implicit operator ShippingStatus(ShippingStatusDTO dto)
+        {
+            return dto == null ? default : new ShippingStatus().LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+        }
     }
 }
