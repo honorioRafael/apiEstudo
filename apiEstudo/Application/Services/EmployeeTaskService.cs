@@ -20,9 +20,8 @@ namespace apiEstudo.Application
             var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(EmployeeTask)), listInputCreateEmployeeTask.Count);
             var id = idRange.FirstId;
 
-            var employeeTaskToCreate = (from i in listInputCreateEmployeeTask
-                                        select new EmployeeTaskDTO().Create(id++,
-                                        new EmployeeTaskExternalPropertiesDTO(i.Name, i.Description))).ToList();
+            var employeeTaskToCreate = (from inputCreateEmployeeTask in listInputCreateEmployeeTask
+                                        select new EmployeeTaskDTO().Create(id++, inputCreateEmployeeTask)).ToList();
             return _repository.CreateMultiple(employeeTaskToCreate);
         }
 

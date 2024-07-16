@@ -4,15 +4,17 @@
     {
         public string Name { get; set; }
         public int Quantity { get; set; }
+        public long BrandId { get; set; }
         public OutputBrand Brand { get; set; }
 
         public OutputProduct()
         { }
 
-        public OutputProduct(string name, int quantity, OutputBrand brand)
+        public OutputProduct(string name, int quantity, long brandId, OutputBrand brand)
         {
             Name = name;
             Quantity = quantity;
+            BrandId = brandId;
             Brand = brand;
         }
     }

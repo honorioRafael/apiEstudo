@@ -27,9 +27,6 @@ namespace apiEstudo.Domain.Models
         public ShippingStatus()
         { }
 
-        public static implicit operator OutputShippingStatus(ShippingStatus shippingStatus)
-        {
-            return shippingStatus == null ? default : new OutputShippingStatus(shippingStatus.Id, shippingStatus.Description);
-        }
+        
     }
 }

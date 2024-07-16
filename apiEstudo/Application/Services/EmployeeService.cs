@@ -33,22 +33,22 @@ namespace apiEstudo.Application.Services
             return _repository.UpdateMultiple(employeesToUpdate);
         }
 
-        public override List<long> CreateMultiple(List<InputCreateEmployee> listInputCreate)
+        public override List<long> CreateMultiple(List<InputCreateEmployee> listInputCreateEmployee)
         {
-            if (listInputCreate.Count == 0)
+            if (listInputCreateEmployee.Count == 0)
                 throw new ArgumentNullException();
 
-            List<EmployeeTaskDTO>? listRelatedTasks = _employeeTaskRepository.GetListByListId((from i in listInputCreate select i.EmployeeTaskId).ToList());
+            List<EmployeeTaskDTO>? listRelatedTasks = _employeeTaskRepository.GetListByListId((from i in listInputCreateEmployee select i.EmployeeTaskId).ToList());
             if (listRelatedTasks == null || listRelatedTasks.Count == 0)
                 throw new NotFoundException("Employee Task ID inválido!");
-            if (listInputCreate.Any(x => x.Age < 0))
+            if (listInputCreateEmployee.Any(x => x.Age < 0))
                 throw new InvalidArgumentException("Há uma idade inválida na lista de atualização.");
 
-            var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(Employee)), listInputCreate.Count);
+            var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(Employee)), listInputCreateEmployee.Count);
             var id = idRange.FirstId;
 
-            var employeesToCreate = (from i in listInputCreate
-                                     select new EmployeeDTO().Create(id++, new EmployeeExternalPropertiesDTO(i.Name, i.Age, i.EmployeeTaskId))).ToList();
+            var employeesToCreate = (from inputCreateEmployee in listInputCreateEmployee
+                                     select new EmployeeDTO().Create(id++, inputCreateEmployee)).ToList();
             return _repository.CreateMultiple(employeesToCreate);
         }
     }

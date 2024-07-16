@@ -20,8 +20,8 @@ namespace apiEstudo.Application.Services
             var rangeId = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(Brand)), listInputCreateBrand.Count);
             var id = rangeId.FirstId;
 
-            var createdBrand = (from i in listInputCreateBrand
-                                select new BrandDTO().Create(id++, new BrandExternalPropertiesDTO(i.Name))).ToList();
+            var createdBrand = (from inputCreateBrand in listInputCreateBrand
+                                select new BrandDTO().Create(id++, inputCreateBrand)).ToList();
             return _repository.CreateMultiple(createdBrand);
         }
 
