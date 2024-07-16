@@ -18,7 +18,7 @@ namespace apiEstudo.Application.Services
             var UserEntity = _repository.GetByName(view.Name);
             if (UserEntity == null)
                 throw new ArgumentNullException();
-            if (UserEntity.Password != view.Password)
+            if (UserEntity.ExternalPropertiesDTO.Password != view.Password)
                 throw new WrongPasswordException("A senha informada é inválida");
 
             return UserEntity;

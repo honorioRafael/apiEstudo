@@ -7,6 +7,6 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
 {
     public interface IUserRepository : IBaseRepository<User, InputCreateUser, InputUpdateUser, OutputUser, UserDTO, UserExternalPropertiesDTO, UserInternalPropertiesDTO, UserAuxiliaryPropertiesDTO>
     {
-        public User? GetByName(string username);
+        public UserDTO? GetByName(string username);
     }
 }

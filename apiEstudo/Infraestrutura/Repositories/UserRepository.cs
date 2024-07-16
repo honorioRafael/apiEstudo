@@ -12,9 +12,9 @@ namespace apiEstudo.Infraestrutura.Repositories
         public UserRepository(ConnectionContext context) : base(context)
         { }
 
-        public User? GetByName(string name)
+        public UserDTO? GetByName(string name)
         {
-            return _dbset.Where(x => x.Name == name).FirstOrDefault();
+            return FromEntryToDTO(_dbset.Where(x => x.Name == name).FirstOrDefault());
         }
     }
 }
