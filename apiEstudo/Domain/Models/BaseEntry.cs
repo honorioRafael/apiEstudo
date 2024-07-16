@@ -4,7 +4,7 @@
     {
         public long Id { get; protected set; }
         public virtual DateTime CreationDate { get; protected set; }
-        public virtual DateTime? ChangeDate { get; set; }
+        public virtual DateTime? ChangeDate { get; protected set; }
 
         public TEntry LoadInternalData(long id, DateTime creationDate, DateTime? changeDate)
         {

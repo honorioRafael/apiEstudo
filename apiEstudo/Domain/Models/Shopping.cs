@@ -1,4 +1,5 @@
-﻿using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
 {
@@ -31,6 +32,18 @@ namespace apiEstudo.Domain.Models
 
         public Shopping() { }
 
+        public static implicit operator ShoppingDTO(Shopping shopping)
+        {
+            return shopping == null ? default : new ShoppingDTO().Create(
+                shopping.Id,
+                new ShoppingExternalPropertiesDTO(shopping.EmployeeId, shopping.Value),
+                new ShoppingInternalPropertiesDTO(shopping.ShippingStatusId).LoadInternalData(shopping.Id, shopping.CreationDate, shopping.ChangeDate));
+        }
 
+        public static implicit operator Shopping(ShoppingDTO dto)
+        {
+            return dto == null ? default : new Shopping(dto.ExternalPropertiesDTO.EmployeeId, dto.ExternalPropertiesDTO.Value, dto.InternalPropertiesDTO.ShippingStatusId, null, null)
+                .LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+        }
     }
 }

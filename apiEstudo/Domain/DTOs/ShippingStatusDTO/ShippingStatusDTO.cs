@@ -1,5 +1,4 @@
 ﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Domain.DTOs
 {

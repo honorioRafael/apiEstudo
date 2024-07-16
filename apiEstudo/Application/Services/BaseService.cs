@@ -1,5 +1,4 @@
 ﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Application.Arguments.Base;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
@@ -7,12 +6,10 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public abstract class BaseService<TEntry, TRepository, TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : IBaseService<TInputCreate, TInputCreateComplete, TInputInternalCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
+    public abstract class BaseService<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
         where TEntry : BaseEntry<TEntry>, new()
         where TRepository : IBaseRepository<TEntry, TInputCreate, TInputUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TInputCreate : BaseInputCreate<TInputCreate>
-        where TInputInternalCreate : BaseInputInternalCreate<TInputInternalCreate>
-        where TInputCreateComplete : BaseInputCreateComplete<TInputCreate, TInputInternalCreate>
         where TInputUpdate : BaseInputUpdate<TInputUpdate>
         where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
         where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
@@ -156,7 +153,7 @@ namespace apiEstudo.Application.Services
         #endregion        
     }
 
-    public abstract class BaseService_1<TEntry, TRepository, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputCreateComplete_0, BaseInputInternalCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseService_1<TOutput>
+    public abstract class BaseService_1<TEntry, TRepository, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseService_1<TOutput>
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>, new()
         where TRepository : IBaseRepository_1<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
@@ -165,22 +162,5 @@ namespace apiEstudo.Application.Services
         where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
     {
         protected BaseService_1(TRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository) { }
-    }
-
-    public abstract class BaseService_2<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, TInputCreate, BaseInputCreateComplete<TInputCreate, BaseInputInternalCreate_0>, BaseInputInternalCreate_0, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseService_2<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
-        where TEntry : BaseEntry<TEntry>, new()
-        where TRepository : IBaseRepository<TEntry, TInputCreate, TInputUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
-        where TInputCreate : BaseInputCreate<TInputCreate>
-        where TInputUpdate : BaseInputUpdate<TInputUpdate>
-        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
-        where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
-        where TOutput : BaseOutput<TOutput>
-        where TDTO : BaseDTO<TInputCreate, TInputUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
-        where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
-        where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
-        where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
-    {
-        protected BaseService_2(TRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository)
-        { }
     }
 }

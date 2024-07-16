@@ -1,6 +1,6 @@
 ﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.DTOs.UserDTO;
 using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.DTOs.UserDTO;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;

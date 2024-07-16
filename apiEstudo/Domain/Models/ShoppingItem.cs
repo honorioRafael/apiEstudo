@@ -1,4 +1,6 @@
-﻿namespace apiEstudo.Domain.Models
+﻿using apiEstudo.Domain.DTOs;
+
+namespace apiEstudo.Domain.Models
 {
     public class ShoppingItem : BaseEntry<ShoppingItem>
     {
@@ -26,6 +28,18 @@
         public ShoppingItem()
         { }
 
+        public static implicit operator ShoppingItemDTO(ShoppingItem shoppingItem)
+        {
+            return shoppingItem == null ? default : new ShoppingItemDTO().Create(
+                shoppingItem.Id,
+                new ShoppingItemExternalPropertiesDTO(shoppingItem.ProductId, shoppingItem.Quantity),
+                new ShoppingItemInternalPropertiesDTO(shoppingItem.ShoppingId).LoadInternalData(shoppingItem.Id, shoppingItem.CreationDate, shoppingItem.ChangeDate));
+        }
 
+        public static implicit operator ShoppingItem(ShoppingItemDTO dto)
+        {
+            return dto == null ? default : new ShoppingItem(dto.InternalPropertiesDTO.ShoppingId, dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.Quantity, null, null)
+                .LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+        }
     }
 }

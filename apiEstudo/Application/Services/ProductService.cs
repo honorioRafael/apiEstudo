@@ -3,12 +3,11 @@ using apiEstudo.Application.Arguments.Product;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.Repositories;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class ProductService : BaseService_2<Product, IProductRepository, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct, ProductDTO, ProductExternalPropertiesDTO, ProductInternalPropertiesDTO, ProductAuxiliaryPropertiesDTO>, IProductService
+    public class ProductService : BaseService<Product, IProductRepository, InputCreateProduct, InputUpdateProduct, InputIdentityUpdateProduct, InputIdentityDeleteProduct, OutputProduct, ProductDTO, ProductExternalPropertiesDTO, ProductInternalPropertiesDTO, ProductAuxiliaryPropertiesDTO>, IProductService
     {
         public ProductService(IProductRepository contextInterface, IBrandRepository brandRepository, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository)
         {

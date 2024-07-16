@@ -2,7 +2,7 @@
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
-    public interface IEmployeeTaskService : IBaseService_2<InputCreateEmployeeTask, InputUpdateEmployeeTask, InputIdentityUpdateEmployeeTask, InputIdentityDeleteEmployeeTask, OutputEmployeeTask>
+    public interface IEmployeeTaskService : IBaseService<InputCreateEmployeeTask, InputUpdateEmployeeTask, InputIdentityUpdateEmployeeTask, InputIdentityDeleteEmployeeTask, OutputEmployeeTask>
     {
 
     }

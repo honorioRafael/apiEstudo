@@ -8,7 +8,7 @@ namespace apiEstudo.Controllers
     [ApiController]
     [Authorize]
     [Route("api/v1/Shopping")]
-    public class ShoppingController : BaseController<IShoppingService, InputCreateShopping, InputCreateShoppingComplete, InputInternalCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>
+    public class ShoppingController : BaseController<IShoppingService, InputCreateShopping, InputUpdateShopping, InputIdentityUpdateShopping, InputIdentityDeleteShopping, OutputShopping>
     {
         public ShoppingController(IShoppingService service) : base(service) { }
 

@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.DTOs;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiEstudo.Domain.Models
@@ -12,7 +10,7 @@ namespace apiEstudo.Domain.Models
         [NotMapped]
         public override DateTime CreationDate { get => base.CreationDate; protected set => base.CreationDate = value; }
         [NotMapped]
-        public override DateTime? ChangeDate { get => base.ChangeDate; set => base.ChangeDate = value; }
+        public override DateTime? ChangeDate { get => base.ChangeDate; protected set => base.ChangeDate = value; }
         #endregion
 
         public string Description { get; set; }
