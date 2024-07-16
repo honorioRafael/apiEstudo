@@ -3,7 +3,7 @@ using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Application.ServicesInterfaces
 {
-    public interface IUserService : IBaseService_2<InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>
+    public interface IUserService : IBaseService_2<InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, OutputUser>
     {
         public User? Auth(InputCreateUser view);
     }

@@ -1,4 +1,7 @@
-﻿namespace apiEstudo.Domain.Models
+﻿using apiEstudo.Domain.DTOs;
+using apiEstudo.Domain.DTOs.UserDTO;
+
+namespace apiEstudo.Domain.Models
 {
     public class User : BaseEntry<User>
     {
@@ -13,5 +16,15 @@
 
         public User()
         { }
+
+        public static implicit operator UserDTO(User user)
+        {
+            return user == null ? default : new UserDTO().Create(user.Id, new UserExternalPropertiesDTO(user.Name, user.Password), new UserInternalPropertiesDTO().LoadInternalData(user.Id, user.CreationDate, user.ChangeDate));
+        }
+
+        public static implicit operator User(UserDTO dto)
+        {
+            return dto == null ? default : new User(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Password).LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+        }
     }
 }

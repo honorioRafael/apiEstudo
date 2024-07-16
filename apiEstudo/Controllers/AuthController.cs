@@ -9,7 +9,7 @@ namespace apiEstudo.Controllers
 {
     [ApiController]
     [Route("api/v1/Auth")]
-    public class AuthController : BaseController_2<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>
+    public class AuthController : BaseController_2<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, OutputUser>
     {
         public AuthController(IUserService service) : base(service)
         { }
