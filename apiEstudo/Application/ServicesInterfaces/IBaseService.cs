@@ -14,7 +14,6 @@ namespace apiEstudo.Application.ServicesInterfaces
     {
         long Create(TInputCreate inputCreate);
         List<long> CreateMultiple(List<TInputCreate> listInputCreate);
-        List<long> CreateMultiple(List<TInputCreateComplete> listInputCreate);
         long Update(TInputIdentityUpdate inputIdentityUpdate);
         List<long> UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate);
         void Delete(TInputIdentityDelete inputIdentityDelete);

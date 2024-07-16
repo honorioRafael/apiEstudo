@@ -1,6 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
-
-namespace apiEstudo.Domain.Models
+﻿namespace apiEstudo.Domain.Models
 {
     public class Product : BaseEntry<Product>
     {
@@ -30,9 +28,6 @@ namespace apiEstudo.Domain.Models
         }
         public Product() { }
 
-        public static implicit operator OutputProduct(Product product)
-        {
-            return product == null ? default : new OutputProduct(product.Name, product.Quantity, product.Brand).LoadInternalData(product.Id, product.CreationDate, product.ChangeDate);
-        }
+
     }
 }

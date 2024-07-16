@@ -1,4 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
+﻿using apiEstudo.Domain.DTOs;
 
 namespace apiEstudo.Domain.Models
 {
@@ -14,9 +14,18 @@ namespace apiEstudo.Domain.Models
 
         public Brand() { }
 
-        public static implicit operator OutputBrand(Brand brand)
+
+        public static implicit operator BrandDTO(Brand brand)
         {
-            return brand == null ? default : new OutputBrand(brand.Name).LoadInternalData(brand.Id, brand.CreationDate, brand.ChangeDate);
+            return brand == null ? default : new BrandDTO().Create(
+                brand.Id,
+                new BrandExternalPropertiesDTO(brand.Name),
+                new BrandInternalPropertiesDTO().LoadInternalData(brand.Id, brand.CreationDate, brand.ChangeDate));
+        }
+
+        public static implicit operator Brand(BrandDTO dto)
+        {
+            return dto == null ? default : new Brand(dto.ExternalPropertiesDTO.Name).LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
     }
 }

@@ -1,48 +1,48 @@
-﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Application.ServicesInterfaces;
-using apiEstudo.Domain.Models;
-using apiEstudo.Infraestrutura.RepositoriesInterfaces;
+﻿//using apiEstudo.Application.Arguments;
+//using apiEstudo.Application.ServicesInterfaces;
+//using apiEstudo.Domain.Models;
+//using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
-namespace apiEstudo.Application.Services
-{
-    public class UserService : BaseService_2<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>, IUserService
-    {
-        public UserService(IUserRepository contextInterface) : base(contextInterface)
-        {
-        }
+//namespace apiEstudo.Application.Services
+//{
+//    public class UserService : BaseService_2<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, BaseOutput_0>, IUserService
+//    {
+//        public UserService(IUserRepository contextInterface) : base(contextInterface)
+//        {
+//        }
 
-        public User? Auth(InputCreateUser view)
-        {
-            var UserEntity = _repository.GetByName(view.Name);
-            if (UserEntity == null)
-                throw new ArgumentNullException();
-            if (UserEntity.Password != view.Password)
-                throw new WrongPasswordException("A senha informada é inválida");
+//        public User? Auth(InputCreateUser view)
+//        {
+//            var UserEntity = _repository.GetByName(view.Name);
+//            if (UserEntity == null)
+//                throw new ArgumentNullException();
+//            if (UserEntity.Password != view.Password)
+//                throw new WrongPasswordException("A senha informada é inválida");
 
-            return UserEntity;
-        }
+//            return UserEntity;
+//        }
 
-        public long Create(InputCreateUser inputCreateUser)
-        {
-            if (inputCreateUser == null)
-                throw new ArgumentNullException();
-            var NameInUse = _repository.GetByName(inputCreateUser.Name);
-            if (NameInUse != null)
-                throw new NameInUseException("O nome de usuário ja está em uso!");
+//        public long Create(InputCreateUser inputCreateUser)
+//        {
+//            if (inputCreateUser == null)
+//                throw new ArgumentNullException();
+//            var NameInUse = _repository.GetByName(inputCreateUser.Name);
+//            if (NameInUse != null)
+//                throw new NameInUseException("O nome de usuário ja está em uso!");
 
-            var UserToCreate = InternalCreate([inputCreateUser]).First();
-            return _repository.Create(UserToCreate);
-        }
+//            var UserToCreate = InternalCreate([inputCreateUser]).First();
+//            return _repository.Create(UserToCreate);
+//        }
 
-        public long Update(InputIdentityUpdateUser inputIdentityUpdateUser)
-        {
-            var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
-            if (OriginalItem == null) throw new NotFoundException();
-            if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != OriginalItem.Name)
-                throw new InvalidArgumentException("Esse nome ja está em uso!");
+//        public long Update(InputIdentityUpdateUser inputIdentityUpdateUser)
+//        {
+//            var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
+//            if (OriginalItem == null) throw new NotFoundException();
+//            if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != OriginalItem.Name)
+//                throw new InvalidArgumentException("Esse nome ja está em uso!");
 
-            var UserToUpdate = InternalUpdate([inputIdentityUpdateUser], [OriginalItem]).First();
-            return _repository.Update(UserToUpdate);
-        }
-    }
-}
+//            var UserToUpdate = InternalUpdate([inputIdentityUpdateUser], [OriginalItem]).First();
+//            return _repository.Update(UserToUpdate);
+//        }
+//    }
+//}

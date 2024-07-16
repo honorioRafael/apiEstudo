@@ -18,6 +18,7 @@ namespace apiEstudo.Mappings
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new ShoppingItemMap());
             modelBuilder.ApplyConfiguration(new ShippingStatusMap());
+            modelBuilder.ApplyConfiguration(new IdControlMap());
         }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeTask> Tasks { get; set; }
@@ -26,5 +27,6 @@ namespace apiEstudo.Mappings
         public DbSet<Shopping> Compras { get; set; }
         public DbSet<ShoppingItem> ShoppingLists { get; set; }
         public DbSet<ShippingStatus> ShippingStatus { get; set; }
+        public DbSet<IdControl> IdControls { get; set; }
     }
 }

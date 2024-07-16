@@ -1,4 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
+﻿using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
@@ -18,9 +18,17 @@ namespace apiEstudo.Domain.Models
 
         public EmployeeTask() { }
 
-        public static implicit operator OutputEmployeeTask(EmployeeTask employeeTask)
+        public static implicit operator EmployeeTaskDTO(EmployeeTask employeeTask)
         {
-            return employeeTask == null ? default : new OutputEmployeeTask(employeeTask.Name, employeeTask.Description).LoadInternalData(employeeTask.Id, employeeTask.CreationDate, employeeTask.ChangeDate);
+            return employeeTask == null ? default : new EmployeeTaskDTO().Create(
+                employeeTask.Id,
+                new EmployeeTaskExternalPropertiesDTO(employeeTask.Name, employeeTask.Description),
+                new EmployeeTaskInternalPropertiesDTO().LoadInternalData(employeeTask.Id, employeeTask.CreationDate, employeeTask.ChangeDate));
+        }
+
+        public static implicit operator EmployeeTask(EmployeeTaskDTO dto)
+        {
+            return dto == null ? default : new EmployeeTask(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Description).LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
     }
 }

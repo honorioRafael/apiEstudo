@@ -7,7 +7,7 @@ namespace apiEstudo.Application.Arguments
         [JsonIgnore]
         public override DateTime? ChangeDate { get => base.ChangeDate; set => base.ChangeDate = value; }
         [JsonIgnore]
-        public override DateTime? CreationDate { get => base.CreationDate; set => base.CreationDate = value; }
+        public override DateTime CreationDate { get => base.CreationDate; set => base.CreationDate = value; }
 
         public string Description { get; set; }
 

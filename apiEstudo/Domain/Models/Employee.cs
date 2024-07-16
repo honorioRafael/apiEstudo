@@ -1,4 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
+﻿using apiEstudo.Domain.DTOs;
 using apiEstudo.Domain.Models;
 
 namespace apiEstudo.Domain.Model
@@ -36,9 +36,18 @@ namespace apiEstudo.Domain.Model
         public Employee()
         { }
 
-        public static implicit operator OutputEmployee(Employee employee)
+        public static implicit operator EmployeeDTO(Employee employee)
         {
-            return employee == null ? default : new OutputEmployee(employee.Name, employee.Age, employee.EmployeeTask).LoadInternalData(employee.Id, employee.CreationDate, employee.ChangeDate);
+            return employee == null ? default : new EmployeeDTO().Create(
+                employee.Id,
+                new EmployeeExternalPropertiesDTO(employee.Name, employee.Age, employee.EmployeeTaskId),
+                new EmployeeInternalPropertiesDTO().LoadInternalData(employee.Id, employee.CreationDate, employee.ChangeDate));
+        }
+
+        public static implicit operator Employee(EmployeeDTO dto)
+        {
+            return dto == null ? default : new Employee(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Age, dto.ExternalPropertiesDTO.EmployeeTaskId, null)
+                .LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
     }
 }

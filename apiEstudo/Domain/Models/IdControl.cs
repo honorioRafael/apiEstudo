@@ -9,7 +9,7 @@ namespace apiEstudo.Domain.Models
         [NotMapped]
         public override DateTime? ChangeDate { get => base.ChangeDate; set => base.ChangeDate = value; }
         [NotMapped]
-        public override DateTime? CreationDate { get => base.CreationDate; protected set => base.CreationDate = value; }
+        public override DateTime CreationDate { get => base.CreationDate; protected set => base.CreationDate = value; }
         #endregion
 
         #region Properties

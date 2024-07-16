@@ -1,5 +1,4 @@
-﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.Model;
+﻿using apiEstudo.Domain.Model;
 
 namespace apiEstudo.Domain.Models
 {
@@ -32,9 +31,6 @@ namespace apiEstudo.Domain.Models
 
         public Shopping() { }
 
-        public static implicit operator OutputShopping(Shopping shop)
-        {
-            return shop == null ? default : new OutputShopping(shop.Value, shop.Employee, (from item in shop.ListShoppingItem select (OutputShoppingItem)item).ToList(), shop.ShippingStatus).LoadInternalData(shop.Id, shop.CreationDate, shop.ChangeDate);
-        }
+
     }
 }

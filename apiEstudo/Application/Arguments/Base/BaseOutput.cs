@@ -3,10 +3,10 @@
     public class BaseOutput<TOutput> where TOutput : BaseOutput<TOutput>
     {
         public virtual long Id { get; set; }
-        public virtual DateTime? CreationDate { get; set; }
+        public virtual DateTime CreationDate { get; set; }
         public virtual DateTime? ChangeDate { get; set; }
 
-        public virtual TOutput LoadInternalData(long id, DateTime? creationDate, DateTime? changeDate)
+        public virtual TOutput LoadInternalData(long id, DateTime creationDate, DateTime? changeDate)
         {
             Id = id;
             CreationDate = creationDate;
