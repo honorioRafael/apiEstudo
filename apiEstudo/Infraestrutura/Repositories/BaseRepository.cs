@@ -118,14 +118,21 @@ namespace apiEstudo.Infraestrutura.Repositories
         #endregion
     }
 
-    public abstract class BaseRepository_1<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseRepository_1<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+    public abstract class BaseRepository_1<TEntry> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, BaseOutput_0, BaseDTO_0, BaseExternalPropertiesDTO_0, BaseInternalPropertiesDTO_0, BaseAuxiliaryPropertiesDTO_0>, IBaseRepository_1<TEntry>
+        where TEntry : BaseEntry<TEntry>, new()
+    {
+        protected BaseRepository_1(ConnectionContext context) : base(context)
+        { }
+    }
+
+    public abstract class BaseRepository_2<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseRepository_2<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TEntry : BaseEntry<TEntry>, new()
         where TOutput : BaseOutput<TOutput>
         where TDTO : BaseDTO_1<TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
     {
-        protected BaseRepository_1(ConnectionContext context) : base(context)
+        protected BaseRepository_2(ConnectionContext context) : base(context)
         { }
     }
 }

@@ -10,10 +10,10 @@ namespace apiEstudo.Mappings
         {
             builder.ToTable("tarefas");
             builder.Property(x => x.Id).HasColumnName("id");
-            builder.Property(x => x.Name).HasColumnName("nome");
-            builder.Property(x => x.Description).HasColumnName("descricao");
             builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
             builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
+            builder.Property(x => x.Name).HasColumnName("nome");
+            builder.Property(x => x.Description).HasColumnName("descricao");
         }
     }
 }

@@ -10,12 +10,12 @@ namespace apiEstudo.Mappings
         {
             builder.ToTable("users");
             builder.HasKey(x => x.Id).HasName("id");
+            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
+            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
             builder.Property(x => x.Name).HasColumnName("nome");
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Password).HasColumnName("senha");
             builder.Property(x => x.Password).IsRequired();
-            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
-            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
         }
     }
 }

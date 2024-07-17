@@ -8,13 +8,13 @@ namespace apiEstudo.Domain.DTOs
 
         public static implicit operator OutputShippingStatus(ShippingStatusDTO dto)
         {
-            return dto == null ? default : new OutputShippingStatus(dto.InternalPropertiesDTO.Id, "desc");
+            return dto == null ? default : new OutputShippingStatus(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.Description);
         }
 
         public static implicit operator ShippingStatusDTO(OutputShippingStatus output)
         {
             return output == null ? default : new ShippingStatusDTO().Create(output.Id,
-                new ShippingStatusInternalPropertiesDTO().LoadInternalData(output.Id, output.CreationDate, output.ChangeDate));
+                new ShippingStatusInternalPropertiesDTO(output.Description).LoadInternalData(output.Id, output.CreationDate, output.ChangeDate));
         }
     }
 }

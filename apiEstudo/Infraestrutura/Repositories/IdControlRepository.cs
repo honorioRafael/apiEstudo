@@ -1,12 +1,10 @@
-﻿using apiEstudo.Application.Arguments;
-using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Models;
+﻿using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 using apiEstudo.Mappings;
 
 namespace apiEstudo.Infraestrutura.Repositories
 {
-    public class IdControlRepository : BaseRepository_1<IdControl, BaseOutput_0, BaseDTO_0, BaseInternalPropertiesDTO_0, BaseAuxiliaryPropertiesDTO_0>, IIdControlRepository
+    public class IdControlRepository : BaseRepository_1<IdControl>, IIdControlRepository
     {
         public IdControlRepository(ConnectionContext context) : base(context) { }
 

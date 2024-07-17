@@ -10,11 +10,11 @@ namespace apiEstudo.Mappings
         {
             builder.ToTable("compras");
             builder.HasKey(x => x.Id).HasName("id");
+            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
+            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
             builder.Property(x => x.EmployeeId).HasColumnName("funcionario_id");
             builder.Property(x => x.EmployeeId).IsRequired();
             builder.Property(x => x.Value).HasColumnName("valor");
-            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
-            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
             builder.Property(x => x.ShippingStatusId).HasColumnName("envio_status");
 
             builder.HasOne(x => x.Employee)

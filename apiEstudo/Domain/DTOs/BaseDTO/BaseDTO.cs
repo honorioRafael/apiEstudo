@@ -22,7 +22,7 @@ namespace apiEstudo.Domain.DTOs
             InternalPropertiesDTO = new TInternalPropertiesDTO();
             AuxiliaryPropertiesDTO = new TAuxiliaryPropertiesDTO();
         }
-
+        #region Create
         public TDTO Create(long id, TInputCreate inputCreate, TInternalPropertiesDTO internalPropertiesDTO = default(TInternalPropertiesDTO), TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = default(TAuxiliaryPropertiesDTO))
         {
             foreach (PropertyInfo item in ExternalPropertiesDTO.GetType().GetProperties().ToList())
@@ -73,6 +73,31 @@ namespace apiEstudo.Domain.DTOs
 
             return this as TDTO;
         }
+
+        #endregion
+
+        #region Update
+
+        public TDTO Update(TInputUpdate inputUpdate, TInternalPropertiesDTO internalPropertiesDTO = default(TInternalPropertiesDTO), TAuxiliaryPropertiesDTO auxiliaryPropertiesDTO = default(TAuxiliaryPropertiesDTO))
+        {
+            foreach (PropertyInfo item in ExternalPropertiesDTO.GetType().GetProperties().ToList())
+            {
+                var propertyValue = inputUpdate.GetType().GetProperty(item.Name)?.GetValue(inputUpdate);
+
+                if (propertyValue != null)
+                    item.SetValue(ExternalPropertiesDTO, propertyValue);
+            }
+
+            if (internalPropertiesDTO != null)
+                InternalPropertiesDTO = internalPropertiesDTO;
+
+            if (auxiliaryPropertiesDTO != null)
+                AuxiliaryPropertiesDTO = auxiliaryPropertiesDTO;
+
+            return this as TDTO;
+        }
+
+        #endregion
     }
 
 

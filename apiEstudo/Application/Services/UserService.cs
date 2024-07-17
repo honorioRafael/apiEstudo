@@ -7,7 +7,7 @@ using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
 namespace apiEstudo.Application.Services
 {
-    public class UserService : BaseService<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, BaseInputIdentityDelete_0, OutputUser, UserDTO, UserExternalPropertiesDTO, UserInternalPropertiesDTO, UserAuxiliaryPropertiesDTO>, IUserService
+    public class UserService : BaseService_2<User, IUserRepository, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, OutputUser, UserDTO, UserExternalPropertiesDTO, UserInternalPropertiesDTO, UserAuxiliaryPropertiesDTO>, IUserService
     {
         public UserService(IUserRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository)
         { }
@@ -39,13 +39,12 @@ namespace apiEstudo.Application.Services
 
         public long Update(InputIdentityUpdateUser inputIdentityUpdateUser)
         {
-            var OriginalItem = _repository.Get(inputIdentityUpdateUser.Id);
-            if (OriginalItem == null) throw new NotFoundException();
-            if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != OriginalItem.ExternalPropertiesDTO.Name)
+            var originalUser = _repository.Get(inputIdentityUpdateUser.Id);
+            if (originalUser == null) throw new NotFoundException();
+            if (_repository.GetByName(inputIdentityUpdateUser.InputUpdate.Name) != null && inputIdentityUpdateUser.InputUpdate.Name != originalUser.ExternalPropertiesDTO.Name)
                 throw new InvalidArgumentException("Esse nome ja está em uso!");
 
-            var UserToUpdate = InternalUpdate([inputIdentityUpdateUser], [OriginalItem]).First();
-            return _repository.Update(UserToUpdate);
+            return _repository.Update(originalUser.Update(inputIdentityUpdateUser.InputUpdate));
         }
     }
 }

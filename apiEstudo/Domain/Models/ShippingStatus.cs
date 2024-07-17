@@ -31,12 +31,12 @@ namespace apiEstudo.Domain.Models
         {
             return shippingStatus == null ? default : new ShippingStatusDTO().Create(
                 shippingStatus.Id,
-                new ShippingStatusInternalPropertiesDTO().LoadInternalData(shippingStatus.Id, shippingStatus.CreationDate, shippingStatus.ChangeDate));
+                new ShippingStatusInternalPropertiesDTO(shippingStatus.Description).LoadInternalData(shippingStatus.Id, shippingStatus.CreationDate, shippingStatus.ChangeDate));
         }
 
         public static implicit operator ShippingStatus(ShippingStatusDTO dto)
         {
-            return dto == null ? default : new ShippingStatus().LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new ShippingStatus(dto.InternalPropertiesDTO.Description, null).LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
     }
 }

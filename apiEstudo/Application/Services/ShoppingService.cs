@@ -1,7 +1,6 @@
 ﻿using apiEstudo.Application.Arguments;
 using apiEstudo.Application.ServicesInterfaces;
 using apiEstudo.Domain.DTOs;
-using apiEstudo.Domain.Model;
 using apiEstudo.Domain.Models;
 using apiEstudo.Infraestrutura.RepositoriesInterfaces;
 
@@ -13,7 +12,7 @@ namespace apiEstudo.Application.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IProductRepository _productRepository;
         private readonly IShoppingItemService _shoppingItemService;
-        
+
         public ShoppingService(IShoppingRepository shoppingRepository, IShoppingItemRepository shoppingItemRepository, IEmployeeRepository employeeRepository, IProductRepository productRepository, IShoppingItemService shoppingItemService, IIdControlRepository idControlRepository) : base(shoppingRepository, idControlRepository)
         {
             _shoppingItemRepository = shoppingItemRepository;
@@ -34,7 +33,7 @@ namespace apiEstudo.Application.Services
             List<EmployeeDTO> listRelatedEmployee = _employeeRepository.GetListByListId((from i in listInputCreateShopping select i.EmployeeId).ToList());
             if (listRelatedEmployee.Count == 0)
                 throw new InvalidArgumentException("Employee ID inválido!");
-            
+
 
             var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(Shopping)), listInputCreateShopping.Count);
             var id = idRange.FirstId;
@@ -42,12 +41,12 @@ namespace apiEstudo.Application.Services
             var shoppingToCreate = (from inputCreateShopping in listInputCreateShopping select new ShoppingDTO().Create(id++, inputCreateShopping, new ShoppingInternalPropertiesDTO(1))).ToList();
             List<long> listShoppingId = _repository.CreateMultiple(shoppingToCreate);
 
-           /* var listCreateShoppingItem = (from i in listCreate
-                                          let parentId = 1// listShoppingId[i.Index]
-                                          let createdItens = (from j in i.CreatedItens select new InputCreateShoppingItemComplete(j, new InputInternalCreateShoppingItem(parentId))).ToList()
-                                          select createdItens).SelectMany(x => x).ToList();
+            /* var listCreateShoppingItem = (from i in listCreate
+                                           let parentId = 1// listShoppingId[i.Index]
+                                           let createdItens = (from j in i.CreatedItens select new InputCreateShoppingItemComplete(j, new InputInternalCreateShoppingItem(parentId))).ToList()
+                                           select createdItens).SelectMany(x => x).ToList();
 
-            CreateMultipleShoppingItens(listCreateShoppingItem);*/
+             CreateMultipleShoppingItens(listCreateShoppingItem);*/
             return listShoppingId;
         }
 
@@ -60,15 +59,15 @@ namespace apiEstudo.Application.Services
                 throw new ArgumentNullException();
 
             List<EmployeeDTO>? listRelatedEmployees = _employeeRepository.GetListByListId((from i in listInputIdentityUpdateShopping
-                                                                                        select i.InputUpdate.EmployeeId).ToList());
+                                                                                           select i.InputUpdate.EmployeeId).ToList());
             if (listRelatedEmployees == null || listRelatedEmployees.Count == 0)
                 throw new InvalidArgumentException("Há um ID de funcionário inválido!");
 
             if (listInputIdentityUpdateShopping.Any(x => x.InputUpdate.Value < 0))
                 throw new InvalidArgumentException("Hã um valor inválido!");
 
-            List<ShoppingDTO> ShoppingsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShopping select i.Id).ToList());
-            if (ShoppingsToBeUpdated.Count == 0)
+            List<ShoppingDTO> shoppingsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShopping select i.Id).ToList());
+            if (shoppingsToBeUpdated.Count == 0)
                 throw new InvalidArgumentException("Há um ID de compra inválido!");
 
             /*foreach (var inputIdentityUpdateShopping in listInputIdentityUpdateShopping)
@@ -106,8 +105,11 @@ namespace apiEstudo.Application.Services
                 }
             }*/
 
-            var ShoppingsToUpdate = InternalUpdate(listInputIdentityUpdateShopping, ShoppingsToBeUpdated);
-            return _repository.UpdateMultiple(ShoppingsToUpdate);            
+            var updatedShoppings = (from inputIdentityUpdateShopping in listInputIdentityUpdateShopping
+                                    let inputUpdateShopping = inputIdentityUpdateShopping.InputUpdate
+                                    from shoppingToUpdate in shoppingsToBeUpdated
+                                    select shoppingToUpdate.Update(inputUpdateShopping)).ToList();
+            return _repository.UpdateMultiple(updatedShoppings);
         }
         #endregion
 

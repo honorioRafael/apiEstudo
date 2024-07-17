@@ -8,7 +8,7 @@ namespace apiEstudo.Domain.DTOs
 
         public static implicit operator OutputEmployee(EmployeeDTO dto)
         {
-            return dto == null ? default : new OutputEmployee(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.EmployeeTaskId, dto.ExternalPropertiesDTO.Age, dto.AuxiliaryPropertiesDTO.EmployeeTask).LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
+            return dto == null ? default : new OutputEmployee(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.EmployeeTaskId, dto.ExternalPropertiesDTO.Age, dto.AuxiliaryPropertiesDTO.EmployeeTaskDTO).LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
 
         public static implicit operator EmployeeDTO(OutputEmployee output)

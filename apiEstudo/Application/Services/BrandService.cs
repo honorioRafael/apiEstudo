@@ -30,12 +30,15 @@ namespace apiEstudo.Application.Services
             if (listInputIdentityUpdateBrand == null)
                 throw new ArgumentNullException();
 
-            List<BrandDTO> BrandsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateBrand select i.Id).ToList());
-            if (BrandsToBeUpdated.Count == 0)
+            List<BrandDTO> brandsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateBrand select i.Id).ToList());
+            if (brandsToBeUpdated.Count == 0)
                 throw new NotFoundException("Há um ID de marca inválido na lista de atualização.");
 
-            var BrandToUpdate = InternalUpdate(listInputIdentityUpdateBrand, BrandsToBeUpdated);
-            return _repository.UpdateMultiple(BrandToUpdate);
+            var updatedBrands = (from inputIdentityUpdateBrand in listInputIdentityUpdateBrand
+                                 let inputUpdateBrand = inputIdentityUpdateBrand.InputUpdate
+                                 from brandToUpdate in brandsToBeUpdated
+                                 select brandToUpdate.Update(inputUpdateBrand)).ToList();
+            return _repository.UpdateMultiple(updatedBrands);
         }
     }
 }

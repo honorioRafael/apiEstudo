@@ -4,7 +4,7 @@
     {
         public double Quantity { get; set; }
         public long ProductId { get; set; }
-        public OutputProduct Produto { get; set; }
+        public OutputProduct Product { get; set; }
 
         public OutputShoppingItem()
         { }
@@ -13,7 +13,7 @@
         {
             Quantity = quantity;
             ProductId = productId;
-            Produto = produto;
+            Product = produto;
             Id = id;
         }
     }

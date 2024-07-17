@@ -47,7 +47,7 @@ namespace apiEstudo.Domain.Model
 
         public static implicit operator Employee(EmployeeDTO dto)
         {
-            return dto == null ? default : new Employee(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Age, dto.ExternalPropertiesDTO.EmployeeTaskId, dto.AuxiliaryPropertiesDTO.EmployeeTask)
+            return dto == null ? default : new Employee(dto.ExternalPropertiesDTO.Name, dto.ExternalPropertiesDTO.Age, dto.ExternalPropertiesDTO.EmployeeTaskId, dto.AuxiliaryPropertiesDTO.EmployeeTaskDTO)
                 .LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
     }

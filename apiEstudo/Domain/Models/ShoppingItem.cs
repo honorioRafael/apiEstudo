@@ -33,12 +33,13 @@ namespace apiEstudo.Domain.Models
             return shoppingItem == null ? default : new ShoppingItemDTO().Create(
                 shoppingItem.Id,
                 new ShoppingItemExternalPropertiesDTO(shoppingItem.ProductId, shoppingItem.Quantity),
-                new ShoppingItemInternalPropertiesDTO(shoppingItem.ShoppingId).LoadInternalData(shoppingItem.Id, shoppingItem.CreationDate, shoppingItem.ChangeDate));
+                new ShoppingItemInternalPropertiesDTO(shoppingItem.ShoppingId).LoadInternalData(shoppingItem.Id, shoppingItem.CreationDate, shoppingItem.ChangeDate),
+                new ShoppingItemAuxiliaryPropertiesDTO(shoppingItem.Product, shoppingItem.Shopping));
         }
 
         public static implicit operator ShoppingItem(ShoppingItemDTO dto)
         {
-            return dto == null ? default : new ShoppingItem(dto.InternalPropertiesDTO.ShoppingId, dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.Quantity, null, null)
+            return dto == null ? default : new ShoppingItem(dto.InternalPropertiesDTO.ShoppingId, dto.ExternalPropertiesDTO.ProductId, dto.ExternalPropertiesDTO.Quantity, dto.AuxiliaryPropertiesDTO.ProductDTO, dto.AuxiliaryPropertiesDTO.ShoppingDTO)
                 .LoadInternalData(dto.InternalPropertiesDTO.Id, dto.InternalPropertiesDTO.CreationDate, dto.InternalPropertiesDTO.ChangeDate);
         }
     }

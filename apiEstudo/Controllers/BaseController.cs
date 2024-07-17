@@ -115,16 +115,4 @@ namespace apiEstudo.Controllers
     {
         public BaseController_1(TService service) : base(service) { }
     }
-
-    public abstract class BaseController_2<TService, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : BaseController<TService, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
-        where TService : IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
-        where TInputCreate : BaseInputCreate<TInputCreate>
-        where TInputUpdate : BaseInputUpdate<TInputUpdate>
-        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
-        where TInputIdentityDelete : BaseInputIdentityDelete<TInputIdentityDelete>
-        where TOutput : BaseOutput<TOutput>
-    {
-        protected BaseController_2(TService service) : base(service)
-        { }
-    }
 }

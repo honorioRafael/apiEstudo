@@ -57,32 +57,6 @@ namespace apiEstudo.Application.Services
             throw new NotImplementedException();
         }
 
-        internal List<TDTO> InternalUpdate(List<TInputIdentityUpdate> listInputIdentityUpdate, List<TDTO> listEntitiesToBeUpdated)
-        {
-            var inputUpdateProperties = typeof(TInputUpdate).GetProperties();
-            var listUpdatedEntities = new List<TEntry>();
-
-            foreach (var inputUpdate in listInputIdentityUpdate)
-            {
-                TEntry originalObject = (from i in FromDTOToEntry(listEntitiesToBeUpdated)
-                                         where i.Id == inputUpdate.Id
-                                         select i).First();
-
-                foreach (var propertyUpdate in inputUpdateProperties)
-                {
-                    var entryProperty = typeof(TEntry).GetProperty(propertyUpdate.Name);
-                    var propertyUpdateValue = propertyUpdate.GetValue(inputUpdate.InputUpdate);
-
-                    if (entryProperty == null) continue;
-                    entryProperty.SetValue(originalObject, propertyUpdateValue);
-                }
-
-                listUpdatedEntities.Add(originalObject.SetChangeDate());
-            }
-
-            return FromEntryToDTO(listUpdatedEntities);
-        }
-
         #endregion
 
         #region Create
@@ -156,11 +130,27 @@ namespace apiEstudo.Application.Services
     public abstract class BaseService_1<TEntry, TRepository, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseService_1<TOutput>
         where TOutput : BaseOutput<TOutput>
         where TEntry : BaseEntry<TEntry>, new()
-        where TRepository : IBaseRepository_1<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+        where TRepository : IBaseRepository_2<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TDTO : BaseDTO_1<TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
         where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
     {
         protected BaseService_1(TRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository) { }
+    }
+
+    public abstract class BaseService_2<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputIdentityDelete_0, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+        where TEntry : BaseEntry<TEntry>, new()
+        where TRepository : IBaseRepository<TEntry, TInputCreate, TInputUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+        where TInputCreate : BaseInputCreate<TInputCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
+        where TOutput : BaseOutput<TOutput>
+        where TDTO : BaseDTO<TInputCreate, TInputUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+        where TExternalPropertiesDTO : BaseExternalPropertiesDTO<TExternalPropertiesDTO>, new()
+        where TInternalPropertiesDTO : BaseInternalPropertiesDTO<TInternalPropertiesDTO>, new()
+        where TAuxiliaryPropertiesDTO : BaseAuxiliaryPropertiesDTO<TAuxiliaryPropertiesDTO>, new()
+    {
+        protected BaseService_2(TRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository)
+        { }
     }
 }

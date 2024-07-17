@@ -40,12 +40,15 @@ namespace apiEstudo.Application.Services
             if (listInputIdentityUpdateProduct.Any(x => x.InputUpdate.Quantity < 0))
                 throw new InvalidArgumentException("Quantidade inválida!");
 
-            List<ProductDTO> ProductsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateProduct select i.Id).ToList());
-            if (ProductsToBeUpdated.Count == 0)
+            List<ProductDTO> productsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateProduct select i.Id).ToList());
+            if (productsToBeUpdated.Count == 0)
                 throw new NotFoundException("Product ID não localizado!");
 
-            var productsToUpdate = InternalUpdate(listInputIdentityUpdateProduct, ProductsToBeUpdated);
-            return _repository.UpdateMultiple(productsToUpdate);
+            var updatedProducts = (from inputIdentityUpdateProduct in listInputIdentityUpdateProduct
+                                   let inputUpdateProduct = inputIdentityUpdateProduct.InputUpdate
+                                   from ProductToUpdate in productsToBeUpdated
+                                   select ProductToUpdate.Update(inputUpdateProduct)).ToList(); ;
+            return _repository.UpdateMultiple(updatedProducts);
         }
     }
 }

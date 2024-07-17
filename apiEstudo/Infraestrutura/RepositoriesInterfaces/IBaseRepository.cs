@@ -24,8 +24,11 @@ namespace apiEstudo.Infraestrutura.RepositoriesInterfaces
         void Delete(TDTO classe);
         void DeleteMultiple(List<TDTO> entry);
     }
+    public interface IBaseRepository_1<TEntry> : IBaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, BaseOutput_0, BaseDTO_0, BaseExternalPropertiesDTO_0, BaseInternalPropertiesDTO_0, BaseAuxiliaryPropertiesDTO_0>
+        where TEntry : BaseEntry<TEntry>
+    { }
 
-    public interface IBaseRepository_1<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : IBaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+    public interface IBaseRepository_2<TEntry, TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : IBaseRepository<TEntry, BaseInputCreate_0, BaseInputUpdate_0, TOutput, TDTO, BaseExternalPropertiesDTO_0, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TEntry : BaseEntry<TEntry>, new()
         where TOutput : BaseOutput<TOutput>
         where TDTO : BaseDTO_1<TOutput, TDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>

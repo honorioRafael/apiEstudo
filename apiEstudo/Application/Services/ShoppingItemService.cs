@@ -21,14 +21,17 @@ namespace apiEstudo.Application.Services
             return _repository.CreateMultiple(shoppingItemToCreate);
         }
 
-        public List<long> UpdateMultiple(List<InputIdentityUpdateShoppingItem> listInputIdentityUpdate)
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateShoppingItem> listInputIdentityUpdateShoppingItem)
         {
-            List<ShoppingItemDTO> ShoppingItensToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdate select i.Id).ToList());
-            if (ShoppingItensToBeUpdated.Count == 0)
+            List<ShoppingItemDTO> shoppingItensToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShoppingItem select i.Id).ToList());
+            if (shoppingItensToBeUpdated.Count == 0)
                 throw new NotFoundException("Shopping Item ID não localizado!");
 
-            var shoppingItensToUpdate = InternalUpdate(listInputIdentityUpdate, ShoppingItensToBeUpdated);
-            return _repository.UpdateMultiple(shoppingItensToUpdate);
+            var updatedShoppingItens = (from inputIdentityUpdateShoppingItem in listInputIdentityUpdateShoppingItem
+                                        let inputUpdateShoppingItem = inputIdentityUpdateShoppingItem.InputUpdate
+                                        from shoppingItemToUpdate in shoppingItensToBeUpdated
+                                        select shoppingItemToUpdate.Update(inputUpdateShoppingItem)).ToList();
+            return _repository.UpdateMultiple(updatedShoppingItens);
         }
     }
 }

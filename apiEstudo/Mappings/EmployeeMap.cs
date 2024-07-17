@@ -10,12 +10,12 @@ namespace apiEstudo.Mappings
         {
             builder.ToTable("funcionarios");
             builder.HasKey(x => x.Id).HasName("id");
+            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
+            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
             builder.Property(x => x.Name).HasColumnName("nome");
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Age).HasColumnName("idade");
             builder.Property(x => x.EmployeeTaskId).HasColumnName("tarefa_id");
-            builder.Property(x => x.CreationDate).HasColumnName("data_criacao");
-            builder.Property(x => x.ChangeDate).HasColumnName("data_alteracao");
 
             builder.HasOne(x => x.EmployeeTask)
                 .WithMany(t => t.Employees)

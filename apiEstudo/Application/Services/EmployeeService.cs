@@ -14,25 +14,6 @@ namespace apiEstudo.Application.Services
         }
         private readonly IEmployeeTaskRepository _employeeTaskRepository;
 
-        public override List<long> UpdateMultiple(List<InputIdentityUpdateEmployee> listInputIdentityUpdateEmployee)
-        {
-            if (listInputIdentityUpdateEmployee.Count == 0)
-                throw new ArgumentNullException();
-            if (listInputIdentityUpdateEmployee.Any(x => x.InputUpdate.Age < 0))
-                throw new InvalidArgumentException("Idade inválida!");
-
-            List<EmployeeTaskDTO>? listRelatedTasks = _employeeTaskRepository.GetListByListId((from i in listInputIdentityUpdateEmployee select i.InputUpdate.TaskId).ToList());
-            if (listRelatedTasks == null || listRelatedTasks.Count == 0)
-                throw new NotFoundException("Há um ID de Tarefa inválido na lista de atualização!");
-
-            List<EmployeeDTO>? EmployeesToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateEmployee select i.Id).ToList());
-            if (EmployeesToBeUpdated == null || EmployeesToBeUpdated.Count == 0)
-                throw new NotFoundException("Há um ID de Funcionário inválido na lista de atualização.");
-
-            var employeesToUpdate = InternalUpdate(listInputIdentityUpdateEmployee, EmployeesToBeUpdated);
-            return _repository.UpdateMultiple(employeesToUpdate);
-        }
-
         public override List<long> CreateMultiple(List<InputCreateEmployee> listInputCreateEmployee)
         {
             if (listInputCreateEmployee.Count == 0)
@@ -50,6 +31,28 @@ namespace apiEstudo.Application.Services
             var employeesToCreate = (from inputCreateEmployee in listInputCreateEmployee
                                      select new EmployeeDTO().Create(id++, inputCreateEmployee)).ToList();
             return _repository.CreateMultiple(employeesToCreate);
+        }
+
+        public override List<long> UpdateMultiple(List<InputIdentityUpdateEmployee> listInputIdentityUpdateEmployee)
+        {
+            if (listInputIdentityUpdateEmployee.Count == 0)
+                throw new ArgumentNullException();
+            if (listInputIdentityUpdateEmployee.Any(x => x.InputUpdate.Age < 0))
+                throw new InvalidArgumentException("Idade inválida!");
+
+            List<EmployeeTaskDTO>? listRelatedTasks = _employeeTaskRepository.GetListByListId((from i in listInputIdentityUpdateEmployee select i.InputUpdate.EmployeeTaskId).ToList());
+            if (listRelatedTasks == null || listRelatedTasks.Count == 0)
+                throw new NotFoundException("Há um ID de Tarefa inválido na lista de atualização!");
+
+            List<EmployeeDTO>? employeesToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateEmployee select i.Id).ToList());
+            if (employeesToBeUpdated == null || employeesToBeUpdated.Count == 0)
+                throw new NotFoundException("Há um ID de Funcionário inválido na lista de atualização.");
+
+            var updatedEmployees = (from inputIdentityUpdateEmployee in listInputIdentityUpdateEmployee
+                                    let inputUpdateEmployee = inputIdentityUpdateEmployee.InputUpdate
+                                    from employeeToUpdate in employeesToBeUpdated
+                                    select employeeToUpdate.Update(inputUpdateEmployee)).ToList();
+            return _repository.UpdateMultiple(updatedEmployees);
         }
     }
 }
