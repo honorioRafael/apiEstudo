@@ -24,12 +24,13 @@ namespace apiEstudo.Application.Services
         public override List<long> UpdateMultiple(List<InputIdentityUpdateShoppingItem> listInputIdentityUpdateShoppingItem)
         {
             List<ShoppingItemDTO> shoppingItensToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShoppingItem select i.Id).ToList());
-            if (shoppingItensToBeUpdated.Count == 0)
+            if (shoppingItensToBeUpdated.Count != listInputIdentityUpdateShoppingItem.Count)
                 throw new NotFoundException("Shopping Item ID não localizado!");
 
             var updatedShoppingItens = (from inputIdentityUpdateShoppingItem in listInputIdentityUpdateShoppingItem
                                         let inputUpdateShoppingItem = inputIdentityUpdateShoppingItem.InputUpdate
                                         from shoppingItemToUpdate in shoppingItensToBeUpdated
+                                        where shoppingItemToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateShoppingItem.Id
                                         select shoppingItemToUpdate.Update(inputUpdateShoppingItem)).ToList();
             return _repository.UpdateMultiple(updatedShoppingItens);
         }

@@ -31,12 +31,13 @@ namespace apiEstudo.Application
                 throw new ArgumentNullException();
 
             List<EmployeeTaskDTO> employeeTasksToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateEmployeeTask select i.Id).ToList());
-            if (employeeTasksToBeUpdated.Count == 0)
+            if (employeeTasksToBeUpdated.Count != listInputIdentityUpdateEmployeeTask.Count)
                 throw new NotFoundException("EmployeeTask ID não localizado!");
 
             var updatedTasks = (from inputIdentityUpdateEmployeeTask in listInputIdentityUpdateEmployeeTask
                                 let inputUpdateEmployeeTask = inputIdentityUpdateEmployeeTask.InputUpdate
                                 from employeeTaskToUpdate in employeeTasksToBeUpdated
+                                where employeeTaskToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateEmployeeTask.Id
                                 select employeeTaskToUpdate.Update(inputUpdateEmployeeTask)).ToList();
             return _repository.UpdateMultiple(updatedTasks);
         }

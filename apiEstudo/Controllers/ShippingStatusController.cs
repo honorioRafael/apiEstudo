@@ -35,5 +35,26 @@ namespace apiEstudo.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpPost("Multiple")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult CreateMultiple(List<BaseInputCreate_0> listInputCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPut("Multiple")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult UpdateMultiple(List<BaseInputIdentityUpdate_0> listInputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete("Multiple")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult DeleteMultiple(List<BaseInputIdentityDelete_0> listInputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

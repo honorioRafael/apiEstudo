@@ -61,9 +61,30 @@ namespace apiEstudo.Controllers
             }
         }
 
+        [HttpPost("Multiple")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult CreateMultiple(List<InputCreateUser> listInputCreate)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete]
         [ApiExplorerSettings(IgnoreApi = true)]
         public override IActionResult Delete(BaseInputIdentityDelete_0 inputIdentityDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPut("Multiple")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult UpdateMultiple(List<InputIdentityUpdateUser> listInputIdentityUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete("Multiple")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult DeleteMultiple(List<BaseInputIdentityDelete_0> listInputIdentityDelete)
         {
             throw new NotImplementedException();
         }
@@ -79,7 +100,8 @@ namespace apiEstudo.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public override IActionResult GetAll()
         {
-            return base.GetAll();
+            throw new NotImplementedException();
         }
+
     }
 }

@@ -45,12 +45,13 @@ namespace apiEstudo.Application.Services
                 throw new NotFoundException("Há um ID de Tarefa inválido na lista de atualização!");
 
             List<EmployeeDTO>? employeesToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateEmployee select i.Id).ToList());
-            if (employeesToBeUpdated == null || employeesToBeUpdated.Count == 0)
+            if (employeesToBeUpdated == null || employeesToBeUpdated.Count != listInputIdentityUpdateEmployee.Count)
                 throw new NotFoundException("Há um ID de Funcionário inválido na lista de atualização.");
 
             var updatedEmployees = (from inputIdentityUpdateEmployee in listInputIdentityUpdateEmployee
                                     let inputUpdateEmployee = inputIdentityUpdateEmployee.InputUpdate
                                     from employeeToUpdate in employeesToBeUpdated
+                                    where employeeToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateEmployee.Id
                                     select employeeToUpdate.Update(inputUpdateEmployee)).ToList();
             return _repository.UpdateMultiple(updatedEmployees);
         }

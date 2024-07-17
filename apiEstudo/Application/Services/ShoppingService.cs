@@ -67,7 +67,7 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Hã um valor inválido!");
 
             List<ShoppingDTO> shoppingsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShopping select i.Id).ToList());
-            if (shoppingsToBeUpdated.Count == 0)
+            if (shoppingsToBeUpdated.Count != listInputIdentityUpdateShopping.Count)
                 throw new InvalidArgumentException("Há um ID de compra inválido!");
 
             /*foreach (var inputIdentityUpdateShopping in listInputIdentityUpdateShopping)
@@ -108,6 +108,7 @@ namespace apiEstudo.Application.Services
             var updatedShoppings = (from inputIdentityUpdateShopping in listInputIdentityUpdateShopping
                                     let inputUpdateShopping = inputIdentityUpdateShopping.InputUpdate
                                     from shoppingToUpdate in shoppingsToBeUpdated
+                                    where shoppingToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateShopping.Id
                                     select shoppingToUpdate.Update(inputUpdateShopping)).ToList();
             return _repository.UpdateMultiple(updatedShoppings);
         }

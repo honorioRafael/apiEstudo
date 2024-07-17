@@ -41,13 +41,14 @@ namespace apiEstudo.Application.Services
                 throw new InvalidArgumentException("Quantidade inválida!");
 
             List<ProductDTO> productsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateProduct select i.Id).ToList());
-            if (productsToBeUpdated.Count == 0)
+            if (productsToBeUpdated.Count != listInputIdentityUpdateProduct.Count)
                 throw new NotFoundException("Product ID não localizado!");
 
             var updatedProducts = (from inputIdentityUpdateProduct in listInputIdentityUpdateProduct
                                    let inputUpdateProduct = inputIdentityUpdateProduct.InputUpdate
-                                   from ProductToUpdate in productsToBeUpdated
-                                   select ProductToUpdate.Update(inputUpdateProduct)).ToList(); ;
+                                   from productToUpdate in productsToBeUpdated
+                                   where productToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateProduct.Id
+                                   select productToUpdate.Update(inputUpdateProduct)).ToList(); ;
             return _repository.UpdateMultiple(updatedProducts);
         }
     }

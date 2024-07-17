@@ -45,6 +45,31 @@ namespace apiEstudo.Controllers
             }
         }
 
+        [HttpPost("Multiple")]
+        public virtual IActionResult CreateMultiple(List<TInputCreate> listInputCreate)
+        {
+            try
+            {
+                return Ok(_service.CreateMultiple(listInputCreate));
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("A lista está vazia");
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpPut]
         public virtual IActionResult Update(TInputIdentityUpdate inputIdentityUpdate)
@@ -71,12 +96,59 @@ namespace apiEstudo.Controllers
             }
         }
 
+        [HttpPut("Multiple")]
+        public virtual IActionResult UpdateMultiple(List<TInputIdentityUpdate> listInputIdentityUpdate)
+        {
+            try
+            {
+                return Ok(_service.UpdateMultiple(listInputIdentityUpdate));
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("A lista está vazia");
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete]
         public virtual IActionResult Delete(TInputIdentityDelete inputIdentityDelete)
         {
             try
             {
                 _service.Delete(inputIdentityDelete);
+                return Ok();
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("A lista está vazia");
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("Multiple")]
+        public virtual IActionResult DeleteMultiple(List<TInputIdentityDelete> listInputIdentityDelete)
+        {
+            try
+            {
+                _service.DeleteMultiple(listInputIdentityDelete);
                 return Ok();
             }
             catch (ArgumentNullException)
