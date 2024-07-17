@@ -34,8 +34,8 @@ namespace apiEstudo.Application.Services
             if (brandsToBeUpdated.Count != listInputIdentityUpdateBrand.Count)
                 throw new NotFoundException("Há um ID de marca inválido na lista de atualização.");
 
-            var updatedBrands = (from inputIdentityUpdateBrand in listInputIdentityUpdateBrand                                 
-                                 let inputUpdateBrand = inputIdentityUpdateBrand.InputUpdate                                 
+            var updatedBrands = (from inputIdentityUpdateBrand in listInputIdentityUpdateBrand
+                                 let inputUpdateBrand = inputIdentityUpdateBrand.InputUpdate
                                  from brandToUpdate in brandsToBeUpdated
                                  where brandToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateBrand.Id
                                  select brandToUpdate.Update(inputUpdateBrand)).ToList();

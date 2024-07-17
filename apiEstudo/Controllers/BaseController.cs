@@ -20,6 +20,7 @@ namespace apiEstudo.Controllers
             _service = service;
         }
 
+        #region Create / Post
         [HttpPost]
         public virtual IActionResult Create(TInputCreate inputCreate)
         {
@@ -70,7 +71,9 @@ namespace apiEstudo.Controllers
             }
         }
 
+        #endregion
 
+        #region Update / Put
         [HttpPut]
         public virtual IActionResult Update(TInputIdentityUpdate inputIdentityUpdate)
         {
@@ -121,6 +124,9 @@ namespace apiEstudo.Controllers
             }
         }
 
+        #endregion
+
+        #region Delete
         [HttpDelete]
         public virtual IActionResult Delete(TInputIdentityDelete inputIdentityDelete)
         {
@@ -165,6 +171,9 @@ namespace apiEstudo.Controllers
             }
         }
 
+        #endregion
+
+        #region Get
         [HttpGet]
         public virtual IActionResult GetAll()
         {
@@ -179,6 +188,8 @@ namespace apiEstudo.Controllers
             if (Query == null) return NotFound();
             return Ok(Query);
         }
+
+        #endregion
     }
 
     public abstract class BaseController_1<TService, TOutput> : BaseController<TService, BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>

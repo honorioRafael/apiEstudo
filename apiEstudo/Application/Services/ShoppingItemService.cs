@@ -13,14 +13,6 @@ namespace apiEstudo.Application.Services
             _productRepository = productRepository;
         }
 
-        public override List<long> CreateMultiple(List<InputCreateShoppingItem> listInputCreateShoppingItem)
-        {
-            var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(ShoppingItem)), listInputCreateShoppingItem.Count);
-            var id = idRange.FirstId;
-            var shoppingItemToCreate = (from inputCreateShoppingItem in listInputCreateShoppingItem select new ShoppingItemDTO().Create(id++, inputCreateShoppingItem)).ToList();
-            return _repository.CreateMultiple(shoppingItemToCreate);
-        }
-
         public override List<long> UpdateMultiple(List<InputIdentityUpdateShoppingItem> listInputIdentityUpdateShoppingItem)
         {
             List<ShoppingItemDTO> shoppingItensToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShoppingItem select i.Id).ToList());

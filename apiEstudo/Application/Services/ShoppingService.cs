@@ -38,15 +38,15 @@ namespace apiEstudo.Application.Services
             var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(Shopping)), listInputCreateShopping.Count);
             var id = idRange.FirstId;
 
-            var shoppingToCreate = (from inputCreateShopping in listInputCreateShopping select new ShoppingDTO().Create(id++, inputCreateShopping, new ShoppingInternalPropertiesDTO(1))).ToList();
+            var shoppingToCreate = (from inputCreateShopping in listInputCreateShopping
+                                    select new ShoppingDTO().Create(id++, inputCreateShopping, new ShoppingInternalPropertiesDTO(1))).ToList();
             List<long> listShoppingId = _repository.CreateMultiple(shoppingToCreate);
 
             /* var listCreateShoppingItem = (from i in listCreate
                                            let parentId = 1// listShoppingId[i.Index]
                                            let createdItens = (from j in i.CreatedItens select new InputCreateShoppingItemComplete(j, new InputInternalCreateShoppingItem(parentId))).ToList()
                                            select createdItens).SelectMany(x => x).ToList();
-
-             CreateMultipleShoppingItens(listCreateShoppingItem);*/
+            */
             return listShoppingId;
         }
 
@@ -147,13 +147,20 @@ namespace apiEstudo.Application.Services
         #endregion
 
         #region ShoppingItens
-        private void CreateMultipleShoppingItens(List<InputCreateShoppingItem> inputCreateShoppingItem)
+        private void CreateMultipleShoppingItens(long shopId, List<InputCreateShoppingItem> listInputCreateShoppingItem)
         {
-            //List<Product>? listRelatedProducts = _productRepository.GetListByListId((from i in inputCreateShoppingItem select i.InputCreate.ProductId).ToList());
-            //if (listRelatedProducts == null || listRelatedProducts.Count == 0)
-            //    throw new NotFoundException("Há um id de produto inválido na lista de criação!");
+            List<ProductDTO>? listRelatedProducts = _productRepository.GetListByListId((from i in listInputCreateShoppingItem select i.ProductId).ToList());
+            if (listRelatedProducts == null || listRelatedProducts.Count != listInputCreateShoppingItem.Count)
+                throw new InvalidArgumentException("Há um ID de produto inválido na lista de criação!");
+            ShoppingDTO shopping = _repository.Get(shopId);
+            if (shopping == null)
+                throw new InvalidArgumentException("O ID da compra é inválido!");
 
-            //_shoppingItemService.CreateMultiple(inputCreateShoppingItem);
+            var idRange = _idControlRepository.GetRangeId(TableName.GetNameId(nameof(ShoppingItem)), listInputCreateShoppingItem.Count);
+            var id = idRange.FirstId;
+            var shoppingItemToCreate = (from inputCreateShoppingItem in listInputCreateShoppingItem select new ShoppingItemDTO().Create(id++, inputCreateShoppingItem, new ShoppingItemInternalPropertiesDTO(shopId))).ToList();
+
+            _shoppingItemRepository.CreateMultiple(shoppingItemToCreate);
         }
 
         private void UpdateMultipleShoppingItens(List<InputIdentityUpdateShoppingItem> inputIdentityUpdateShoppingitem)
