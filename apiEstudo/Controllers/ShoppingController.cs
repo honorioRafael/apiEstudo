@@ -17,7 +17,7 @@ namespace apiEstudo.Controllers
         {
             try
             {
-                return Ok(_service.UpdateShippingStatusCancel(inputCancelShippingStatus));
+                return Ok(_service.UpdateShippingStatusCancel([inputCancelShippingStatus]));
             }
             catch (Exception ex)
             {
@@ -30,7 +30,7 @@ namespace apiEstudo.Controllers
         {
             try
             {
-                return Ok(_service.UpdateShippingStatusApprove(inputApproveShippingStatus));
+                return Ok(_service.UpdateShippingStatusApprove([inputApproveShippingStatus]));
             }
             catch (Exception ex)
             {

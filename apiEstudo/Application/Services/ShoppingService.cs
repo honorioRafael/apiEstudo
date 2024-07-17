@@ -56,23 +56,22 @@ namespace apiEstudo.Application.Services
         #region Update        
         public override List<long> UpdateMultiple(List<InputIdentityUpdateShopping> listInputIdentityUpdateShopping)
         {
-            /*if (listInputIdentityUpdateShopping.Count == 0)
+            if (listInputIdentityUpdateShopping.Count == 0)
                 throw new ArgumentNullException();
 
-            List<Employee>? listRelatedEmployees = _employeeRepository.GetListByListId((from i in listInputIdentityUpdateShopping
-                                                                                        let j = i.InputUpdate
-                                                                                        select j.EmployeeId).ToList());
+            List<EmployeeDTO>? listRelatedEmployees = _employeeRepository.GetListByListId((from i in listInputIdentityUpdateShopping
+                                                                                        select i.InputUpdate.EmployeeId).ToList());
             if (listRelatedEmployees == null || listRelatedEmployees.Count == 0)
-                throw new InvalidArgumentException("Employee ID inválido!");
+                throw new InvalidArgumentException("Há um ID de funcionário inválido!");
 
             if (listInputIdentityUpdateShopping.Any(x => x.InputUpdate.Value < 0))
-                throw new InvalidArgumentException("Valor inválido!");
+                throw new InvalidArgumentException("Hã um valor inválido!");
 
-            List<Shopping> ShoppingsToBeUpdated = GetListByListId((from i in listInputIdentityUpdateShopping select i.Id).ToList());
+            List<ShoppingDTO> ShoppingsToBeUpdated = _repository.GetListByListId((from i in listInputIdentityUpdateShopping select i.Id).ToList());
             if (ShoppingsToBeUpdated.Count == 0)
-                throw new InvalidArgumentException("Shopping ID não localizado!");
+                throw new InvalidArgumentException("Há um ID de compra inválido!");
 
-            foreach (var inputIdentityUpdateShopping in listInputIdentityUpdateShopping)
+            /*foreach (var inputIdentityUpdateShopping in listInputIdentityUpdateShopping)
             {
                 // produtos compra - Create
                 if (inputIdentityUpdateShopping.InputUpdate.CreatedItens != null)
@@ -105,37 +104,42 @@ namespace apiEstudo.Application.Services
                         throw new InvalidArgumentException("Há um ID de produto inválido na lista de deleção.");
                     DeleteMultipleShoppingItens(inputIdentityUpdateShopping.InputUpdate.DeletedItens);
                 }
-            }
+            }*/
 
             var ShoppingsToUpdate = InternalUpdate(listInputIdentityUpdateShopping, ShoppingsToBeUpdated);
-            return _repository.UpdateMultiple(ShoppingsToUpdate);*/
-            return [1];
+            return _repository.UpdateMultiple(ShoppingsToUpdate);            
         }
         #endregion
 
         #region Shipping
-        public long UpdateShippingStatusApprove(InputApproveShippingStatus inputApproveShippingStatus)
+        public List<long> UpdateShippingStatusApprove(List<InputApproveShippingStatus> listInputApproveShippingStatus)
         {
-            if (inputApproveShippingStatus.Id < 0)
-                throw new InvalidArgumentException("Shopping ID inválido!");
+            if (listInputApproveShippingStatus.Any(x => x.Id < 0))
+                throw new InvalidArgumentException("Há um shopping ID inválido!");
 
-            var OriginalShopping = _repository.Get(inputApproveShippingStatus.Id);
-            if (OriginalShopping == null)
-                throw new InvalidArgumentException("Shopping ID inválido!");
+            List<ShoppingDTO> originalShoppings = _repository.GetListByListId((from i in listInputApproveShippingStatus select i.Id).ToList());
+            if (originalShoppings.Count != listInputApproveShippingStatus.Count)
+                throw new InvalidArgumentException("Há um shopping ID inválido!");
 
-            return 1;// _repository.Update(new Shopping(OriginalShopping.EmployeeId, OriginalShopping.Value, 2, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate));
+            return _repository.UpdateMultiple((from i in listInputApproveShippingStatus
+                                               let listOg = originalShoppings
+                                               from og in listOg
+                                               select new ShoppingDTO().Create(og.InternalPropertiesDTO.Id, new ShoppingExternalPropertiesDTO(og.ExternalPropertiesDTO.EmployeeId, og.ExternalPropertiesDTO.Value), new ShoppingInternalPropertiesDTO(2).LoadInternalData(og.InternalPropertiesDTO.Id, og.InternalPropertiesDTO.CreationDate, og.InternalPropertiesDTO.ChangeDate))).ToList());
         }
 
-        public long UpdateShippingStatusCancel(InputCancelShippingStatus inputCancelShippingStatus)
+        public List<long> UpdateShippingStatusCancel(List<InputCancelShippingStatus> listInputCancelShippingStatus)
         {
-            if (inputCancelShippingStatus.Id < 0)
-                throw new InvalidArgumentException("Shopping ID inválido!");
+            if (listInputCancelShippingStatus.Any(x => x.Id < 0))
+                throw new InvalidArgumentException("Há um shopping ID inválido!");
 
-            var OriginalShopping = _repository.Get(inputCancelShippingStatus.Id);
-            if (OriginalShopping == null)
-                throw new InvalidArgumentException("Shopping ID inválido!");
+            List<ShoppingDTO> originalShoppings = _repository.GetListByListId((from i in listInputCancelShippingStatus select i.Id).ToList());
+            if (originalShoppings.Count != listInputCancelShippingStatus.Count)
+                throw new InvalidArgumentException("Há um shopping ID inválido!");
 
-            return 1;// _repository.Update(new Shopping(OriginalShopping.EmployeeId, OriginalShopping.Value, 3, null, null).LoadInternalData(OriginalShopping.Id, OriginalShopping.CreationDate, OriginalShopping.ChangeDate)); ;
+            return _repository.UpdateMultiple((from i in listInputCancelShippingStatus
+                                               let listOg = originalShoppings
+                                               from og in listOg
+                                               select new ShoppingDTO().Create(og.InternalPropertiesDTO.Id, new ShoppingExternalPropertiesDTO(og.ExternalPropertiesDTO.EmployeeId, og.ExternalPropertiesDTO.Value), new ShoppingInternalPropertiesDTO(3).LoadInternalData(og.InternalPropertiesDTO.Id, og.InternalPropertiesDTO.CreationDate, og.InternalPropertiesDTO.ChangeDate))).ToList());
         }
         #endregion
 
