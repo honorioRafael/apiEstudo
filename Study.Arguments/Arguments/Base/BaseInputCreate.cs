@@ -1,4 +1,4 @@
-﻿namespace apiEstudo.Application.Arguments
+﻿namespace Study.Arguments.Arguments
 {
     public class BaseInputCreate<TInputCreate> where TInputCreate : BaseInputCreate<TInputCreate>
     {

@@ -1,4 +1,4 @@
-﻿namespace apiEstudo.Application.Arguments.Product
+﻿namespace Study.Arguments.Arguments.Product
 {
     public class InputCreateProduct : BaseInputCreate<InputCreateProduct>
     {

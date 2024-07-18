@@ -1,6 +1,6 @@
-﻿using apiEstudo.Domain.DTOs;
+﻿using Study.Domain.DTO;
 
-namespace apiEstudo.Application.Arguments
+namespace Study.Arguments.Arguments
 {
     public class OutputEmployee : BaseOutput<OutputEmployee>
     {

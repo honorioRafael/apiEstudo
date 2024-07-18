@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace apiEstudo.Application.Arguments
+namespace Study.Arguments.Arguments
 {
     public class OutputShippingStatus : BaseOutput<OutputShippingStatus>
     {

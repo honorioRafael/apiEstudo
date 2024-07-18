@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apiEstudo", "apiEstudo\apiEstudo.csproj", "{04C108AC-C1DF-453A-971C-EF179DCA14C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Study.Api", "Study.Api\Study.Api.csproj", "{04C108AC-C1DF-453A-971C-EF179DCA14C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Study.Arguments", "Study.Arguments\Study.Arguments.csproj", "{C2A6B390-70F9-42A9-8310-108F0F80E10F}"
 EndProject

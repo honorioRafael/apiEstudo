@@ -1,4 +1,4 @@
-﻿namespace apiEstudo.Application.Arguments.Brand
+﻿namespace Study.Arguments.Arguments.Brand
 {
     public class InputIdentityUpdateBrand : BaseInputIdentityUpdate<InputUpdateBrand>
     {
