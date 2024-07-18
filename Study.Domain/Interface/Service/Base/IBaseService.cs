@@ -1,5 +1,4 @@
-﻿using Study.Arguments.Arguments;
-using Study.Arguments.Arguments.Base;
+﻿using Study.Arguments.Arguments.Base;
 
 namespace Study.Domain.Interface.Service
 {

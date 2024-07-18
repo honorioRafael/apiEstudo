@@ -53,7 +53,7 @@ internal class Program
         });
 
         // DataBase Context
-        builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer("Data Source=DESKTOP-HADLTPF\\SQLEXPRESS;Database=master;Integrated Security=True;TrustServerCertificate=True;"));
+        builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         // Repositories
         builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();

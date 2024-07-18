@@ -1,9 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Study.Arguments.Key;
 using Study.Domain.DTO.UserDTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Study.Arguments.Key;
 
 namespace Study.Domain.Service.Token
 {

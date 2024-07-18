@@ -1,5 +1,4 @@
-﻿using Study.Arguments.Arguments;
-using Study.Arguments.Arguments.Base;
+﻿using Study.Arguments.Arguments.Base;
 using Study.Domain.DTO;
 
 namespace Study.Domain.Interface.Repository.Base
