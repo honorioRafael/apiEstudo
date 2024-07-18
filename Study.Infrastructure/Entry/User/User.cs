@@ -1,5 +1,6 @@
 ﻿using Study.Domain.DTO;
 using Study.Domain.DTO.UserDTO;
+using Study.Infrastructure.Entry.Base;
 
 namespace Study.Infrastructure.Entry
 {

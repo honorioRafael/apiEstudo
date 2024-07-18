@@ -1,18 +1,16 @@
-using Study;
-using Study.Application;
-using Study.Domain.Service;
-using Study.Domain.Interface.Service;
-using Study.Infraestrutura;
-using Study.Infrastructure.Repository;
-using Study.Domain.Interface.Repository;
-using Study.Infrastructure.Map;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using Microsoft.AspNetCore.Connections;
+using Study.Application;
+using Study.Arguments.Key;
+using Study.Domain.Interface.Repository;
+using Study.Domain.Interface.Service;
+using Study.Domain.Service;
+using Study.Infraestrutura;
 using Study.Infrastructure.Context;
+using Study.Infrastructure.Repository;
+using System.Text;
 
 
 internal class Program

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Study.Arguments.Arguments.Base;
+using System.Text.Json.Serialization;
 
 namespace Study.Arguments.Arguments
 {

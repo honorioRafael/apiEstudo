@@ -1,5 +1,4 @@
 ﻿using Study.Arguments.Arguments;
-using Study.Arguments.Arguments.Product;
 
 namespace Study.Domain.DTO
 {

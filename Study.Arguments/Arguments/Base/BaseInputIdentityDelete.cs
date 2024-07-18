@@ -1,4 +1,4 @@
-﻿namespace Study.Arguments.Arguments
+﻿namespace Study.Arguments.Arguments.Base
 {
     public class BaseInputIdentityDelete<TInputInputIdentityDelete> where TInputInputIdentityDelete : BaseInputIdentityDelete<TInputInputIdentityDelete>
     {

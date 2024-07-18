@@ -1,4 +1,6 @@
-﻿namespace Study.Arguments.Arguments
+﻿using Study.Arguments.Arguments.Base;
+
+namespace Study.Arguments.Arguments
 {
     public class InputCreateEmployeeTask : BaseInputCreate<InputCreateEmployeeTask>
     {

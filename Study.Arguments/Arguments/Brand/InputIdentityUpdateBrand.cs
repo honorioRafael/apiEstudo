@@ -1,4 +1,6 @@
-﻿namespace Study.Arguments.Arguments.Brand
+﻿using Study.Arguments.Arguments.Base;
+
+namespace Study.Arguments.Arguments
 {
     public class InputIdentityUpdateBrand : BaseInputIdentityUpdate<InputUpdateBrand>
     {

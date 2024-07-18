@@ -1,4 +1,5 @@
 ﻿
+using Study.Infrastructure.Entry.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Study.Infrastructure.Entry

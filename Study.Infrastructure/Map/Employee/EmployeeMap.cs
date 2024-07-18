@@ -1,6 +1,6 @@
-﻿using Study.Domain.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Study.Infrastructure.Entry;
 
 namespace Study.Infrastructure.Map
 {

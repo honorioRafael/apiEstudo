@@ -1,4 +1,4 @@
-﻿using Study.Domain.DTO;
+﻿using Study.Arguments.Arguments.Base;
 
 namespace Study.Arguments.Arguments
 {
@@ -12,13 +12,12 @@ namespace Study.Arguments.Arguments
         public OutputEmployee()
         { }
 
-        public OutputEmployee(string name, long employeeTaskId, int age, EmployeeTaskDTO task)
+        public OutputEmployee(string name, long employeeTaskId, int age, OutputEmployeeTask task)
         {
             Name = name;
             EmployeeTaskId = employeeTaskId;
             Age = age;
-
-            EmployeeTask = (OutputEmployeeTask)task;
+            EmployeeTask = task;
         }
     }
 }

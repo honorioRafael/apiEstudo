@@ -1,4 +1,6 @@
-﻿namespace Study.Arguments.Arguments.Product
+﻿using Study.Arguments.Arguments.Base;
+
+namespace Study.Arguments.Arguments
 {
     public class InputCreateProduct : BaseInputCreate<InputCreateProduct>
     {

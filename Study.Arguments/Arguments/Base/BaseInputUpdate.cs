@@ -1,4 +1,4 @@
-﻿namespace Study.Arguments.Arguments
+﻿namespace Study.Arguments.Arguments.Base
 {
     public class BaseInputUpdate<TInputUpdate> where TInputUpdate : BaseInputUpdate<TInputUpdate> { }
 
