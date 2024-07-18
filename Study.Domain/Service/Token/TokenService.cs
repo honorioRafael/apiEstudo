@@ -9,7 +9,7 @@ namespace Study.Domain.Service.Token
 {
     public class TokenService
     {
-        public static object GenerateToken(UserDTO user)
+        public static string GenerateToken(UserDTO user)
         {
             var key = Encoding.ASCII.GetBytes(Key.Secret);
             var tokenConfig = new SecurityTokenDescriptor
@@ -25,10 +25,7 @@ namespace Study.Domain.Service.Token
             var token = tokenHandler.CreateToken(tokenConfig);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return new
-            {
-                token = tokenString
-            };
+            return tokenString;
         }
     }
 }

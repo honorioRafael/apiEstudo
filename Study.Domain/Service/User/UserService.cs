@@ -6,6 +6,7 @@ using Study.Domain.DTO.UserDTO;
 using Study.Domain.Interface.Repository;
 using Study.Domain.Interface.Service;
 using Study.Domain.Service.Base;
+using Study.Domain.Service.Token;
 
 namespace Study.Domain.Service
 {
@@ -14,7 +15,7 @@ namespace Study.Domain.Service
         public UserService(IUserRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository)
         { }
 
-        public OutputUser? Auth(InputCreateUser view)
+        public object? Auth(InputCreateUser view)
         {
             var UserEntity = _repository.GetByName(view.Name);
             if (UserEntity == null)
@@ -22,7 +23,11 @@ namespace Study.Domain.Service
             if (UserEntity.ExternalPropertiesDTO.Password != view.Password)
                 throw new WrongPasswordException("A senha informada é inválida");
 
-            return UserEntity;
+            return new
+            {
+                Token = TokenService.GenerateToken(UserEntity),
+                User = (OutputUser)UserEntity
+            };
         }
 
         public long Create(InputCreateUser inputCreateUser)

@@ -38,17 +38,13 @@ namespace Study.Api.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Auth(InputCreateUser view)
+        public IActionResult Auth(InputCreateUser inputCreateUser)
         {
             try
             {
-                OutputUser? UserAccount = _service.Auth(view);
-
-                var token = TokenService.GenerateToken(UserAccount);
-                return Ok(token);
-
+                return Ok(_service.Auth(inputCreateUser));
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
                 return NotFound();
             }
