@@ -36,8 +36,7 @@ namespace apiEstudo.Application.Services
 
             var updatedBrands = (from inputIdentityUpdateBrand in listInputIdentityUpdateBrand
                                  let inputUpdateBrand = inputIdentityUpdateBrand.InputUpdate
-                                 from brandToUpdate in brandsToBeUpdated
-                                 where brandToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateBrand.Id
+                                 let brandToUpdate = (from j in brandsToBeUpdated where j.InternalPropertiesDTO.Id == inputIdentityUpdateBrand.Id select j).FirstOrDefault()
                                  select brandToUpdate.Update(inputUpdateBrand)).ToList();
             return _repository.UpdateMultiple(updatedBrands);
         }

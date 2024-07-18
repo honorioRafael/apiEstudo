@@ -22,4 +22,11 @@ namespace apiEstudo.Application.ServicesInterfaces
     public interface IBaseService_1<TOutput> : IBaseService<BaseInputCreate_0, BaseInputUpdate_0, BaseInputIdentityUpdate_0, BaseInputIdentityDelete_0, TOutput>
         where TOutput : BaseOutput<TOutput>
     { }
+
+    public interface IBaseService_2<TInputCreate, TInputUpdate, TInputIdentityUpdate, TOutput> : IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputIdentityDelete_0, TOutput>
+        where TInputCreate : BaseInputCreate<TInputCreate>
+        where TInputUpdate : BaseInputUpdate<TInputUpdate>
+        where TInputIdentityUpdate : BaseInputIdentityUpdate<TInputUpdate>
+        where TOutput : BaseOutput<TOutput>
+    { }
 }

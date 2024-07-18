@@ -36,8 +36,7 @@ namespace apiEstudo.Application
 
             var updatedTasks = (from inputIdentityUpdateEmployeeTask in listInputIdentityUpdateEmployeeTask
                                 let inputUpdateEmployeeTask = inputIdentityUpdateEmployeeTask.InputUpdate
-                                from employeeTaskToUpdate in employeeTasksToBeUpdated
-                                where employeeTaskToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateEmployeeTask.Id
+                                let employeeTaskToUpdate = (from j in employeeTasksToBeUpdated where j.InternalPropertiesDTO.Id == inputIdentityUpdateEmployeeTask.Id select j).FirstOrDefault()
                                 select employeeTaskToUpdate.Update(inputUpdateEmployeeTask)).ToList();
             return _repository.UpdateMultiple(updatedTasks);
         }

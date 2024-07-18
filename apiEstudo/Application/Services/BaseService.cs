@@ -138,7 +138,7 @@ namespace apiEstudo.Application.Services
         protected BaseService_1(TRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository) { }
     }
 
-    public abstract class BaseService_2<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputIdentityDelete_0, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
+    public abstract class BaseService_2<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO> : BaseService<TEntry, TRepository, TInputCreate, TInputUpdate, TInputIdentityUpdate, BaseInputIdentityDelete_0, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>, IBaseService_2<TInputCreate, TInputUpdate, TInputIdentityUpdate, TOutput>
         where TEntry : BaseEntry<TEntry>, new()
         where TRepository : IBaseRepository<TEntry, TInputCreate, TInputUpdate, TOutput, TDTO, TExternalPropertiesDTO, TInternalPropertiesDTO, TAuxiliaryPropertiesDTO>
         where TInputCreate : BaseInputCreate<TInputCreate>

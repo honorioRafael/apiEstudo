@@ -46,8 +46,7 @@ namespace apiEstudo.Application.Services
 
             var updatedProducts = (from inputIdentityUpdateProduct in listInputIdentityUpdateProduct
                                    let inputUpdateProduct = inputIdentityUpdateProduct.InputUpdate
-                                   from productToUpdate in productsToBeUpdated
-                                   where productToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateProduct.Id
+                                   let productToUpdate = (from j in productsToBeUpdated where j.InternalPropertiesDTO.Id == inputIdentityUpdateProduct.Id select j).FirstOrDefault()
                                    select productToUpdate.Update(inputUpdateProduct)).ToList(); ;
             return _repository.UpdateMultiple(updatedProducts);
         }

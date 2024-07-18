@@ -21,8 +21,7 @@ namespace apiEstudo.Application.Services
 
             var updatedShoppingItens = (from inputIdentityUpdateShoppingItem in listInputIdentityUpdateShoppingItem
                                         let inputUpdateShoppingItem = inputIdentityUpdateShoppingItem.InputUpdate
-                                        from shoppingItemToUpdate in shoppingItensToBeUpdated
-                                        where shoppingItemToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateShoppingItem.Id
+                                        let shoppingItemToUpdate = (from j in shoppingItensToBeUpdated where j.InternalPropertiesDTO.Id == inputIdentityUpdateShoppingItem.Id select j).FirstOrDefault()
                                         select shoppingItemToUpdate.Update(inputUpdateShoppingItem)).ToList();
             return _repository.UpdateMultiple(updatedShoppingItens);
         }

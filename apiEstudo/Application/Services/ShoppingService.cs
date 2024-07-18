@@ -107,8 +107,7 @@ namespace apiEstudo.Application.Services
 
             var updatedShoppings = (from inputIdentityUpdateShopping in listInputIdentityUpdateShopping
                                     let inputUpdateShopping = inputIdentityUpdateShopping.InputUpdate
-                                    from shoppingToUpdate in shoppingsToBeUpdated
-                                    where shoppingToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateShopping.Id
+                                    let shoppingToUpdate = (from j in shoppingsToBeUpdated where j.InternalPropertiesDTO.Id == inputIdentityUpdateShopping.Id select j).FirstOrDefault()
                                     select shoppingToUpdate.Update(inputUpdateShopping)).ToList();
             return _repository.UpdateMultiple(updatedShoppings);
         }

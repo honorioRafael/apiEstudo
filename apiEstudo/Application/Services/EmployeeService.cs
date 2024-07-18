@@ -50,8 +50,7 @@ namespace apiEstudo.Application.Services
 
             var updatedEmployees = (from inputIdentityUpdateEmployee in listInputIdentityUpdateEmployee
                                     let inputUpdateEmployee = inputIdentityUpdateEmployee.InputUpdate
-                                    from employeeToUpdate in employeesToBeUpdated
-                                    where employeeToUpdate.InternalPropertiesDTO.Id == inputIdentityUpdateEmployee.Id
+                                    let employeeToUpdate = (from j in employeesToBeUpdated where j.InternalPropertiesDTO.Id == inputIdentityUpdateEmployee.Id select j).FirstOrDefault()
                                     select employeeToUpdate.Update(inputUpdateEmployee)).ToList();
             return _repository.UpdateMultiple(updatedEmployees);
         }
