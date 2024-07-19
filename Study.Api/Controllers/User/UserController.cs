@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Study.Api.Controllers.Base;
 using Study.Arguments.Arguments;
 using Study.Arguments.Arguments.Base;
@@ -8,19 +9,17 @@ using Study.Domain.Service.Token;
 
 namespace Study.Api.Controllers
 {
-    [ApiController]
-    [Route("api/v1/Auth")]
-    public class AuthController : BaseController_2<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, OutputUser>
+    public class UserController : BaseController_2<IUserService, InputCreateUser, InputUpdateUser, InputIdentityUpdateUser, OutputUser>
     {
-        public AuthController(IUserService service) : base(service)
+        public UserController(IUserService service) : base(service)
         { }
 
         [HttpPost]
-        public override IActionResult Create(InputCreateUser view)
+        public override IActionResult Create(InputCreateUser inputCreateUser)
         {
             try
             {
-                _service.Create(view);
+                _service.Create(inputCreateUser);
                 return Ok();
             }
             catch (ArgumentNullException)
@@ -38,11 +37,12 @@ namespace Study.Api.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Auth(InputCreateUser inputCreateUser)
+        [AllowAnonymous]
+        public IActionResult Auth(InputLoginUser inputLoginUser)
         {
             try
             {
-                return Ok(_service.Auth(inputCreateUser));
+                return Ok(_service.Auth(inputLoginUser));
             }
             catch (ArgumentNullException)
             {
@@ -87,15 +87,15 @@ namespace Study.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public override IActionResult Get(long id)
+        [ApiExplorerSettings(IgnoreApi = true)]        
+        public override ActionResult<OutputUser> Get(long id)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public override IActionResult GetAll()
+        public override ActionResult<List<OutputUser>> GetAll()
         {
             throw new NotImplementedException();
         }

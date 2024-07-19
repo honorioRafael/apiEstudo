@@ -7,15 +7,12 @@ using Study.Domain.Interface.Service;
 
 namespace Study.Api.Controllers
 {
-    [ApiController]
-    [Authorize]
-    [Route("api/v1/ShippingStatus")]
     public class ShippingStatusController : BaseController_1<IShippingStatusService, OutputShippingStatus>
     {
         public ShippingStatusController(IShippingStatusService service) : base(service) { }
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public override IActionResult Get(long id)
+        public override ActionResult<OutputShippingStatus> Get(long id)
         {
             throw new NotImplementedException();
         }

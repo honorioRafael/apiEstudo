@@ -15,19 +15,15 @@ namespace Study.Domain.Service
         public UserService(IUserRepository contextInterface, IIdControlRepository idControlRepository) : base(contextInterface, idControlRepository)
         { }
 
-        public object? Auth(InputCreateUser view)
+        public OutputLoginUser Auth(InputLoginUser inputLoginUser)
         {
-            var UserEntity = _repository.GetByName(view.Name);
-            if (UserEntity == null)
+            var userEntity = _repository.GetByName(inputLoginUser.Name);
+            if (userEntity == null)
                 throw new ArgumentNullException();
-            if (UserEntity.ExternalPropertiesDTO.Password != view.Password)
-                throw new WrongPasswordException("A senha informada é inválida");
+            if (userEntity.ExternalPropertiesDTO.Password != inputLoginUser.Password)
+                throw new WrongPasswordException("A senha informada é inválida!");
 
-            return new
-            {
-                Token = TokenService.GenerateToken(UserEntity),
-                User = (OutputUser)UserEntity
-            };
+            return new OutputLoginUser(TokenService.GenerateToken(userEntity), userEntity);            
         }
 
         public long Create(InputCreateUser inputCreateUser)

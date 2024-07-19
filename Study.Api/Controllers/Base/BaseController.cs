@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Study.Arguments.Arguments.Base;
 using Study.Arguments.CustomException;
 using Study.Domain.Interface.Service;
 
 namespace Study.Api.Controllers.Base
 {
+    [ApiController]
+    [Authorize]
+    [Route("api/v1/[controller]")]
     public abstract class BaseController<TService, TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput> : ControllerBase
         where TService : IBaseService<TInputCreate, TInputUpdate, TInputIdentityUpdate, TInputIdentityDelete, TOutput>
         where TInputCreate : BaseInputCreate<TInputCreate>
@@ -175,18 +179,18 @@ namespace Study.Api.Controllers.Base
 
         #region Get
         [HttpGet]
-        public virtual IActionResult GetAll()
+        public virtual ActionResult<List<TOutput>> GetAll()
         {
-            var Query = _service.GetAll();
-            return Ok(Query);
+            var query = _service.GetAll();
+            return Ok(query);
         }
 
         [HttpGet("{id}")]
-        public virtual IActionResult Get(long id)
+        public virtual ActionResult<TOutput> Get(long id)
         {
-            var Query = _service.Get(id);
-            if (Query == null) return NotFound();
-            return Ok(Query);
+            var query = _service.Get(id);
+            if (query == null) return NotFound();
+            return Ok(query);
         }
 
         #endregion
